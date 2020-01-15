@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Kimirina',
       debugShowCheckedModeBanner: false,
       onGenerateRoute: router.generateRoute,
-      initialRoute: loginViewRoute,
+      initialRoute: carruselViewRoute,
     );
   }
 }
