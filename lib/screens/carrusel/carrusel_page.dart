@@ -1,139 +1,122 @@
-import 'dart:async';
+/**
+ * Author: Damodar Lohani
+ * profile: https://github.com/lohanidamodar
+  */
 
 import 'package:flutter/material.dart';
-import 'package:kimirina_app/models/carrusel_model.dart';
+import 'package:intro_views_flutter/Models/page_view_model.dart';
+import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:kimirina_app/routes/routes.dart';
-import 'package:kimirina_app/widgets/carrusel_slide_dots.dart';
-import 'package:kimirina_app/widgets/carrusel_slide_item.dart';
 
-class CarruselPage extends StatefulWidget {
-  @override
-  _CarruselPage createState() => _CarruselPage();
-}
-
-class _CarruselPage extends State<CarruselPage> {
-  int _currentPage = 0;
-  final PageController _pageController = PageController(initialPage: 0);
-
-  @override
-  void initState() {
-    super.initState();
-    Timer.periodic(Duration(seconds: 5), (Timer timer) {
-      if (_currentPage < 2) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
-
-      _pageController.animateToPage(
-        _currentPage,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeIn,
-      );
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-  }
-
-  _onPageChanged(int index) {
-    setState(() {
-      _currentPage = index;
-    });
-  }
+class CarruselPage extends StatelessWidget {
+  final pages = [
+    PageViewModel(
+      pageColor: Color(0xF6F6F7FF),
+      bubbleBackgroundColor: Colors.indigo,
+      title: Container(),
+      body: Column(
+        children: <Widget>[
+          Text('Kimirina'),
+          Text(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            style: TextStyle(color: Colors.black54, fontSize: 16.0),
+          ),
+        ],
+      ),
+      mainImage: Image.asset(
+        'assets/images/image1.jpg',
+        width: 285.0,
+        alignment: Alignment.center,
+      ),
+      textStyle: TextStyle(color: Colors.black),
+    ),
+    PageViewModel(
+      pageColor: Color(0xF6F6F7FF),
+      bubbleBackgroundColor: Colors.indigo,
+      title: Container(),
+      body: Column(
+        children: <Widget>[
+          Text('Confidencialidad'),
+          Text(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            style: TextStyle(color: Colors.black54, fontSize: 16.0),
+          ),
+        ],
+      ),
+      mainImage: Image.asset(
+        'assets/images/image1.jpg',
+        width: 285.0,
+        alignment: Alignment.center,
+      ),
+      textStyle: TextStyle(color: Colors.black),
+    ),
+    PageViewModel(
+      pageColor: Color(0xF6F6F7FF),
+      iconColor: null,
+      bubbleBackgroundColor: Colors.indigo,
+      title: Container(),
+      body: Column(
+        children: <Widget>[
+          Text('Confianza'),
+          Text(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            style: TextStyle(color: Colors.black54, fontSize: 16.0),
+          ),
+        ],
+      ),
+      mainImage: Image.asset(
+        'assets/images/image2.jpg',
+        width: 285.0,
+        alignment: Alignment.center,
+      ),
+      textStyle: TextStyle(color: Colors.black),
+    ),
+    PageViewModel(
+      pageColor: Color(0xF6F6F7FF),
+      iconColor: null,
+      bubbleBackgroundColor: Colors.indigo,
+      title: Container(),
+      body: Column(
+        children: <Widget>[
+          Text('Sin Discriminación'),
+          Text(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            style: TextStyle(color: Colors.black54, fontSize: 16.0),
+          ),
+        ],
+      ),
+      mainImage: Image.asset(
+        'assets/images/image3.jpg',
+        width: 285.0,
+        alignment: Alignment.center,
+      ),
+      textStyle: TextStyle(color: Colors.black),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: <Widget>[
-                    PageView.builder(
-                      scrollDirection: Axis.horizontal,
-                      controller: _pageController,
-                      onPageChanged: _onPageChanged,
-                      itemCount: slideList.length,
-                      itemBuilder: (ctx, i) => SlideItem(i),
-                    ),
-                    Stack(
-                      alignment: AlignmentDirectional.topStart,
-                      children: <Widget>[
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 35),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              for(int i = 0; i<slideList.length; i++)
-                                if( i == _currentPage )
-                                  SlideDots(true)
-                                else
-                                  SlideDots(false)
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            IntroViewsFlutter(
+              pages,
+              onTapDoneButton: () {
+                Navigator.of(context).pushNamed(loginViewRoute);
+              },
+              showSkipButton: false,
+              doneText: Text(
+                "Empezar",
               ),
-              SizedBox(
-                height: 20,
+              pageButtonsColor: Colors.indigo,
+              pageButtonTextStyles: new TextStyle(
+                // color: Colors.indigo,
+                fontSize: 16.0,
+                fontFamily: "Regular",
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  FlatButton(
-                    child: Text(
-                      'Getting Started',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    padding: const EdgeInsets.all(15),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(registerViewRoute);
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Have an account?',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      FlatButton(
-                        child: Text(
-                          'Login',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(loginViewRoute);
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

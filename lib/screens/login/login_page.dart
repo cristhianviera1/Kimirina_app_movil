@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(fontSize: 16, color: Colors.black),
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                        labelText: "Email",
+                        labelText: "Correo",
                         contentPadding: new EdgeInsets.symmetric(
                             vertical:
                                 MediaQuery.of(context).size.height * 0.022,
@@ -180,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(fontSize: 16, color: Colors.black),
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
-                        labelText: "Password",
+                        labelText: "Contaseña",
                         contentPadding: new EdgeInsets.symmetric(
                             vertical:
                                 MediaQuery.of(context).size.height * 0.022,
@@ -203,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onChanged: _value1Changed,
                           ),
                           Text(
-                            "Remember Me",
+                            "Recordarme",
                             style: TextStyle(
                                 color: Colors.deepPurpleAccent,
                                 fontSize: 16,
@@ -229,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     BorderRadius.all(Radius.circular(25))),
                             child: Center(
                               child: Text(
-                                "SIGN IN",
+                                "Ingresar",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
@@ -241,75 +242,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Container(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text(
-                            "Connect with",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(left: 7),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.065,
-                                width:
-                                    MediaQuery.of(context).size.height * 0.065,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue[900],
-                                    shape: BoxShape.circle),
-                                child: Center(
-                                  child: Image.asset(
-                                    "assets/facebook.png",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 7),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.065,
-                                width:
-                                    MediaQuery.of(context).size.height * 0.065,
-                                decoration: BoxDecoration(
-                                    color: Colors.red, shape: BoxShape.circle),
-                                  child: Image.asset(
-                                    "assets/google.png",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              Container(
-                                margin: EdgeInsets.only(left: 7),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.065,
-                                width:
-                                    MediaQuery.of(context).size.height * 0.065,
-                                decoration: BoxDecoration(
-                                    color: Colors.lightBlue[400],
-                                    shape: BoxShape.circle),
-                                  child: Image.asset(
-                                    "assets/twitter.png",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              Container(
-                                margin: EdgeInsets.only(left: 7),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.065,
-                                width:
-                                    MediaQuery.of(context).size.height * 0.065,
-                                decoration: BoxDecoration(
-                                    color: Colors.lightBlue[800],
-                                    shape: BoxShape.circle),
-                                  child: Image.asset(
-                                    "assets/linkedin.png",
-                                    color: Colors.white,
-                                ),
-                              )
-                            ],
+                          OutlineButton.icon(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8.0,
+                              horizontal: 100,
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0)),
+                            borderSide: BorderSide(color: Colors.red),
+                            color: Colors.red,
+                            highlightedBorderColor: Colors.red,
+                            textColor: Colors.red,
+                            icon: Icon(
+                              FontAwesomeIcons.googlePlusG,
+                              size: 18.0,
+                            ),
+                            label: Text("Google"),
+                            onPressed: () {},
                           )
                         ],
                       ),
@@ -330,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  "New User?",
+                                  "¿Eres nuevo?",
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600,
@@ -340,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   width: 5,
                                 ),
                                 Text(
-                                  "Signup",
+                                  "Registrarse",
                                   style: TextStyle(
                                       color: Colors.deepPurpleAccent,
                                       fontWeight: FontWeight.w600,
@@ -382,14 +333,14 @@ class _LoginScreenState extends State<LoginScreen> {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
-      return 'Enter Valid Email';
+      return 'Ingrese un email válido';
     else
       return null;
   }
 
   String validatePassword(String value) {
     if (value.length < 6)
-      return 'Password must be atleast 6 digits';
+      return 'La contraseña debe tener al menos 6 caracteres';
     else
       return null;
   }
