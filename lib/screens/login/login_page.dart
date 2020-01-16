@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -247,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           OutlineButton.icon(
                             padding: const EdgeInsets.symmetric(
                               vertical: 8.0,
-                              horizontal: 100,
+                              horizontal: 10,
                             ),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0)),
@@ -259,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               FontAwesomeIcons.googlePlusG,
                               size: 18.0,
                             ),
-                            label: Text("Google"),
+                            label: Text("Iniciar con Google"),
                             onPressed: () {},
                           )
                         ],
@@ -320,6 +321,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState.validate()) {
 //    If all data are correct then save data to out variables
       _formKey.currentState.save();
+      Navigator.of(context).pushNamed(navBarViewRoute);
     } else {
 //    If all data are not valid then start auto validation.
       setState(() {

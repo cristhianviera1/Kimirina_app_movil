@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/carrusel/carrusel_page.dart';
 import 'package:kimirina_app/screens/login/login_page.dart';
@@ -9,11 +10,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case carruselViewRoute:
       return MaterialPageRoute(builder: (context) => CarruselPage());
     case loginViewRoute:
-     return MaterialPageRoute(builder: (context) => LoginScreen());
+      return MaterialPageRoute(builder: (context) => LoginScreen());
+    case navBarViewRoute:
+      return MaterialPageRoute(builder: (context) => NavBar());
     case registerViewRoute:
-     return MaterialPageRoute(builder: (context) => SignupScreen());
-    break;
+      return MaterialPageRoute(builder: (context) => SignupScreen());
+      break;
     default:
-     return MaterialPageRoute(builder: (context) => LoginScreen());
+      return MaterialPageRoute(builder: (context) => LoginScreen());
   }
 }

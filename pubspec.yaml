@@ -27,6 +27,7 @@ dependencies:
   line_icons: ^0.2.0
   intro_views_flutter: ^2.8.0
   font_awesome_flutter: ^8.5.0
+  cached_network_image: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -50,11 +51,8 @@ flutter:
     - assets/images/image2.jpg
     - assets/images/image3.jpg
     - assets/images/logo.png
-    - assets/facebook.png
     - assets/login.png
-    - assets/google.png
-    - assets/twitter.png
-    - assets/linkedin.png
+    - assets/images/profile.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

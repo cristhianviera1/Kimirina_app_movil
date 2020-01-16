@@ -142,15 +142,15 @@ class _SignupScreenState extends State<SignupScreen> {
                   TextFormField(
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Enter name';
+                        return 'Ingrese un nombre';
                       }
                     },
-                    obscureText: true,
+                    obscureText: false,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 16, color: Colors.black),
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      labelText: "Name",
+                      labelText: "Nombre",
                       contentPadding: new EdgeInsets.symmetric(
                           vertical: MediaQuery.of(context).size.height * 0.022,
                           horizontal: 15.0),
@@ -201,7 +201,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     style: TextStyle(fontSize: 16, color: Colors.black),
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      labelText: "Password",
+                      labelText: "Contraseña",
                       contentPadding: new EdgeInsets.symmetric(
                           vertical: MediaQuery.of(context).size.height * 0.022,
                           horizontal: 15.0),
@@ -217,7 +217,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 10,
                   ),
                   TextFormField(
-                    validator: validatePassword,
+                    validator: validateSamePassword,
                     onSaved: (String val) {
                       _password = val;
                     },
@@ -227,7 +227,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     style: TextStyle(fontSize: 16, color: Colors.black),
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
-                      labelText: "Confirm Password",
+                      labelText: "Confirmar contraseña",
                       contentPadding: new EdgeInsets.symmetric(
                           vertical: MediaQuery.of(context).size.height * 0.022,
                           horizontal: 15.0),
@@ -253,7 +253,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   BorderRadius.all(Radius.circular(25))),
                           child: Center(
                             child: Text(
-                              "SIGN UP",
+                              "Registrar",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
                             ),
@@ -263,6 +263,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     height: 12,
                   ),
+                  //Flecha hacía atras
                   Container(
                     child: GestureDetector(
                         onTap: () {
@@ -289,6 +290,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   bool _value1 = false;
   bool _autoValidate = false;
+  String pass = "";
 
   void _value1Changed(bool value) => setState(() => _value1 = value);
 
@@ -309,16 +311,23 @@ class _SignupScreenState extends State<SignupScreen> {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
-      return 'Enter Valid Email';
+      return 'Ingrese un email válido';
     else
       return null;
   }
-
   String validatePassword(String value) {
     if (value.length < 6)
-      return 'Password must be atleast 6 digits';
+      return 'La contraseña debe contener mínimo 6 dígitos';
     else
+      _password = value;
       return null;
+  }
+  String validateSamePassword(String value){
+    if(!(value == _password)){
+      return  "Las contraseñas no coinciden";
+    }else{
+      return null;
+    }
   }
 }
 
