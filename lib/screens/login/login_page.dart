@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
+import 'package:kimirina_app/services/user_service.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   FocusNode myFocusNode;
-
+  ApiService _apiService = ApiService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email;
   String _password;
@@ -19,6 +23,19 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     myFocusNode = FocusNode();
+    verifyToken();
+  }
+
+  Future verifyToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString("token");
+    if (token != null) {
+      _apiService.verifyToken(token).then((isSucces) {
+        if (isSucces) {
+          Navigator.of(context).pushNamed(navBarViewRoute);
+        }
+      });
+    }
   }
 
   @override
@@ -319,15 +336,42 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
-//    If all data are correct then save data to out variables
+      //    If all data are correct then save data to out variables
       _formKey.currentState.save();
-      Navigator.of(context).pushNamed(navBarViewRoute);
+      _loginUser();
     } else {
-//    If all data are not valid then start auto validation.
+      //    If all data are not valid then start auto validation.
       setState(() {
         _autoValidate = true;
       });
     }
+  }
+
+  void _loginUser() {
+    User user = new User(email: _email, password: _password);
+    _apiService.loginUser(user).then((isSucces) {
+      print(isSucces);
+      if (isSucces) {
+        Navigator.of(context).pushNamed(navBarViewRoute);
+      } else {
+        return Alert(
+          context: context,
+          type: AlertType.warning,
+          title: "Error al iniciar sesión",
+          desc: "Verifique su correo y contraseña.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Aceptar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      }
+    });
   }
 
   String validateEmail(String value) {
@@ -346,6 +390,18 @@ class _LoginScreenState extends State<LoginScreen> {
     else
       return null;
   }
+
+  /*void getPreferences() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if (preferences.get("userIsLogged")) {
+      _apiService.verifyToken(preferences.get("token")).then((isSucces) {
+        print(isSucces);
+        if (isSucces) {
+          Navigator.of(context).pushNamed(navBarViewRoute);
+        }
+      });
+    }
+  }*/
 }
 
 class RoundedClipper extends CustomClipper<Path> {

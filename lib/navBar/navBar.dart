@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/screens/chat/chat_page.dart';
 import 'package:kimirina_app/screens/news/news_page.dart';
+import 'package:kimirina_app/screens/product/produt_page.dart';
 import 'dart:async';
 
 import 'package:kimirina_app/screens/profile/profile_page.dart';
@@ -33,7 +34,7 @@ class _NavBar extends State<NavBar> {
         controller: pageController,
         children: <Widget>[
           Center(
-            child: Text('Kimirina'),
+            child: ProductScreen(),
           ),
           Center(
             child: NewsScreen(),            
@@ -128,8 +129,20 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
       @required this.onItemSelected}) {
     _selectedIndex = currentIndex;
   }
-
+  var itemsNav = [];
   Widget _buildItem(FancyBottomNavigationItem item, bool isSelected) {
+    colors(){
+      if(_selectedIndex == 0){
+        activeColor = Color.fromRGBO(240, 53, 6, 1);
+      }else if(_selectedIndex == 1){
+        activeColor = Color.fromRGBO(45, 40, 124, 1);
+      }else if(_selectedIndex == 2){
+        activeColor = Color.fromRGBO(26, 134, 61, 1);
+      }else if(_selectedIndex == 3){
+        activeColor = Color.fromRGBO(111, 0, 92, 1);
+      }
+    }
+    colors();
     return AnimatedContainer(
       width: isSelected ? 124 : 50,
       height: double.maxFinite,
@@ -181,29 +194,31 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
     backgroundColor = (backgroundColor == null)
         ? Theme.of(context).bottomAppBarColor
         : backgroundColor;
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+          child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 56,
+        padding: EdgeInsets.only(left: 8, right: 8, top: 6, bottom: 6),
+        decoration: BoxDecoration(
+            color: backgroundColor,
+            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 2)]),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: items.map((item) {
+            var index = items.indexOf(item);
+            return GestureDetector(
+              onTap: () {
+                onItemSelected(index);
 
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 56,
-      padding: EdgeInsets.only(left: 8, right: 8, top: 6, bottom: 6),
-      decoration: BoxDecoration(
-          color: backgroundColor,
-          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 2)]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: items.map((item) {
-          var index = items.indexOf(item);
-          return GestureDetector(
-            onTap: () {
-              onItemSelected(index);
-
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            child: _buildItem(item, _selectedIndex == index),
-          );
-        }).toList(),
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              child: _buildItem(item, _selectedIndex == index),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

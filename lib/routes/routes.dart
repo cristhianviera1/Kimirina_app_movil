@@ -4,3 +4,4 @@ const String loginViewRoute = 'login';
 const String registerViewRoute = 'register';
 const String carruselViewRoute = 'carrusel';
 const String navBarViewRoute = 'navBar';
+const String productDetaisViewRoute = 'productDetails';

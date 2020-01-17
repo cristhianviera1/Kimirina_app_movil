@@ -4,6 +4,7 @@ import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/carrusel/carrusel_page.dart';
 import 'package:kimirina_app/screens/login/login_page.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
+import 'package:kimirina_app/screens/product/product_details.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -13,6 +14,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => LoginScreen());
     case navBarViewRoute:
       return MaterialPageRoute(builder: (context) => NavBar());
+    case productDetaisViewRoute:
+      return MaterialPageRoute(builder: (context) => ProductDetailsPage());
     case registerViewRoute:
       return MaterialPageRoute(builder: (context) => SignupScreen());
       break;

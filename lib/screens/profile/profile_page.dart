@@ -1,88 +1,169 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kimirina_app/routes/routes.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class ProfileScreen extends StatelessWidget {
-  final image = 'https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/img%2F1.jpg?alt=media';
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.fromLTRB(16.0, 50.0, 16.0, 16.0),
-              child: Column(
+        backgroundColor: Color.fromRGBO(255, 255, 255, .9),
+        body: SafeArea(
+          child: ListView(
+            children: <Widget>[
+              Stack(
                 children: <Widget>[
-                  Stack(
+                  Container(
+                    width: double.infinity,
+                    height: 330,
+                    color: Colors.teal,
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: 30,
+                    child: Icon(
+                      Icons.settings,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Column(
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.all(16.0),
-                        margin: EdgeInsets.only(top: 16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5.0)
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(left: 96.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text("Alanys Rojas", style: Theme.of(context).textTheme.title,),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                          height: 100,
+                          margin: EdgeInsets.only(top: 60),
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundColor: Colors.white,
+                            backgroundImage: NetworkImage(
+                                'https://ktusu.com/admin/uploads/slider/836295524.jpg'),
+                          )),
+                      Padding(
+                        padding: EdgeInsets.all(4),
                       ),
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(image),
-                            fit: BoxFit.cover
-                          )
-                        ),
-                        margin: EdgeInsets.only(left: 16.0),
-                        ),
+                      Text(
+                        "Alanys Rojas",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20),
+                        textAlign: TextAlign.center,
+                      ),
+                      UserInfo()
                     ],
-                  ),
-
-                  SizedBox(height: 20.0),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        ListTile(
-                          title: Text("Email"),
-                          subtitle: Text("afv.rojas@yavirac.edu.ec"),
-                          leading: Icon(Icons.email),
-                        ),
-                        ListTile(
-                          title: Text("Teléfono"),
-                          subtitle: Text("xxxxxxx"),
-                          leading: Icon(Icons.phone),
-                        ),
-                        ListTile(
-                          title: Text("Provincia"),
-                          subtitle: Text("Pichincha"),
-                          leading: Icon(Icons.location_city),
-                        ),
-                      ],
-                    ),
                   )
                 ],
               ),
+            ],
+          ),
+        ));
+  }
+}
+
+class UserInfo extends StatefulWidget {
+  @override
+  _UserInfoState createState() => _UserInfoState();
+}
+
+class _UserInfoState extends State<UserInfo> {
+  String _provincia = "Pichincha";
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: <Widget>[
+          Card(
+            child: Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.all(15),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Información del usuario",
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.black38,
+                  ),
+                  Container(
+                      child: Column(
+                    children: <Widget>[
+                      ListTile(
+                          leading: Icon(Icons.my_location),
+                          title: Text("Provincia"),
+                          subtitle: Text("$_provincia"),
+                          onTap: () {
+                            Alert(
+                                context: context,
+                                title: "Provincia",
+                                content: Column(
+                                  children: <Widget>[
+                                    DropdownButton(
+                                      value: _provincia,
+                                      icon: Icon(Icons.arrow_downward),
+                                      underline: Container(
+                                        height: 2,
+                                        color: Colors.deepPurpleAccent,
+                                      ),
+                                      items: <String>[
+                                        'Pichincha',
+                                        'Guayas',
+                                        'Loja',
+                                        'Esmeraldas'
+                                      ].map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String newValue) {
+                                        _provincia = newValue;
+                                        setState(() {});
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                buttons: [
+                                ]).show();
+                          }),
+                      ListTile(
+                        leading: Icon(Icons.email),
+                        title: Text("Email"),
+                        subtitle: Text("alanys@gmail.com"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.phone),
+                        title: Text("Phone"),
+                        subtitle: Text(""),
+                      ),
+                      ListTile(
+                        leading: Icon(FontAwesomeIcons.powerOff),
+                        title: Text("Cerrar Sesión"),
+                        onTap: () async{
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setString("token", null);
+                          Navigator.of(context).pushNamed(loginViewRoute);
+                        },
+                      ),
+                    ],
+                  ))
+                ],
+              ),
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

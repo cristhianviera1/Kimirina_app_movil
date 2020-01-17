@@ -1,3 +1,5 @@
+import 'dart:async';
+
 /**
  * Author: Damodar Lohani
  * profile: https://github.com/lohanidamodar
@@ -6,9 +8,22 @@
 import 'package:flutter/material.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
+import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CarruselPage extends StatelessWidget {
+class CarruselPage extends StatefulWidget {
+  @override
+  _CarruselPageState createState() => _CarruselPageState();
+}
+
+class _CarruselPageState extends State<CarruselPage> {
+  @override
+  void initState() {
+    super.initState();
+    verifyFirstOpen();
+  }
+
   final pages = [
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
@@ -103,6 +118,7 @@ class CarruselPage extends StatelessWidget {
             IntroViewsFlutter(
               pages,
               onTapDoneButton: () {
+                updateFirstOpen();
                 Navigator.of(context).pushNamed(loginViewRoute);
               },
               showSkipButton: false,
@@ -121,4 +137,17 @@ class CarruselPage extends StatelessWidget {
       ),
     );
   }
+
+  Future updateFirstOpen() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("firstInit", true);
+  }
+  Future <bool> verifyFirstOpen() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var firstInit = pref.getBool("firstInit")??false;
+    if(firstInit){
+      Navigator.of(context).pushNamed(loginViewRoute);
+    }
+  }
+
 }

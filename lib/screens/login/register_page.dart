@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kimirina_app/models/user_model.dart';
+import 'package:kimirina_app/services/user_service.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -6,6 +8,8 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+
+  ApiService _apiService = ApiService();
   FocusNode focusNode1;
   FocusNode focusNode2;
   FocusNode focusNode3;
@@ -298,6 +302,11 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_formKey.currentState.validate()) {
 //    If all data are correct then save data to out variables
       _formKey.currentState.save();
+      User user = User(email: _email,password: _password);
+      _apiService.registerUser(user).then((isSuccess){
+        print(isSuccess);
+      }        
+      );
     } else {
 //    If all data are not valid then start auto validation.
       setState(() {

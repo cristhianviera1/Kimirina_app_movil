@@ -28,7 +28,9 @@ dependencies:
   intro_views_flutter: ^2.8.0
   font_awesome_flutter: ^8.5.0
   cached_network_image: ^2.0.0
-
+  rflutter_alert: ^1.0.3
+  shared_preferences: ^0.5.6
+  auto_size_text: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
