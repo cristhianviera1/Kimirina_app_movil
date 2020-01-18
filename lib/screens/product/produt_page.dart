@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fancy_dialog/fancy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:kimirina_app/routes/routes.dart';
@@ -91,13 +92,13 @@ class _ProductScreen extends State<ProductScreen> {
                 bottomRight: Radius.circular(20.0),
               )),
           child: ListTile(
-
-            title: Text("Nuestros Servicios",
+            title: Text(
+              "Nuestros Servicios",
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 20.0),
-                  textAlign: TextAlign.center,
+              textAlign: TextAlign.center,
             ),
           ),
         ),
@@ -129,7 +130,7 @@ class _ProductScreen extends State<ProductScreen> {
 
   Widget buildList(BuildContext context, int index) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.of(context).pushNamed(productDetaisViewRoute);
       },
       child: Container(

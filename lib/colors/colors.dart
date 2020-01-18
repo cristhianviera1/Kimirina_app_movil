@@ -15,13 +15,24 @@ class HexColor extends Color {
 
 
 
-Color primaryColor = HexColor("#046D8A");
+Color primaryColor = HexColor("#2D287C");
+
 Color primaryLight = HexColor("#046D8A");
 Color primaryDark = HexColor("#102840");
 
-Color secondaryColor = HexColor("#046D8A");
+Color secondaryColor = HexColor("#FE405A");
+
 Color secondaryLight = HexColor("#102840");
 Color secondaryDark = HexColor("#046D8A");
+
+Color tertyaryColor = HexColor("#1A863D");
+
+
+Color kimirina = HexColor("#F03506");
+Color noticias = HexColor("#2D287C");
+Color chat = HexColor("#1A863D");
+Color perfil = HexColor("#6F005C");
+
 
 
 const Color gradientStart = const Color(0xFFfbab66);

@@ -1,19 +1,23 @@
+import 'package:fancy_dialog/FancyAnimation.dart';
+import 'package:fancy_dialog/FancyGif.dart';
+import 'package:fancy_dialog/FancyTheme.dart';
+import 'package:fancy_dialog/fancy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/screens/chat/chat_page.dart';
 import 'package:kimirina_app/screens/news/news_page.dart';
 import 'package:kimirina_app/screens/product/produt_page.dart';
-import 'package:kimirina_app/screens/vih/vih_question_page.dart';
 import 'dart:async';
 
 import 'package:kimirina_app/screens/profile/profile_page.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NavBar extends StatefulWidget {
-  static final String path = "lib/src/pages/misc/navybar.dart";
   @override
   _NavBar createState() => _NavBar();
 }
-
 
 class _NavBar extends State<NavBar> {
   @override
@@ -21,12 +25,30 @@ class _NavBar extends State<NavBar> {
     indexcontroller.close();
     super.dispose();
   }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   PageController pageController = PageController(initialPage: 0);
   StreamController<int> indexcontroller = StreamController<int>.broadcast();
   int index = 0;
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () {
+      return showQuestionViH(context);
+      /*
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var tempAnswer = prefs.getBool("ViHAnswer") ?? false;
+      print("PRRO");
+      print(tempAnswer);
+      if (!tempAnswer) {
+        return showQuestionViH(context);
+      }*/
+    });
     return Scaffold(
+      key: myGlobals.scaffoldKey,
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
@@ -38,7 +60,7 @@ class _NavBar extends State<NavBar> {
             child: ProductScreen(),
           ),
           Center(
-            child: NewsScreen(),            
+            child: NewsScreen(),
           ),
           Center(
             child: ChatList(),            
@@ -46,6 +68,7 @@ class _NavBar extends State<NavBar> {
           Center(
             child: ProfileScreen()
           ),
+          Center(child: ProfileScreen()),
         ],
       ),
       bottomNavigationBar: StreamBuilder<Object>(
@@ -57,9 +80,11 @@ class _NavBar extends State<NavBar> {
               currentIndex: cIndex,
               items: <FancyBottomNavigationItem>[
                 FancyBottomNavigationItem(
-                    icon: Icon(FontAwesomeIcons.kaggle), title: Text('Kimirina')),
+                    icon: Icon(FontAwesomeIcons.kaggle),
+                    title: Text('Kimirina')),
                 FancyBottomNavigationItem(
-                    icon: Icon(FontAwesomeIcons.newspaper), title: Text('Noticias')),
+                    icon: Icon(FontAwesomeIcons.newspaper),
+                    title: Text('Noticias')),
                 FancyBottomNavigationItem(
                     icon: Icon(Icons.message), title: Text('Chat')),
                 FancyBottomNavigationItem(
@@ -132,17 +157,18 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
   }
   var itemsNav = [];
   Widget _buildItem(FancyBottomNavigationItem item, bool isSelected) {
-    colors(){
-      if(_selectedIndex == 0){
+    colors() {
+      if (_selectedIndex == 0) {
         activeColor = Color.fromRGBO(240, 53, 6, 1);
-      }else if(_selectedIndex == 1){
+      } else if (_selectedIndex == 1) {
         activeColor = Color.fromRGBO(45, 40, 124, 1);
-      }else if(_selectedIndex == 2){
+      } else if (_selectedIndex == 2) {
         activeColor = Color.fromRGBO(26, 134, 61, 1);
-      }else if(_selectedIndex == 3){
+      } else if (_selectedIndex == 3) {
         activeColor = Color.fromRGBO(111, 0, 92, 1);
       }
     }
+
     colors();
     return AnimatedContainer(
       width: isSelected ? 124 : 50,
@@ -197,7 +223,7 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
         : backgroundColor;
     return WillPopScope(
       onWillPop: () => Future.value(false),
-          child: Container(
+      child: Container(
         width: MediaQuery.of(context).size.width,
         height: 56,
         padding: EdgeInsets.only(left: 8, right: 8, top: 6, bottom: 6),
@@ -238,3 +264,95 @@ class FancyBottomNavigationItem {
   }
 }
 
+//Se pregunta si la persona tiene ViH
+Future<void> showQuestionViH(BuildContext context) async {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) => FancyDialog(
+            title: "¿Tienes ViH?",
+            descreption:
+                "Sabías que hoy en día existen pruebas rápidas y fiables",
+            ok: "No",
+            okColor: primaryColor,
+            cancel: "Si",
+            cancelColor: secondaryColor,
+            cancelFun: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setBool("ViHAnswer", true);
+              prefs.setBool("UserViH", true);
+              yesAlert(myGlobals.scaffoldKey.currentContext);
+            },
+            okFun: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setBool("ViHAnswer", true);
+              //Se guarda si el usuario tiene o no ViH
+              prefs.setBool("UserViH", false);
+              noAlert(myGlobals.scaffoldKey.currentContext);
+            },
+            animationType: FancyAnimation.BOTTOM_TOP,
+            gifPath: ("assets/gif/kimirina_logo.gif"),
+          ));
+}
+Future<Alert> noAlert(BuildContext context) {
+  Alert(
+    context: context,
+    type: AlertType.info,
+    title: "¿Estas seguro?",
+    desc: "Toma una buena decisión\n¡Hazte la prueba!",
+    buttons: [
+      DialogButton(
+        child: Text(
+          "Agencias Kimirina",
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: () => Navigator.pop(context),
+      )
+    ],
+  ).show();
+}
+Future<Alert> yesAlert(BuildContext context) {
+  Alert(
+    context: context,
+    image: Image.asset("assets/images/logo.png"),
+    title: "¿Cómo esta tu tratamiento?",
+    desc: "Es muy importante seguir el tratamiento antirretroviral y tomar los medicamentos diariamente",
+    buttons: [
+      DialogButton(
+        child: Text(
+          "Lo he abandonado",
+          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        onPressed: () => Navigator.pop(context),
+      ),
+      DialogButton(
+        child: Text(
+          "No estoy en tratamiento",
+          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        onPressed: () => Navigator.pop(context),
+      ),
+      DialogButton(
+        child: Text(
+          "Todo en orden",
+          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        onPressed: () => Navigator.pop(context),
+      )
+    ],
+  ).show();
+}
+
+
+
+//Se define una variable global para tener el contexto inicial de la clase
+MyGlobals myGlobals = new MyGlobals();
+class MyGlobals {
+  GlobalKey _scaffoldKey;
+  MyGlobals() {
+    _scaffoldKey = GlobalKey();
+  }
+  GlobalKey get scaffoldKey => _scaffoldKey;
+}

@@ -20,7 +20,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case registerViewRoute:
       return MaterialPageRoute(builder: (context) => SignupScreen());
     case vihQuestionViewRoute:
-      return MaterialPageRoute(builder: (context) => VihQuestionPage());
+      return MaterialPageRoute(builder: (context) => ViHQuestionPage());
       break;
     default:
       return MaterialPageRoute(builder: (context) => LoginScreen());

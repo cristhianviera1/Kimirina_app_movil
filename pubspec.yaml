@@ -31,6 +31,8 @@ dependencies:
   rflutter_alert: ^1.0.3
   shared_preferences: ^0.5.6
   auto_size_text: ^2.1.0
+  fancy_dialog: ^1.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -55,6 +57,7 @@ flutter:
     - assets/images/logo.png
     - assets/login.png
     - assets/images/profile.jpg
+    - assets/gif/kimirina_logo.gif
     - assets/images/prep.png
     - assets/images/asesorias.png
     - assets/images/pruebaRapida.jpg

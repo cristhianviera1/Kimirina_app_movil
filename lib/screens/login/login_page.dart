@@ -390,18 +390,6 @@ class _LoginScreenState extends State<LoginScreen> {
     else
       return null;
   }
-
-  /*void getPreferences() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    if (preferences.get("userIsLogged")) {
-      _apiService.verifyToken(preferences.get("token")).then((isSucces) {
-        print(isSucces);
-        if (isSucces) {
-          Navigator.of(context).pushNamed(navBarViewRoute);
-        }
-      });
-    }
-  }*/
 }
 
 class RoundedClipper extends CustomClipper<Path> {
