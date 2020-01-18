@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:kimirina_app/routes/routes.dart';
 
 class ChatList extends StatelessWidget {
   @override
@@ -103,7 +104,9 @@ class _ChatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(chatDetailViewRoute);
+      },
       child: Padding(
         padding: EdgeInsets.all(20),
         child: Row(
@@ -115,7 +118,7 @@ class _ChatItem extends StatelessWidget {
                 children: <Widget>[
                   InkWell(
                     onTap: () {
-                      print('You want to see the display pictute.');
+                      Navigator.of(context).pushNamed(chatDetailViewRoute);
                     },
                     child: CircleAvatar(
                       backgroundImage: AssetImage(this.imgURL),
