@@ -169,7 +169,7 @@ class _UserInfoState extends State<UserInfo> {
                         title: Text("¿Nos ayudas con más información?"),
                         subtitle: Text("Así podemos crear planes de prevención y campañas de tratamiento"),
                         onTap: (){
-                          Navigator.of(context).pushNamed("routeName");
+                          Navigator.of(context).pushNamed(quizPageViewRoute);
                         },
                       )
                     ],

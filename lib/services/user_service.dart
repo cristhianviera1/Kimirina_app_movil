@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  final String baseUrl = "http://192.168.100.220:3000";
+  final String baseUrl = "http://192.168.100.174:3000";
   User currentUser;
   //headers
   final Map<String, String> headers = {"Content-type": "application/json"};

@@ -6,6 +6,7 @@ import 'package:kimirina_app/screens/chat/chat_details_page.dart';
 import 'package:kimirina_app/screens/login/login_page.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
 import 'package:kimirina_app/screens/product/product_details.dart';
+import 'package:kimirina_app/screens/profile/form_page.dart';
 import 'package:kimirina_app/screens/vih/vih_question_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -29,3 +30,5 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => LoginScreen());
   }
 }
+
+
