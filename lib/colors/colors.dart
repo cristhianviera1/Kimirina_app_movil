@@ -25,7 +25,7 @@ Color secondaryColor = HexColor("#FE405A");
 Color secondaryLight = HexColor("#102840");
 Color secondaryDark = HexColor("#046D8A");
 
-Color tertyaryColor = HexColor("#1A863D");
+Color tertyaryColor = HexColor("#FFD15C");
 
 
 Color kimirina = HexColor("#F03506");
@@ -33,7 +33,7 @@ Color noticias = HexColor("#2D287C");
 Color chat = HexColor("#1A863D");
 Color perfil = HexColor("#6F005C");
 
-
+const TextStyle estiloBotonesTexto = TextStyle(fontSize: 16);
 
 const Color gradientStart = const Color(0xFFfbab66);
 const Color gradientEnd = const Color(0xFFf7418c);

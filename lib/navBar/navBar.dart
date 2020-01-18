@@ -36,16 +36,14 @@ class _NavBar extends State<NavBar> {
   int index = 0;
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () {
-      return showQuestionViH(context);
-      /*
+    Future.delayed(Duration.zero, () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var tempAnswer = prefs.getBool("ViHAnswer") ?? false;
       print("PRRO");
       print(tempAnswer);
       if (!tempAnswer) {
         return showQuestionViH(context);
-      }*/
+      }
     });
     return Scaffold(
       key: myGlobals.scaffoldKey,
@@ -63,11 +61,9 @@ class _NavBar extends State<NavBar> {
             child: NewsScreen(),
           ),
           Center(
-            child: ChatList(),            
+            child: ChatList(),
           ),
-          Center(
-            child: ProfileScreen()
-          ),
+          Center(child: ProfileScreen()),
           Center(child: ProfileScreen()),
         ],
       ),
@@ -293,6 +289,7 @@ Future<void> showQuestionViH(BuildContext context) async {
             gifPath: ("assets/gif/kimirina_logo.gif"),
           ));
 }
+
 Future<Alert> noAlert(BuildContext context) {
   Alert(
     context: context,
@@ -310,45 +307,56 @@ Future<Alert> noAlert(BuildContext context) {
     ],
   ).show();
 }
+
 Future<Alert> yesAlert(BuildContext context) {
   Alert(
     context: context,
-    image: Image.asset("assets/images/logo.png"),
+    image: Image.asset("assets/images/questions.png"),
     title: "¿Cómo esta tu tratamiento?",
-    desc: "Es muy importante seguir el tratamiento antirretroviral y tomar los medicamentos diariamente",
-    buttons: [
-      DialogButton(
-        child: Text(
-          "Lo he abandonado",
-          style: TextStyle(color: Colors.white),
-          textAlign: TextAlign.center,
-        ),
-        onPressed: () => Navigator.pop(context),
-      ),
-      DialogButton(
-        child: Text(
-          "No estoy en tratamiento",
-          style: TextStyle(color: Colors.white),
-          textAlign: TextAlign.center,
-        ),
-        onPressed: () => Navigator.pop(context),
-      ),
-      DialogButton(
-        child: Text(
-          "Todo en orden",
-          style: TextStyle(color: Colors.white),
-          textAlign: TextAlign.center,
-        ),
-        onPressed: () => Navigator.pop(context),
-      )
-    ],
+    desc:
+        "Es muy importante seguir el tratamiento antirretroviral y tomar los medicamentos diariamente",
+    content: Column(
+      children: <Widget>[
+        SizedBox(height: 15,),
+        DialogButton(
+          child: Text(
+            "Lo he abandonado",
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          color: primaryColor,
+          onPressed: () => Navigator.pop(context),
+        ),SizedBox(height: 15,),
+        DialogButton(
+          child: Text(
+            "No estoy en tratamiento",
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          color: secondaryColor,
+          onPressed: () => Navigator.pop(context),
+        ),SizedBox(height: 15,),
+        DialogButton(
+          child: Text(
+            "Todo en orden",
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          color: tertyaryColor,
+          onPressed: () => Navigator.pop(context),
+        )
+      ],
+    ),
+    buttons: [],
   ).show();
 }
 
-
-
 //Se define una variable global para tener el contexto inicial de la clase
 MyGlobals myGlobals = new MyGlobals();
+
 class MyGlobals {
   GlobalKey _scaffoldKey;
   MyGlobals() {
