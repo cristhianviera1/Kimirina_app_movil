@@ -63,6 +63,9 @@ flutter:
     - assets/images/vinculacion.png
     - assets/images/tratamiento.png
     - assets/images/lubricantes.png
+    - assets/images/pacto_global.jpg
+    - assets/images/2_15_2_SISTEMA_NACIONES-UNIDAS.jpg
+    - assets/images/convenio_kimirina_embajada.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

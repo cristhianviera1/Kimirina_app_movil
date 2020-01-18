@@ -41,7 +41,7 @@ class _NavBar extends State<NavBar> {
             child: NewsScreen(),            
           ),
           Center(
-            child: ChatScreen(),            
+            child: ChatList(),            
           ),
           Center(
             child: ProfileScreen()
