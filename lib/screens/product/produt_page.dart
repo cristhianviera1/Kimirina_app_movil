@@ -20,60 +20,60 @@ class _ProductScreen extends State<ProductScreen> {
 
   final List<Map> schoolLists = [
     {
-      "name": "Edgewick Scchol",
+      "name": "Asesoría en Prevención de VIH e ITS",
       "type":
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "logoText":
-          "https://cdn.pixabay.com/photo/2017/03/16/21/18/logo-2150297_960_720.png"
+          "assets/images/asesorias.png"
     },
     {
-      "name": "Xaviers International",
+      "name": "Pruebas Rápidad VIH",
       "type":
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "logoText":
-          "https://cdn.pixabay.com/photo/2017/01/31/13/14/animal-2023924_960_720.png"
+          "assets/images/pruebaRapida.jpg"
     },
     {
-      "name": "Kinder Garden",
+      "name": "Pruebas para ITS",
       "type":
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "logoText":
-          "https://cdn.pixabay.com/photo/2016/06/09/18/36/logo-1446293_960_720.png"
+          "assets/images/its.png"
     },
     {
-      "name": "WilingTon Cambridge",
+      "name": "Asesoria, vinculación a tratamiento VIH",
       "type":
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "logoText":
-          "https://cdn.pixabay.com/photo/2017/01/13/01/22/rocket-1976107_960_720.png"
+          "assets/images/vinculacion.png"
     },
     {
-      "name": "Fredik Panlon",
+      "name": "Tratamiento ITS",
       "type":
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "logoText":
-          "https://cdn.pixabay.com/photo/2017/03/16/21/18/logo-2150297_960_720.png"
+          "assets/images/tratamiento.png"
     },
     {
-      "name": "Whitehouse International",
+      "name": "PREP",
       "type":
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "logoText":
-          "https://cdn.pixabay.com/photo/2017/01/31/13/14/animal-2023924_960_720.png"
+          "assets/images/prep.png"
     },
     {
-      "name": "Haward Play",
+      "name": "Condones",
       "type":
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "logoText":
-          "https://cdn.pixabay.com/photo/2016/06/09/18/36/logo-1446293_960_720.png"
+          "assets/images/condones.jpg"
     },
     {
-      "name": "Campare Handeson",
+      "name": "Lubricantes",
       "type":
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "logoText":
-          "https://cdn.pixabay.com/photo/2017/01/13/01/22/rocket-1976107_960_720.png"
+          "assets/images/lubricantes.png"
     },
   ];
 
@@ -153,9 +153,9 @@ class _ProductScreen extends State<ProductScreen> {
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(width: 3, color: secondary),
                 image: DecorationImage(
-                    image: CachedNetworkImageProvider(
-                        schoolLists[index]['logoText']),
-                    fit: BoxFit.fill),
+                  image: new AssetImage(schoolLists[index]['logoText']),
+                  fit: BoxFit.fill
+                ),
               ),
             ),
             Expanded(
@@ -178,7 +178,7 @@ class _ProductScreen extends State<ProductScreen> {
                   Row(
                     children: <Widget>[
                       Icon(
-                        Icons.question_answer,
+                        Icons.info,
                         color: secondary,
                         size: 20,
                       ),
