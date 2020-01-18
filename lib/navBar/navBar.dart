@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/screens/chat/chat_page.dart';
 import 'package:kimirina_app/screens/news/news_page.dart';
 import 'package:kimirina_app/screens/product/produt_page.dart';
+import 'package:kimirina_app/screens/vih/vih_question_page.dart';
 import 'dart:async';
 
 import 'package:kimirina_app/screens/profile/profile_page.dart';
@@ -13,13 +14,13 @@ class NavBar extends StatefulWidget {
   _NavBar createState() => _NavBar();
 }
 
+
 class _NavBar extends State<NavBar> {
   @override
   void dispose() {
     indexcontroller.close();
     super.dispose();
   }
-
   PageController pageController = PageController(initialPage: 0);
   StreamController<int> indexcontroller = StreamController<int>.broadcast();
   int index = 0;
@@ -236,3 +237,4 @@ class FancyBottomNavigationItem {
     assert(title != null);
   }
 }
+
