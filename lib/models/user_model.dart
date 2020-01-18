@@ -6,7 +6,8 @@ class User {
   String imagen;
   String telefono;
   String provincia;
-  User({this.id, this.nombre, this.email, this.password,this.provincia});
+  String rol;
+  User({this.id, this.nombre, this.email, this.password,this.provincia,this.rol});
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],

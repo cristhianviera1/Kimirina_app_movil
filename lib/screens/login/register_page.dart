@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/models/user_model.dart';
+import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -256,7 +257,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_formKey.currentState.validate()) {
 //    If all data are correct then save data to out variables
       _formKey.currentState.save();
-      User user = User(email: _email, password: _password);
+      User user = User(email: _email, password: _password, rol: "customer");
       _apiService.registerUser(user).then((isSuccess) {
         if (isSuccess) {
           return Alert(
@@ -270,7 +271,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   "Aceptar",
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                onPressed: () => Navigator.pop(context),
+                onPressed: ()=>Navigator.of(context).pushNamed(loginViewRoute),
                 width: 120,
               )
             ],
@@ -279,15 +280,23 @@ class _SignupScreenState extends State<SignupScreen> {
           return Alert(
           context: context,
           type: AlertType.error,
-          title: "Algo ha fallado",
-          desc: "Por favor verifica tu conexión a internet y que tu correo sea válido.",
+          title: "El correo que ha ingresado ya se encuentra registrado",
+          desc: "¿Desea recuperar su contraseña?",
           buttons: [
             DialogButton(
               child: Text(
-                "Aceptar",
+                "SI",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-              onPressed: () => Navigator.pop(context),
+              onPressed: ()=>Navigator.pop(context), 
+              width: 120,
+            ),
+            DialogButton(
+              child: Text(
+                "NO",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: ()=>Navigator.pop(context), 
               width: 120,
             )
           ],

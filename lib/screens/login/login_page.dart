@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 10,
                       ),
                       Text(
-                        "Welcome",
+                        "Bienvenido",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

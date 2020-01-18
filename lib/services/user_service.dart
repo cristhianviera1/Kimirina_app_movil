@@ -37,7 +37,6 @@ class ApiService {
       return false;
     }
   }
-
   Future<bool> verifyToken(token) async {
     final response = await http
         .get("$baseUrl/api/auth/me", headers: {"x-access-token": token});
