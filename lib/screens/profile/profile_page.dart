@@ -6,15 +6,35 @@ import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Usuario {
-  
-  final User infoOfToken = ApiService().currentUser;
-
+class CurrentProfile {
+  ApiService _apiService = ApiService();
+  verifyToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString("token") ?? null;
+    if (token != null) {
+      _apiService.verifyToken(token).then((response) {
+        if (response != null) {
+          prefs.setString("nombre", response.nombre);
+          prefs.setString("email", response.id);
+          prefs.setString("id", response.email);
+        }
+      });
+    }
+  }
 }
 
 class ProfileScreen extends StatelessWidget {
+  String _nombre;
+  String _email;
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () async {
+      CurrentProfile().verifyToken();
+      SharedPreferences prefs =  await SharedPreferences.getInstance();
+      _nombre = prefs.getString("nombre"??"");
+      _email = prefs.getString("email"??"");
+      prefs.getString("id"??"");
+    });
     return Scaffold(
         backgroundColor: Color.fromRGBO(255, 255, 255, .9),
         body: SafeArea(
@@ -49,8 +69,7 @@ class ProfileScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(4),
                       ),
-                      Text(
-                        "_nombre",
+                      Text(_nombre,
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
@@ -142,13 +161,12 @@ class _UserInfoState extends State<UserInfo> {
                                     ),
                                   ],
                                 ),
-                                buttons: [
-                                ]).show();
+                                buttons: []).show();
                           }),
                       ListTile(
                         leading: Icon(Icons.email),
                         title: Text("Correo"),
-                        subtitle: Text("_correo"),
+                        subtitle: Text(ProfileScreen()._email),
                       ),
                       ListTile(
                         leading: Icon(Icons.phone),
@@ -158,17 +176,20 @@ class _UserInfoState extends State<UserInfo> {
                       ListTile(
                         leading: Icon(FontAwesomeIcons.powerOff),
                         title: Text("Cerrar Sesión"),
-                        onTap: () async{
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                        onTap: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setString("token", null);
                           Navigator.of(context).pushNamed(loginViewRoute);
                         },
                       ),
                       ListTile(
-                        leading: Icon(FontAwesomeIcons.kaggle,color: Color.fromRGBO(240, 53, 6, 1)),
+                        leading: Icon(FontAwesomeIcons.kaggle,
+                            color: Color.fromRGBO(240, 53, 6, 1)),
                         title: Text("¿Nos ayudas con más información?"),
-                        subtitle: Text("Así podemos crear planes de prevención y campañas de tratamiento"),
-                        onTap: (){
+                        subtitle: Text(
+                            "Así podemos crear planes de prevención y campañas de tratamiento"),
+                        onTap: () {
                           Navigator.of(context).pushNamed("routeName");
                         },
                       )
