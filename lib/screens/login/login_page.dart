@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (token != null) {
       _apiService.verifyToken(token).then((isSucces) {
         if (isSucces) {
-          Navigator.of(context).pushNamed(navBarViewRoute);
+          Navigator.of(context).pushNamed(vihQuestionViewRoute);
         }
       });
     }
@@ -352,7 +352,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _apiService.loginUser(user).then((isSucces) {
       print(isSucces);
       if (isSucces) {
-        Navigator.of(context).pushNamed(navBarViewRoute);
+        Navigator.of(context).pushNamed(vihQuestionViewRoute);
       } else {
         return Alert(
           context: context,
