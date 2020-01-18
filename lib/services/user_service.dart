@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  final String baseUrl = "http://192.168.100.206:3000";
+  final String baseUrl = "http://192.168.100.220:3000";
   //headers
   final Map<String, String> headers = {"Content-type": "application/json"};
   String profileToJson(User data) {
@@ -37,7 +37,6 @@ class ApiService {
       return false;
     }
   }
-
   Future<bool> verifyToken(token) async {
     final response = await http
         .get("$baseUrl/api/auth/me", headers: {"x-access-token": token});
