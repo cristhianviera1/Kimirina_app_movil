@@ -16,7 +16,8 @@ class _SignupScreenState extends State<SignupScreen> {
   FocusNode focusNode3;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email;
-  String _password;
+  String _nombre;
+  //String _password;
 
   @override
   void initState() {
@@ -150,6 +151,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         return 'Ingrese un nombre';
                       }
                     },
+                    onSaved: (String val) {
+                      _nombre = val;
+                    },
                     obscureText: false,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 16, color: Colors.black),
@@ -257,7 +261,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_formKey.currentState.validate()) {
 //    If all data are correct then save data to out variables
       _formKey.currentState.save();
-      User user = User(email: _email, password: _password, rol: "customer");
+      User user = User(nombre: _nombre,email: _email, rol: "customer");
       _apiService.registerUser(user).then((isSuccess) {
         if (isSuccess) {
           return Alert(

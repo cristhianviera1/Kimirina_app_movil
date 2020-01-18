@@ -33,11 +33,11 @@ class VihQuestionPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Alert!", style: Theme.of(context).textTheme.title,),
+                    Text("¿Tienes ViH?", style: Theme.of(context).textTheme.title,),
                     SizedBox(height: 10.0),
                     Flexible(
                       child: Text(
-                        "Do you want to continue to turn off the services?"),
+                        "¿Sabías que hoy en día existen pruebas rápidas de Vi?"),
                     ),
                     SizedBox(height: 10.0),
                     Row(children: <Widget>[
@@ -53,7 +53,7 @@ class VihQuestionPage extends StatelessWidget {
                       SizedBox(width: 10.0),
                       Expanded(
                         child: RaisedButton(
-                          child: Text("Yes"),
+                          child: Text("Si"),
                           color: Colors.green,
                           colorBrightness: Brightness.dark,
                           onPressed: (){Navigator.pop(context);},
