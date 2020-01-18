@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
   final String baseUrl = "http://192.168.100.220:3000";
+  User currentUser;
   //headers
   final Map<String, String> headers = {"Content-type": "application/json"};
   String profileToJson(User data) {
@@ -37,13 +38,23 @@ class ApiService {
       return false;
     }
   }
-  Future<bool> verifyToken(token) async {
+  Future <User> verifyToken(token) async {
     final response = await http
         .get("$baseUrl/api/auth/me", headers: {"x-access-token": token});
     if (response.statusCode == 200) {
-      return true;
+      User tempUser = new User(
+        //id: int.parse(jsonDecode(response.body)["_id"]),
+        nombre: jsonDecode(response.body)["nombre"],
+        email: jsonDecode(response.body)["email"]
+        );
+      /*currentUser.id = int.parse(jsonDecode(response.body)["_id"]);
+      currentUser.nombre = jsonDecode(response.body)["nombre"];
+      currentUser.email = jsonDecode(response.body)["email"];*/
+      currentUser = tempUser;
+      print(tempUser);
+      return currentUser;
     } else {
-      return false;
+      return currentUser;
     }
   }
 }

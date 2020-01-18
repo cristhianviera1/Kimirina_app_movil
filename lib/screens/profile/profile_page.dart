@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
+import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+class Usuario {
+  
+  final User infoOfToken = ApiService().currentUser;
+
+}
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -42,7 +50,7 @@ class ProfileScreen extends StatelessWidget {
                         padding: EdgeInsets.all(4),
                       ),
                       Text(
-                        "Alanys Rojas",
+                        "_nombre",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
@@ -67,7 +75,6 @@ class UserInfo extends StatefulWidget {
 
 class _UserInfoState extends State<UserInfo> {
   String _provincia = "Pichincha";
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -101,7 +108,7 @@ class _UserInfoState extends State<UserInfo> {
                       ListTile(
                           leading: Icon(Icons.my_location),
                           title: Text("Provincia"),
-                          subtitle: Text("$_provincia"),
+                          subtitle: Text("_provincia"),
                           onTap: () {
                             Alert(
                                 context: context,
@@ -140,8 +147,8 @@ class _UserInfoState extends State<UserInfo> {
                           }),
                       ListTile(
                         leading: Icon(Icons.email),
-                        title: Text("Email"),
-                        subtitle: Text("alanys@gmail.com"),
+                        title: Text("Correo"),
+                        subtitle: Text("_correo"),
                       ),
                       ListTile(
                         leading: Icon(Icons.phone),
@@ -157,6 +164,14 @@ class _UserInfoState extends State<UserInfo> {
                           Navigator.of(context).pushNamed(loginViewRoute);
                         },
                       ),
+                      ListTile(
+                        leading: Icon(FontAwesomeIcons.kaggle,color: Color.fromRGBO(240, 53, 6, 1)),
+                        title: Text("¿Nos ayudas con más información?"),
+                        subtitle: Text("Así podemos crear planes de prevención y campañas de tratamiento"),
+                        onTap: (){
+                          Navigator.of(context).pushNamed("routeName");
+                        },
+                      )
                     ],
                   ))
                 ],

@@ -22,9 +22,33 @@ class NewsScreen extends StatelessWidget {
       color: Colors.grey.shade800,
     );
     return Scaffold(
+      appBar: PreferredSize(
+        child: Container(
+          height: 70,
+          padding: const EdgeInsets.only(top: 20.0),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: Colors.deepPurple,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20.0),
+                bottomRight: Radius.circular(20.0),
+              )),
+          child: ListTile(
+            title: Text(
+              "Noticias",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        preferredSize: Size.fromHeight(90.0),
+      ),
       backgroundColor: bgColor,
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(16.0, 50.0, 16.0, 16.0),
+        padding: const EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 16.0),
         children: <Widget>[
           Card(
             elevation: 4.0,

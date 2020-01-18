@@ -82,7 +82,7 @@ class _ProductScreen extends State<ProductScreen> {
     return Scaffold(
       appBar: PreferredSize(
         child: Container(
-          height: 90,
+          height: 70,
           padding: const EdgeInsets.only(top: 20.0),
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -93,7 +93,7 @@ class _ProductScreen extends State<ProductScreen> {
               )),
           child: ListTile(
             title: Text(
-              "Nuestros Servicios",
+              "Nuestros servicios",
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var token = prefs.getString("token");
     if (token != null) {
       _apiService.verifyToken(token).then((isSucces) {
-        if (isSucces) {
+        if (isSucces!=null) {
           Navigator.of(context).pushNamed(navBarViewRoute);
         }
       });
@@ -349,9 +349,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _loginUser() {
     User user = new User(email: _email, password: _password);
-    _apiService.loginUser(user).then((isSucces) {
-      print(isSucces);
+    _apiService.loginUser(user).then((isSucces) async {
       if (isSucces) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var token = prefs.getString("token");
+        if (token != null) {
+          _apiService.verifyToken(token).then((isSucces) {
+            if (isSucces != null) {
+              print("Token de verificación");
+              print(isSucces);
+            }
+          });
+        }
         Navigator.of(context).pushNamed(navBarViewRoute);
       } else {
         return Alert(
