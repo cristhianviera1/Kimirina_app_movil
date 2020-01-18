@@ -92,7 +92,7 @@ class _ProductScreen extends State<ProductScreen> {
               )),
           child: ListTile(
 
-            title: Text("Nuesotros Productos",
+            title: Text("Nuestros Servicios",
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

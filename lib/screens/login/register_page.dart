@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/services/user_service.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -8,7 +9,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-
   ApiService _apiService = ApiService();
   FocusNode focusNode1;
   FocusNode focusNode2;
@@ -194,52 +194,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    validator: validatePassword,
-                    onSaved: (String val) {
-                      _password = val;
-                    },
-                    focusNode: focusNode2,
-                    obscureText: true,
-                    keyboardType: TextInputType.text,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      labelText: "Contraseña",
-                      contentPadding: new EdgeInsets.symmetric(
-                          vertical: MediaQuery.of(context).size.height * 0.022,
-                          horizontal: 15.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                      ),
-                    ),
-                    onFieldSubmitted: (String value) {
-                      FocusScope.of(context).requestFocus(focusNode3);
-                    },
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    validator: validateSamePassword,
-                    onSaved: (String val) {
-                      _password = val;
-                    },
-                    focusNode: focusNode3,
-                    obscureText: true,
-                    keyboardType: TextInputType.text,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                    textInputAction: TextInputAction.done,
-                    decoration: InputDecoration(
-                      labelText: "Confirmar contraseña",
-                      contentPadding: new EdgeInsets.symmetric(
-                          vertical: MediaQuery.of(context).size.height * 0.022,
-                          horizontal: 15.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                      ),
-                    ),
-                  ),
                   SizedBox(
                     height: 15,
                   ),
@@ -302,11 +256,44 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_formKey.currentState.validate()) {
 //    If all data are correct then save data to out variables
       _formKey.currentState.save();
-      User user = User(email: _email,password: _password);
-      _apiService.registerUser(user).then((isSuccess){
-        print(isSuccess);
-      }        
-      );
+      User user = User(email: _email, password: _password);
+      _apiService.registerUser(user).then((isSuccess) {
+        if (isSuccess) {
+          return Alert(
+            context: context,
+            type: AlertType.success,
+            title: "Registro exitoso",
+            desc: "Por favor revisa tu dirección de correo electrónico para confirmar.",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "Aceptar",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+              )
+            ],
+          ).show();
+        }else{
+          return Alert(
+          context: context,
+          type: AlertType.error,
+          title: "Algo ha fallado",
+          desc: "Por favor verifica tu conexión a internet y que tu correo sea válido.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Aceptar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+        }
+      });
     } else {
 //    If all data are not valid then start auto validation.
       setState(() {
@@ -323,20 +310,6 @@ class _SignupScreenState extends State<SignupScreen> {
       return 'Ingrese un email válido';
     else
       return null;
-  }
-  String validatePassword(String value) {
-    if (value.length < 6)
-      return 'La contraseña debe contener mínimo 6 dígitos';
-    else
-      _password = value;
-      return null;
-  }
-  String validateSamePassword(String value){
-    if(!(value == _password)){
-      return  "Las contraseñas no coinciden";
-    }else{
-      return null;
-    }
   }
 }
 
