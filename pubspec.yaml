@@ -32,6 +32,7 @@ dependencies:
   shared_preferences: ^0.5.6
   auto_size_text: ^2.1.0
   fancy_dialog: ^1.0.1
+  flare_flutter: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,7 @@ flutter:
     - assets/images/2_15_2_SISTEMA_NACIONES-UNIDAS.jpg
     - assets/images/convenio_kimirina_embajada.jpg
     - assets/images/questions.png
+    - assets/animations/congratulation.flr2d
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
