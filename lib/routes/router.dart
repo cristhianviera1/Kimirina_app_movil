@@ -21,8 +21,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => ProductDetailsPage());
     case registerViewRoute:
       return MaterialPageRoute(builder: (context) => SignupScreen());
-      case chatDetailViewRoute:
+    case chatDetailViewRoute:
       return MaterialPageRoute(builder: (context) => ChatScreen());
+    case formViewRoute:
+      return MaterialPageRoute(builder: (context) => FormPage());
     case vihQuestionViewRoute:
       return MaterialPageRoute(builder: (context) => ViHQuestionPage());
       break;
