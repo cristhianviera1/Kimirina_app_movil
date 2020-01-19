@@ -63,8 +63,9 @@ class _NavBar extends State<NavBar> {
           Center(
             child: ChatList(),
           ),
-          Center(child: ProfileScreen()),
-          Center(child: ProfileScreen()),
+          Center(
+            child: ProfileScreen()
+          ),
         ],
       ),
       bottomNavigationBar: StreamBuilder<Object>(
@@ -317,7 +318,9 @@ Future<Alert> yesAlert(BuildContext context) {
         "Es muy importante seguir el tratamiento antirretroviral y tomar los medicamentos diariamente",
     content: Column(
       children: <Widget>[
-        SizedBox(height: 15,),
+        SizedBox(
+          height: 15,
+        ),
         DialogButton(
           child: Text(
             "Lo he abandonado",
@@ -327,7 +330,10 @@ Future<Alert> yesAlert(BuildContext context) {
           ),
           color: primaryColor,
           onPressed: () => Navigator.pop(context),
-        ),SizedBox(height: 15,),
+        ),
+        SizedBox(
+          height: 15,
+        ),
         DialogButton(
           child: Text(
             "No estoy en tratamiento",
@@ -337,7 +343,10 @@ Future<Alert> yesAlert(BuildContext context) {
           ),
           color: secondaryColor,
           onPressed: () => Navigator.pop(context),
-        ),SizedBox(height: 15,),
+        ),
+        SizedBox(
+          height: 15,
+        ),
         DialogButton(
           child: Text(
             "Todo en orden",

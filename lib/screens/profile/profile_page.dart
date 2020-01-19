@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'form_page.dart';
 
 class CurrentProfile {
   ApiService _apiService = ApiService();
@@ -24,16 +25,11 @@ class CurrentProfile {
 }
 
 class ProfileScreen extends StatelessWidget {
-  String _nombre;
-  String _email;
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero, () async {
       CurrentProfile().verifyToken();
       SharedPreferences prefs =  await SharedPreferences.getInstance();
-      _nombre = prefs.getString("nombre"??"");
-      _email = prefs.getString("email"??"");
-      prefs.getString("id"??"");
     });
     return Scaffold(
         backgroundColor: Color.fromRGBO(255, 255, 255, .9),
@@ -69,7 +65,7 @@ class ProfileScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(4),
                       ),
-                      Text(_nombre,
+                      Text("_nombre",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
@@ -127,7 +123,7 @@ class _UserInfoState extends State<UserInfo> {
                       ListTile(
                           leading: Icon(Icons.my_location),
                           title: Text("Provincia"),
-                          subtitle: Text("_provincia"),
+                          subtitle: Text("$_provincia"),
                           onTap: () {
                             Alert(
                                 context: context,
@@ -166,12 +162,12 @@ class _UserInfoState extends State<UserInfo> {
                       ListTile(
                         leading: Icon(Icons.email),
                         title: Text("Correo"),
-                        subtitle: Text(ProfileScreen()._email),
+                        subtitle: Text("Correo"),
                       ),
                       ListTile(
                         leading: Icon(Icons.phone),
                         title: Text("Phone"),
-                        subtitle: Text(""),
+                        subtitle: Text("Telefono"),
                       ),
                       ListTile(
                         leading: Icon(FontAwesomeIcons.powerOff),
@@ -190,7 +186,7 @@ class _UserInfoState extends State<UserInfo> {
                         subtitle: Text(
                             "Así podemos crear planes de prevención y campañas de tratamiento"),
                         onTap: () {
-                          Navigator.of(context).pushNamed("routeName");
+                          Navigator.of(context).pushNamed(formViewRoute);
                         },
                       )
                     ],

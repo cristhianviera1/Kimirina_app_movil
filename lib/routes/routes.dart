@@ -7,3 +7,4 @@ const String navBarViewRoute = 'navBar';
 const String productDetaisViewRoute = 'productDetails';
 const String vihQuestionViewRoute = 'vihQuestion';
 const String chatDetailViewRoute = 'chatDetail';
+const String formViewRoute= 'form';
