@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  final String baseUrl = "http://192.168.100.174:3000";
-  User currentUser;
+  final String baseUrl = "http://192.168.100.220:3000";
+  User currentUser = new User();
   //headers
   final Map<String, String> headers = {"Content-type": "application/json"};
   String profileToJson(User data) {
@@ -33,6 +33,7 @@ class ApiService {
     if (response.statusCode == 200) {
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setString("token", jsonDecode(response.body)["token"]);
+      verifyToken(pref.get("token"));
       return true;
     } else {
       return false;
@@ -42,19 +43,12 @@ class ApiService {
     final response = await http
         .get("$baseUrl/api/auth/me", headers: {"x-access-token": token});
     if (response.statusCode == 200) {
-      User tempUser = new User(
-        //id: int.parse(jsonDecode(response.body)["_id"]),
+      User tmpUser = new User(
+        email: jsonDecode(response.body)["email"],
         nombre: jsonDecode(response.body)["nombre"],
-        email: jsonDecode(response.body)["email"]
-        );
-      /*currentUser.id = int.parse(jsonDecode(response.body)["_id"]);
-      currentUser.nombre = jsonDecode(response.body)["nombre"];
-      currentUser.email = jsonDecode(response.body)["email"];*/
-      currentUser = tempUser;
-      print(tempUser);
-      return currentUser;
-    } else {
-      return currentUser;
+      );
+      currentUser = tmpUser;
+      return tmpUser;
     }
   }
 }
