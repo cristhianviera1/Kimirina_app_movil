@@ -72,6 +72,8 @@ flutter:
     - assets/images/convenio_kimirina_embajada.jpg
     - assets/images/questions.png
     - assets/animations/congratulation.flr2d
+    - assets/images/imgSeccion_13.png
+    - assets/images/notratamiento.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

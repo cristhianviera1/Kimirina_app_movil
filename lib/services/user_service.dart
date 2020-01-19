@@ -27,6 +27,7 @@ class ApiService {
 
   //LoginUser
   Future<bool> loginUser(User user) async {
+    print("$baseUrl");
     final response = await http.post("$baseUrl/api/auth/login",
         headers: {"content-type": "application/json"},
         body: profileToJson(user));

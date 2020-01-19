@@ -1,10 +1,13 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:cached_network_image/cached_network_image.dart';
+
+import 'package:kimirina_app/routes/routes.dart';
 
 
-class YesTratament extends StatelessWidget {
-  static final String path = "lib/src/pages/login/auth2.dart";
+
+class YesTreatment extends StatelessWidget {
+  
   
   @override
   Widget build(BuildContext context){
@@ -12,7 +15,7 @@ class YesTratament extends StatelessWidget {
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
-          color: Color.fromRGBO(26, 134, 61, 1),
+          color: Color.fromRGBO(45, 40, 124, 1),
           ),
         child: Stack(
           children: <Widget>[
@@ -24,12 +27,10 @@ class YesTratament extends StatelessWidget {
                   color: Colors.white.withOpacity(0.8),
                   borderRadius: BorderRadius.circular(10.0)
                 ),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0,),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Image.asset("assets/animations/congratulation.flr2d"),
+                      Image.asset('assets/images/imgSeccion_13.png'),
                       const SizedBox(height: 10.0),
                       Text("Felicidades", style: TextStyle(
                         color: Colors.deepOrange.shade700,
@@ -37,7 +38,7 @@ class YesTratament extends StatelessWidget {
                         fontWeight: FontWeight.bold
                       ),),
                       const SizedBox(height: 20.0),
-                      Text("Continua con tu tratamiento", textAlign: TextAlign.center, style: TextStyle(
+                      Text("¡Nos alegra que estes en tratamiento!", textAlign: TextAlign.center, style: TextStyle(
                         fontSize: 18.0
                       )),
                       const SizedBox(height: 30.0),
@@ -50,26 +51,14 @@ class YesTratament extends StatelessWidget {
                           color: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                           child: Text("Servicios Kimirina"),
-                          onPressed: (){},
+                          onPressed: () => Navigator.of(context).pushNamed(navBarViewRoute),
                         ),
                       ),
                       const SizedBox(height: 30.0),
-                      Text.rich(TextSpan(
-                        children: [
-                          TextSpan(text: "Already have account? "),
-                          WidgetSpan(
-                            child: InkWell(
-                              onTap: (){print("Login tapped");},
-                              child: Text("Log in", style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            )
-                          )
-                        ]
-                      )),
+                      
                     ],
                   ),
-                ),
+                
               ),
             )
           ],

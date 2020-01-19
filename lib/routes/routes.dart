@@ -8,3 +8,6 @@ const String productDetaisViewRoute = 'productDetails';
 const String vihQuestionViewRoute = 'vihQuestion';
 const String chatDetailViewRoute = 'chatDetail';
 const String formViewRoute= 'form';
+const String yesTreatmentViewRoute= 'tratamiento';
+const String noTreatmentViewRoute = 'no tratamiento';
+const String chatListViewRoute = 'chat list';
