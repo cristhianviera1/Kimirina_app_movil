@@ -80,7 +80,11 @@ flutter:
     - assets/animations/handShake.flr
     - assets/animations/question.flr
     - assets/animations/logo.gif
+<<<<<<< HEAD
     - assets/images/questionBlue.png
+=======
+    - assets/images/logoTransparente.png
+>>>>>>> 4f030be83d3e1e9dcf837e5906a6b4ec10a620bc
 
 
 
