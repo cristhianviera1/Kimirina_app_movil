@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:kimirina_app/colors/colors.dart';
 
 class NewsScreen extends StatelessWidget {
   static final String path = "lib/src/pages/blog/sports_news1.dart";
@@ -26,7 +27,7 @@ class NewsScreen extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20.0),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: Colors.deepPurple,
+              color: verde,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20.0),
                 bottomRight: Radius.circular(20.0),

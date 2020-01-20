@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
 
 class ChatList extends StatelessWidget {
@@ -183,7 +184,7 @@ class _UnreadIndicator extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 height: 30,
-                color: Color.fromRGBO(26, 134, 61, 1),
+                color: azul,
                 width: 30,
                 padding: EdgeInsets.all(0),
                 alignment: Alignment.center,

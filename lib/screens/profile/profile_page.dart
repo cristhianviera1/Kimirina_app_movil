@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -41,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     height: 330,
-                    color: Colors.teal,
+                    color: morado,
                   ),
                   Positioned(
                     top: 10,

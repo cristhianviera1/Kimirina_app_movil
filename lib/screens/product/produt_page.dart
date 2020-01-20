@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fancy_dialog/fancy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 
@@ -87,7 +88,7 @@ class _ProductScreen extends State<ProductScreen> {
           padding: const EdgeInsets.only(top: 20.0),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: Colors.deepPurple,
+              color: naranja,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20.0),
                 bottomRight: Radius.circular(20.0),

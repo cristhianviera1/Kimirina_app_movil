@@ -1,5 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:kimirina_app/colors/colors.dart';
 import 'dart:ui';
 
 import 'package:kimirina_app/routes/routes.dart';
@@ -15,7 +16,7 @@ class YesTreatment extends StatelessWidget {
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
-          color: Color.fromRGBO(45, 40, 124, 1),
+          color: azul,
           ),
         child: Stack(
           children: <Widget>[
