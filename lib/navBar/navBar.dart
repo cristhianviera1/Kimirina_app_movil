@@ -1,5 +1,3 @@
-import 'package:fancy_dialog/FancyAnimation.dart';
-import 'package:fancy_dialog/fancy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/colors/colors.dart';
@@ -276,6 +274,7 @@ Future<void> showQuestionViH(BuildContext context) async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.setBool("ViHAnswer", true);
               prefs.setBool("UserViH", true);
+              Navigator.pop(myGlobals.scaffoldKey.currentContext);
               yesAlert(myGlobals.scaffoldKey.currentContext);
           }),
       DialogButton(
@@ -316,9 +315,9 @@ Future<Alert> noAlert(BuildContext context) {
   ).show();
 }
 
-Future<Alert> yesAlert(BuildContext context) {
+Future<Alert> yesAlert(BuildContext contextYes) {
   Alert(
-    context: context,
+    context: contextYes,
     image: Image.asset("assets/images/questions.png"),
     title: "¿Cómo esta tu tratamiento?",
     desc:
@@ -337,7 +336,7 @@ Future<Alert> yesAlert(BuildContext context) {
           ),
           color: primaryColor,
           onPressed: () =>
-              Navigator.of(context).pushNamed(noTreatmentViewRoute),
+              Navigator.of(contextYes).pushNamed(noTreatmentViewRoute),
         ),
         SizedBox(
           height: 15,
@@ -351,7 +350,7 @@ Future<Alert> yesAlert(BuildContext context) {
           ),
           color: secondaryColor,
           onPressed: () =>
-              Navigator.of(context).pushNamed(noTreatmentViewRoute),
+              Navigator.of(contextYes).pushNamed(noTreatmentViewRoute),
         ),
         SizedBox(
           height: 15,
@@ -364,8 +363,9 @@ Future<Alert> yesAlert(BuildContext context) {
             textAlign: TextAlign.center,
           ),
           color: tertyaryColor,
-          onPressed: () =>
-              Navigator.of(context).pushNamed(yesTreatmentViewRoute),
+          onPressed: () {
+            Navigator.pop(contextYes);
+          }           
         )
       ],
     ),
@@ -374,7 +374,7 @@ Future<Alert> yesAlert(BuildContext context) {
 }
 
 //Se define una variable global para tener el contexto inicial de la clase
-MyGlobals myGlobals = new MyGlobals();
+final MyGlobals myGlobals = new MyGlobals();
 
 class MyGlobals {
   GlobalKey _scaffoldKey;
