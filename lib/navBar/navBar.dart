@@ -61,9 +61,7 @@ class _NavBar extends State<NavBar> {
           Center(
             child: ChatList(),
           ),
-          Center(
-            child: ProfileScreen()
-          ),
+          Center(child: ProfileScreen()),
         ],
       ),
       bottomNavigationBar: StreamBuilder<Object>(
@@ -266,7 +264,7 @@ Future<void> showQuestionViH(BuildContext context) async {
       builder: (BuildContext context) => FancyDialog(
             title: "¿Tienes ViH?",
             descreption:
-                "Sabías que hoy en día existen pruebas rápidas y fiables",
+                "Sabías que hoy en día existen pruebas rápidas y fiables\n\n\n",
             ok: "No",
             okColor: primaryColor,
             cancel: "Si",
@@ -327,7 +325,8 @@ Future<Alert> yesAlert(BuildContext context) {
             textAlign: TextAlign.center,
           ),
           color: primaryColor,
-          onPressed: () => Navigator.of(context).pushNamed(noTreatmentViewRoute),
+          onPressed: () =>
+              Navigator.of(context).pushNamed(noTreatmentViewRoute),
         ),
         SizedBox(
           height: 15,
@@ -340,7 +339,8 @@ Future<Alert> yesAlert(BuildContext context) {
             textAlign: TextAlign.center,
           ),
           color: secondaryColor,
-          onPressed: () => Navigator.of(context).pushNamed(noTreatmentViewRoute),
+          onPressed: () =>
+              Navigator.of(context).pushNamed(noTreatmentViewRoute),
         ),
         SizedBox(
           height: 15,
@@ -353,7 +353,8 @@ Future<Alert> yesAlert(BuildContext context) {
             textAlign: TextAlign.center,
           ),
           color: tertyaryColor,
-          onPressed: () => Navigator.of(context).pushNamed(yesTreatmentViewRoute),
+          onPressed: () =>
+              Navigator.of(context).pushNamed(yesTreatmentViewRoute),
         )
       ],
     ),
