@@ -78,7 +78,9 @@ flutter:
     - assets/animations/Logo.flr
     - assets/animations/Lock_Animation.flr
     - assets/animations/handShake.flr
+    - assets/animations/question.flr
     - assets/animations/logo.gif
+    - assets/images/questionBlue.png
 
 
 

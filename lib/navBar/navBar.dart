@@ -299,14 +299,15 @@ Future<void> showQuestionViH(BuildContext context) async {
 Future<Alert> noAlert(BuildContext context) {
   Alert(
     context: context,
-    type: AlertType.info,
+    image: Image.asset("assets/images/questionBlue.png"),
     title: "¿Estas seguro?",
-    desc: "Toma una buena decisión\n¡Hazte la prueba!",
+    desc: "Toma una buena decisión",
     buttons: [
       DialogButton(
+          color: secondaryColor,
           child: Text(
-            "Agencias Kimirina",
-            style: TextStyle(color: Colors.white),
+            "¡Hazte la prueba!",
+            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 22),
           ),
           onPressed: () {
             Navigator.of(context).pushNamed(agenciasViewRoute);
