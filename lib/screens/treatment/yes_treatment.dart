@@ -33,13 +33,13 @@ class YesTreatment extends StatelessWidget {
                     children: <Widget>[
                       Image.asset('assets/images/imgSeccion_13.png'),
                       const SizedBox(height: 10.0),
-                      Text("Excelente", style: TextStyle(
+                      Text("Felicidades", style: TextStyle(
                         color: Colors.deepOrange.shade700,
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold
                       ),),
                       const SizedBox(height: 20.0),
-                      Text("¡Nos alegra que estes en tratamiento!\nRecuerda, es muy importante seguir el tratamiento antirretroviral y tomar los medicamentos diariamente", textAlign: TextAlign.center, style: TextStyle(
+                      Text("¡Nos alegra que estes en tratamiento!", textAlign: TextAlign.center, style: TextStyle(
                         fontSize: 18.0
                       )),
                       const SizedBox(height: 30.0),
