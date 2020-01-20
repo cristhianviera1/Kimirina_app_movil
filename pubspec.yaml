@@ -79,6 +79,7 @@ flutter:
     - assets/animations/Lock_Animation.flr
     - assets/animations/handShake.flr
     - assets/animations/logo.gif
+    - assets/images/logoTransparente.png
 
 
 

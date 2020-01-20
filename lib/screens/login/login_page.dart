@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
@@ -61,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.35,
                     width: MediaQuery.of(context).size.width,
-                    color: Colors.deepPurple[300],
+                    color: azul.withOpacity(0.6), //azul abajo
                   ),
                   clipper: RoundedClipper(60),
                 ),
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.33,
                     width: MediaQuery.of(context).size.width,
-                    color: Colors.deepPurpleAccent,
+                    color: azul, //Primario
                   ),
                   clipper: RoundedClipper(50),
                 ),
@@ -82,14 +83,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.30) / 2),
-                          color: Colors.deepPurple[300].withOpacity(0.3)),
+                          color: morado.withOpacity(0.3)), //circulo esquina
                       child: Center(
                         child: Container(
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.deepPurpleAccent),
+                              color: azul),
                         ),
                       ),
                     )),
@@ -102,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.36) / 2),
-                          color: Colors.deepPurple[300].withOpacity(0.3)),
+                          color: morado.withOpacity(0.3)), //Circulo Grande
                       child: Center(
                         child: Container(
                           height: 50,
@@ -132,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: <Widget>[
                       Image.asset(
-                        "assets/gif/kimirina_logo.gif",
+                        "assets/images/logoTransparente.png",
                         height: MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.height * 0.15,
                         fit: BoxFit.cover,
@@ -217,14 +218,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Row(
                         children: <Widget>[
                           Checkbox(
-                            activeColor: Colors.deepPurpleAccent,
+                            activeColor: azul,
                             value: _value1,
                             onChanged: _value1Changed,
                           ),
                           Text(
                             "Recordarme",
                             style: TextStyle(
-                                color: Colors.deepPurpleAccent,
+                                color: azul, //letras recuerdame
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold),
                           )
@@ -243,7 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.065,
                             decoration: BoxDecoration(
-                                color: Colors.deepPurpleAccent,
+                                color: azul, //Boton
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(25))),
                             child: Center(
@@ -311,7 +312,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Text(
                                   "Registrarse",
                                   style: TextStyle(
-                                      color: Colors.deepPurpleAccent,
+                                      color: azul,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16),
                                 ),
