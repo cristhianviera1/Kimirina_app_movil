@@ -260,31 +260,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 15,
                     ),
                     Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          OutlineButton.icon(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8.0,
-                              horizontal: 10,
-                            ),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                            borderSide: BorderSide(color: Colors.red),
-                            color: Colors.red,
-                            highlightedBorderColor: Colors.red,
-                            textColor: Colors.red,
-                            icon: Icon(
-                              FontAwesomeIcons.googlePlusG,
-                              size: 18.0,
-                            ),
-                            label: Text("Iniciar con Google"),
-                            onPressed: () {},
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
                         margin: EdgeInsets.only(top: 10, bottom: 15),
                         height: MediaQuery.of(context).size.height * 0.05,
                         child: GestureDetector(
