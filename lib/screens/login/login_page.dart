@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.35,
                     width: MediaQuery.of(context).size.width,
-                    color: azul.withOpacity(0.6), //azul abajo
+                    color: naranja.withOpacity(0.6), //azul abajo
                   ),
                   clipper: RoundedClipper(60),
                 ),
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.33,
                     width: MediaQuery.of(context).size.width,
-                    color: azul, //Primario
+                    color: naranja, //Primario
                   ),
                   clipper: RoundedClipper(50),
                 ),
@@ -83,14 +83,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.30) / 2),
-                          color: morado.withOpacity(0.3)), //circulo esquina
+                          color: Color.fromRGBO(255,0, 0, 0.9)), //circulo esquina
                       child: Center(
                         child: Container(
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: azul),
+                              color: naranja),
                         ),
                       ),
                     )),
@@ -103,14 +103,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.36) / 2),
-                          color: morado.withOpacity(0.3)), //Circulo Grande
+                          color: Color.fromRGBO(255,0, 0, 0.9)), //Circulo Grande
                       child: Center(
                         child: Container(
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.deepPurpleAccent),
+                              color: Color.fromRGBO(255,0, 0, 1.0)), //circulo centro
                         ),
                       ),
                     )),
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.15) / 2),
-                          color: Colors.deepPurple[300].withOpacity(0.3)),
+                          color: Color.fromRGBO(255,0, 0, 0.9)),
                     )),
                 Container(
                   margin: EdgeInsets.only(
@@ -218,14 +218,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Row(
                         children: <Widget>[
                           Checkbox(
-                            activeColor: azul,
+                            activeColor: naranja,
                             value: _value1,
                             onChanged: _value1Changed,
                           ),
                           Text(
                             "Recordarme",
                             style: TextStyle(
-                                color: azul, //letras recuerdame
+                                color: naranja, //letras recuerdame
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold),
                           )
@@ -244,7 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.065,
                             decoration: BoxDecoration(
-                                color: azul, //Boton
+                                color: naranja, //Boton
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(25))),
                             child: Center(
@@ -312,7 +312,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Text(
                                   "Registrarse",
                                   style: TextStyle(
-                                      color: azul,
+                                      color: naranja,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16),
                                 ),
