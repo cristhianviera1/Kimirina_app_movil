@@ -11,3 +11,4 @@ const String formViewRoute= 'form';
 const String yesTreatmentViewRoute= 'tratamiento';
 const String noTreatmentViewRoute = 'no tratamiento';
 const String chatListViewRoute = 'chat list';
+const String settingsViewRoute = 'configuracion';

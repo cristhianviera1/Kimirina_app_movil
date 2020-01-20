@@ -46,10 +46,11 @@ class ProfileScreen extends StatelessWidget {
                   Positioned(
                     top: 10,
                     right: 30,
-                    child: Icon(
-                      Icons.settings,
-                      color: Colors.white,
-                    ),
+                    child: FloatingActionButton(
+    child: Icon(Icons.settings),
+    elevation: 50.0,
+    onPressed: () => Navigator.of(context).pushNamed(settingsViewRoute),
+  ),
                   ),
                   Column(
                     children: <Widget>[

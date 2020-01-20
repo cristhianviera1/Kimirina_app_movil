@@ -33,6 +33,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => NoTreatment());
       case chatListViewRoute:
       return MaterialPageRoute(builder: (context) => ChatList());
+      case settingsViewRoute:
+      return MaterialPageRoute(builder: (context) => ChatList());
     case formViewRoute:
       return MaterialPageRoute(builder: (context) => FormPage());
     case vihQuestionViewRoute:
