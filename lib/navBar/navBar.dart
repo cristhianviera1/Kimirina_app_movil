@@ -14,6 +14,8 @@ import 'package:kimirina_app/screens/profile/profile_page.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../routes/routes.dart';
+
 class NavBar extends StatefulWidget {
   @override
   _NavBar createState() => _NavBar();
@@ -329,7 +331,7 @@ Future<Alert> yesAlert(BuildContext context) {
             textAlign: TextAlign.center,
           ),
           color: primaryColor,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.of(context).pushNamed(noTreatmentViewRoute),
         ),
         SizedBox(
           height: 15,
@@ -342,7 +344,7 @@ Future<Alert> yesAlert(BuildContext context) {
             textAlign: TextAlign.center,
           ),
           color: secondaryColor,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.of(context).pushNamed(noTreatmentViewRoute),
         ),
         SizedBox(
           height: 15,
@@ -355,7 +357,7 @@ Future<Alert> yesAlert(BuildContext context) {
             textAlign: TextAlign.center,
           ),
           color: tertyaryColor,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.of(context).pushNamed(yesTreatmentViewRoute),
         )
       ],
     ),

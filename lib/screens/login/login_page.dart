@@ -355,7 +355,7 @@ class _LoginScreenState extends State<LoginScreen> {
         var token = prefs.getString("token");
         if (token != null) {
           _apiService.verifyToken(token).then((isSucces) {
-            if (isSucces!= null) {
+            if (isSucces != null) {
               print("Token de verificación");
               print(isSucces);
             }
