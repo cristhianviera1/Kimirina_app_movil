@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flare_flutter/flare_actor.dart';
 /**
  * Author: Damodar Lohani
  * profile: https://github.com/lohanidamodar
@@ -31,18 +32,14 @@ class _CarruselPageState extends State<CarruselPage> {
       title: Container(),
       body: Column(
         children: <Widget>[
-          Text('Kimirina'),
+          Text('Kimirina',style: TextStyle(fontWeight: FontWeight.bold),),
           Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'Kimirina es una organización comunitaria especializada en la respuesta a la epidemia del VIH, con capacidades técnicas, metodologías, abordajes, ',
             style: TextStyle(color: Colors.black54, fontSize: 16.0),
           ),
         ],
       ),
-      mainImage: Image.asset(
-        'assets/images/image1.jpg',
-        width: 285.0,
-        alignment: Alignment.center,
-      ),
+      mainImage: Image.asset('assets/gif/kimirina_logo.gif'),
       textStyle: TextStyle(color: Colors.black),
     ),
     PageViewModel(
@@ -52,17 +49,12 @@ class _CarruselPageState extends State<CarruselPage> {
       body: Column(
         children: <Widget>[
           Text('Confidencialidad'),
-          Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+          Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             style: TextStyle(color: Colors.black54, fontSize: 16.0),
           ),
         ],
       ),
-      mainImage: Image.asset(
-        'assets/images/image1.jpg',
-        width: 285.0,
-        alignment: Alignment.center,
-      ),
+      mainImage: FlareActor("assets/animations/Lock_Animation.flr", alignment:Alignment.center, fit:BoxFit.contain, animation:"Untitled"),
       textStyle: TextStyle(color: Colors.black),
     ),
     PageViewModel(
@@ -79,11 +71,7 @@ class _CarruselPageState extends State<CarruselPage> {
           ),
         ],
       ),
-      mainImage: Image.asset(
-        'assets/images/image2.jpg',
-        width: 285.0,
-        alignment: Alignment.center,
-      ),
+      mainImage: FlareActor("assets/animations/handShake.flr", alignment:Alignment.center, fit:BoxFit.contain, animation:"Untitled"),
       textStyle: TextStyle(color: Colors.black),
     ),
     PageViewModel(

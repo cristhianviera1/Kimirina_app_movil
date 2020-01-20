@@ -72,9 +72,15 @@ flutter:
     - assets/images/2_15_2_SISTEMA_NACIONES-UNIDAS.jpg
     - assets/images/convenio_kimirina_embajada.jpg
     - assets/images/questions.png
-    - assets/animations/congratulation.flr2d
     - assets/images/imgSeccion_13.png
     - assets/images/notratamiento.png
+    - assets/images/address.png
+    - assets/animations/Logo.flr
+    - assets/animations/Lock_Animation.flr
+    - assets/animations/handShake.flr
+    - assets/animations/logo.gif
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

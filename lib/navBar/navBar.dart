@@ -259,32 +259,41 @@ class FancyBottomNavigationItem {
 
 //Se pregunta si la persona tiene ViH
 Future<void> showQuestionViH(BuildContext context) async {
-  showDialog(
-      context: context,
-      builder: (BuildContext context) => FancyDialog(
-            title: "¿Tienes ViH?",
-            descreption:
-                "Sabías que hoy en día existen pruebas rápidas y fiables\n\n\n",
-            ok: "No",
-            okColor: primaryColor,
-            cancel: "Si",
-            cancelColor: secondaryColor,
-            cancelFun: () async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
+  Alert(
+    context: context,
+    image: Image.asset("assets/gif/kimirina_logo.gif"),
+    title: "¿Tienes ViH?",
+    desc: "Sabías que hoy en día existen pruebas rápidas y fiables",
+    buttons: [
+      DialogButton(
+          color: secondaryColor,
+          radius: BorderRadius.circular(18.0),
+          child: Text(
+            "SI",
+            style: TextStyle(color: Colors.white),
+          ),
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.setBool("ViHAnswer", true);
               prefs.setBool("UserViH", true);
               yesAlert(myGlobals.scaffoldKey.currentContext);
-            },
-            okFun: () async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
+          }),
+      DialogButton(
+          color: tertyaryColor,
+          radius: BorderRadius.circular(18.0),
+          child: Text(
+            "NO",
+            style: TextStyle(color: Colors.white),
+          ),
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.setBool("ViHAnswer", true);
               //Se guarda si el usuario tiene o no ViH
               prefs.setBool("UserViH", false);
               noAlert(myGlobals.scaffoldKey.currentContext);
-            },
-            animationType: FancyAnimation.BOTTOM_TOP,
-            gifPath: ("assets/gif/kimirina_logo.gif"),
-          ));
+          }),
+    ],
+  ).show();
 }
 
 Future<Alert> noAlert(BuildContext context) {
@@ -295,12 +304,13 @@ Future<Alert> noAlert(BuildContext context) {
     desc: "Toma una buena decisión\n¡Hazte la prueba!",
     buttons: [
       DialogButton(
-        child: Text(
-          "Agencias Kimirina",
-          style: TextStyle(color: Colors.white),
-        ),
-        onPressed: () => Navigator.pop(context),
-      )
+          child: Text(
+            "Agencias Kimirina",
+            style: TextStyle(color: Colors.white),
+          ),
+          onPressed: () {
+            Navigator.of(context).pushNamed(agenciasViewRoute);
+          })
     ],
   ).show();
 }
