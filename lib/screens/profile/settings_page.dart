@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:kimirina_app/colors/colors.dart';
 
 class SettingsOnePage extends StatefulWidget {
   @override
@@ -12,17 +12,20 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
   bool _dark;
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     _dark = false;
   }
 
   Brightness _getBrightness() {
-     return _dark ? Brightness.dark : Brightness.light;
+    return _dark ? Brightness.dark : Brightness.light;
   }
 
   @override
   Widget build(BuildContext context) {
+    var oneNotification = false;
+    var twoNotification = false;
+    var threeNotification = false;
     return Theme(
       isMaterialAppTheme: true,
       data: ThemeData(
@@ -62,20 +65,23 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                     elevation: 8.0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
-                    color: Colors.purple,
+                    color: morado,
                     child: ListTile(
                       onTap: () {
                         //open edit profile
                       },
                       title: Text(
-                        "John Doe",
+                        "Gabriel Viera",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       leading: CircleAvatar(
-                        backgroundColor: Colors.brown.shade800,
+                        radius: 20,
+                        backgroundColor: Colors.white,
+                        backgroundImage: NetworkImage(
+                            'https://ktusu.com/admin/uploads/slider/836295524.jpg'),
                       ),
                       trailing: Icon(
                         Icons.edit,
@@ -94,7 +100,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                         ListTile(
                           leading: Icon(
                             Icons.lock_outline,
-                            color: Colors.purple,
+                            color: morado,
                           ),
                           title: Text("Cambiar Contraseña"),
                           trailing: Icon(Icons.keyboard_arrow_right),
@@ -106,7 +112,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                         ListTile(
                           leading: Icon(
                             FontAwesomeIcons.language,
-                            color: Colors.purple,
+                            color: morado,
                           ),
                           title: Text("Cambiar Nombre"),
                           trailing: Icon(Icons.keyboard_arrow_right),
@@ -118,7 +124,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                         ListTile(
                           leading: Icon(
                             Icons.location_on,
-                            color: Colors.purple,
+                            color: morado,
                           ),
                           title: Text("Cambiar Provincia"),
                           trailing: Icon(Icons.keyboard_arrow_right),
@@ -135,61 +141,40 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.indigo,
+                      color: morado,
                     ),
                   ),
                   SwitchListTile(
-                    activeColor: Colors.purple,
+                    activeColor: morado,
                     contentPadding: const EdgeInsets.all(0),
-                    value: true,
+                    value: oneNotification,
                     title: Text("Recibir notificaciones"),
-                    onChanged: (val) {},
-                  ),
-                  
-                  SwitchListTile(
-                    activeColor: Colors.purple,
-                    contentPadding: const EdgeInsets.all(0),
-                    value: true,
-                    title: Text("Notificaciones de oferta "),
-                    onChanged: (val) {},
+                    onChanged: (val) {
+                      oneNotification = true;
+                    },
                   ),
                   SwitchListTile(
-                    activeColor: Colors.purple,
+                    activeColor: morado,
                     contentPadding: const EdgeInsets.all(0),
-                    value: true,
-                    title: Text("Actualización"),
-                    onChanged: null,
+                    value: twoNotification,
+                    title: Text("Promociones"),
+                    onChanged: (val) {
+                      twoNotification = true;
+                    },
+                  ),
+                  SwitchListTile(
+                    activeColor: morado,
+                    contentPadding: const EdgeInsets.all(0),
+                    value: threeNotification,
+                    title: Text("Recordatorio de prueba VIH"),
+                    onChanged: (val) {
+                      threeNotification = true;
+                    },
                   ),
                   const SizedBox(height: 60.0),
                 ],
               ),
             ),
-            Positioned(
-              bottom: -20,
-              left: -20,
-              child: Container(
-                width: 80,
-                height: 80,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.purple,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 00,
-              left: 00,
-              child: IconButton(
-                icon: Icon(
-                  FontAwesomeIcons.powerOff,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  //log out
-                },
-              ),
-            )
           ],
         ),
       ),

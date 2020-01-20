@@ -33,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
       SharedPreferences prefs = await SharedPreferences.getInstance();
     });
     return Scaffold(
-        backgroundColor: Color.fromRGBO(255, 255, 255, .9),
+        //backgroundColor: Color.fromRGBO(255, 255, 255, .9),
         body: SafeArea(
           child: ListView(
             children: <Widget>[
@@ -73,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
                         padding: EdgeInsets.all(4),
                       ),
                       Text(
-                        "_nombre",
+                        "Gabriel Viera",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
@@ -170,12 +170,12 @@ class _UserInfoState extends State<UserInfo> {
                       ListTile(
                         leading: Icon(Icons.email),
                         title: Text("Correo"),
-                        subtitle: Text("Correo"),
+                        subtitle: Text("cristhian.viera1@gmail.com"),
                       ),
                       ListTile(
                         leading: Icon(Icons.phone),
                         title: Text("Phone"),
-                        subtitle: Text("Telefono"),
+                        subtitle: Text("0988677461"),
                       ),
                       ListTile(
                         leading: Icon(FontAwesomeIcons.powerOff),
