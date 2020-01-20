@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fancy_dialog/fancy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -131,7 +132,7 @@ class _ProductScreen extends State<ProductScreen> {
   Widget buildList(BuildContext context, int index) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(productDetaisViewRoute);
+        showQuestionViH(context);
       },
       child: Container(
         decoration: BoxDecoration(

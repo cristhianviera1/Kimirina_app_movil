@@ -11,7 +11,6 @@ class _FormPage extends State<FormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
     return new MaterialApp(
       home: new Scaffold(
         appBar: new AppBar(
@@ -39,7 +38,6 @@ class _FormPage extends State<FormPage> {
               content: Column(
                 children: <Widget>[
                   FormBuilder(
-                    key: _fbKey,
                     autovalidate: true,
                     child: Column(
                       children: <Widget>[
@@ -97,13 +95,7 @@ class _FormPage extends State<FormPage> {
                               labelText:
                                   "Por favor escifique su ocupación o trabajo"),
                           validators: [
-                            (val) {
-                              if (_fbKey.currentState.fields['ocupacion']
-                                          .currentState.value ==
-                                      "Otro" &&
-                                  (val == null || val.isEmpty))
-                                return "Por favor especifique su ocupación";
-                            },
+                      
                           ],
                         ),
 

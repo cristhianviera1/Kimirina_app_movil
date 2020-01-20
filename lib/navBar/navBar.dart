@@ -1,6 +1,4 @@
 import 'package:fancy_dialog/FancyAnimation.dart';
-import 'package:fancy_dialog/FancyGif.dart';
-import 'package:fancy_dialog/FancyTheme.dart';
 import 'package:fancy_dialog/fancy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,8 +39,6 @@ class _NavBar extends State<NavBar> {
     Future.delayed(Duration.zero, () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var tempAnswer = prefs.getBool("ViHAnswer") ?? false;
-      print("PRRO");
-      print(tempAnswer);
       if (!tempAnswer) {
         return showQuestionViH(context);
       }
