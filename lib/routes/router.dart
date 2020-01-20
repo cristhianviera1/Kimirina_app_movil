@@ -10,6 +10,7 @@ import 'package:kimirina_app/screens/login/register_page.dart';
 import 'package:kimirina_app/screens/product/product_details.dart';
 import 'package:kimirina_app/screens/product/produt_page.dart';
 import 'package:kimirina_app/screens/profile/form_page.dart';
+import 'package:kimirina_app/screens/profile/settings_page.dart';
 import 'package:kimirina_app/screens/treatment/not_treatment.dart';
 import 'package:kimirina_app/screens/vih/vih_question_page.dart';
 
@@ -38,7 +39,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case agenciasViewRoute:
       return MaterialPageRoute(builder: (context) => AgenciesScreen());
     case settingsViewRoute:
-      return MaterialPageRoute(builder: (context) => ChatList());
+      return MaterialPageRoute(builder: (context) => SettingsOnePage());
     case formViewRoute:
       return MaterialPageRoute(builder: (context) => FormPage());
     case productsViewRoute:
