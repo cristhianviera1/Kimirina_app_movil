@@ -365,6 +365,7 @@ Future<Alert> yesAlert(BuildContext contextYes) {
           color: tertyaryColor,
           onPressed: () {
             Navigator.pop(contextYes);
+            Navigator.of(contextYes).pushNamed(yesTreatmentViewRoute);
           }           
         )
       ],

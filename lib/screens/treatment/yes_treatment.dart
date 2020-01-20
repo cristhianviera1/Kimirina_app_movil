@@ -1,9 +1,6 @@
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'dart:ui';
-
-import 'package:kimirina_app/routes/routes.dart';
 
 
 
@@ -53,7 +50,7 @@ class YesTreatment extends StatelessWidget {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                           child: Text("Servicios Kimirina"),
                           onPressed: (){
-                            Navigator.of(context).pushNamed(navBarViewRoute);
+                            Navigator.pop(context);
                           }
                         ),
                       ),
