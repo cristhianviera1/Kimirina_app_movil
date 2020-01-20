@@ -9,6 +9,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
+import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,7 +29,7 @@ class _CarruselPageState extends State<CarruselPage> {
   final pages = [
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
-      bubbleBackgroundColor: Colors.indigo,
+      bubbleBackgroundColor: naranja,
       title: Container(),
       body: Column(
         children: <Widget>[
@@ -44,7 +45,7 @@ class _CarruselPageState extends State<CarruselPage> {
     ),
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
-      bubbleBackgroundColor: Colors.indigo,
+      bubbleBackgroundColor: naranja,
       title: Container(),
       body: Column(
         children: <Widget>[
@@ -60,7 +61,7 @@ class _CarruselPageState extends State<CarruselPage> {
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
       iconColor: null,
-      bubbleBackgroundColor: Colors.indigo,
+      bubbleBackgroundColor: naranja,
       title: Container(),
       body: Column(
         children: <Widget>[
@@ -77,7 +78,7 @@ class _CarruselPageState extends State<CarruselPage> {
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
       iconColor: null,
-      bubbleBackgroundColor: Colors.indigo,
+      bubbleBackgroundColor: naranja,
       title: Container(),
       body: Column(
         children: <Widget>[
@@ -113,9 +114,9 @@ class _CarruselPageState extends State<CarruselPage> {
               doneText: Text(
                 "Empezar",
               ),
-              pageButtonsColor: Colors.indigo,
+              pageButtonsColor: naranja,
               pageButtonTextStyles: new TextStyle(
-                // color: Colors.indigo,
+                // color: naranja,
                 fontSize: 16.0,
                 fontFamily: "Regular",
               ),
