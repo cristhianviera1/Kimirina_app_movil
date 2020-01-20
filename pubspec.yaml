@@ -32,6 +32,7 @@ dependencies:
   shared_preferences: ^0.5.6
   auto_size_text: ^2.1.0
   fancy_dialog: ^1.0.1
+  flutter_form_builder:
 
 dev_dependencies:
   flutter_test:

@@ -1,205 +1,145 @@
 import 'package:flutter/material.dart';
-
-final _formKey = GlobalKey<FormState>();
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class FormPage extends StatefulWidget {
   @override
-  _FormPage createState() => _FormPage();
+  _FormPage createState() => new _FormPage();
 }
 
 class _FormPage extends State<FormPage> {
+  int _currentStep = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Sandbox'),
-      ),
-      body: Container(
-         padding: EdgeInsets.all(8.0),
-         color: Colors.white,
-         child: FormWidget(),
-      ),
-    );
-  }
-}
-
-
-class FormWidget extends StatefulWidget {
-
-
-  @override
-  _FormWidgetState createState() => _FormWidgetState();
-}
-
-class _FormWidgetState extends State<FormWidget> {
-
-
-  int _stepNumber = 1;
-
-  final ctl_name = TextEditingController();
-  final ctl_age = TextEditingController();
-  final ctl_address = TextEditingController();
-  final ctl_city = TextEditingController();
-
-  void saveData(BuildContext context) {
-
-    _formKey.currentState.save();
-
-    print(ctl_name.text);
-    print(ctl_age.text);
-    print(ctl_address.text);
-    print(ctl_city.text);
-
-  }
-
-  void nextPage(BuildContext context) {
-
-    setState(() {
-      if (_stepNumber == 1)
-        _stepNumber = 2;
-      else
-        _stepNumber = 1;
-    });
-  }
-
-
-  Column formOneBuilder(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-              width: double.infinity,
-              child: Text("STEP 1")
-          ),
-        ),
-        TextFormField(
-          controller: ctl_name,
-          decoration: const InputDecoration(
-              labelText: 'Step 1 Name'
-          ),
-        ),
-        TextFormField(
-          controller: ctl_age,
-          decoration: const InputDecoration(
-              labelText: 'Step 2 Age'
-          ),
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FlatButton(
-                  color: Colors.blue,
-                  child: Text('Next'),
-                  onPressed: () {nextPage(context);} ,
-                ),
-                Padding(padding: EdgeInsets.only(left: 8)),
-                FlatButton(
-                  color: Colors.blue,
-                  child: Text('Save'),
-                  onPressed: () {saveData(context);} ,
-                ),
-              ],
+    final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+    return new MaterialApp(
+      home: new Scaffold(
+        appBar: new AppBar(
+            leading: new IconButton(
+                icon: new Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.of(context).pop())),
+        body: new Stepper(
+          type: StepperType.vertical,
+          currentStep: _currentStep,
+          onStepTapped: (int step) => setState(() => _currentStep = step),
+          onStepContinue:
+              _currentStep < 4 ? () => setState(() => _currentStep += 1) : null,
+          onStepCancel:
+              _currentStep > 0 ? () => setState(() => _currentStep -= 1) : null,
+          steps: <Step>[
+            new Step(
+              title: new Text('Datos geográficos'),
+              content: new Text('Formulario'),
+              isActive: _currentStep >= 0,
+              state:
+                  _currentStep >= 0 ? StepState.complete : StepState.disabled,
             ),
-          ),
-        )
-      ],
-    );
-  }
+            new Step(
+              title: new Text('Datos personales'),
+              content: Column(
+                children: <Widget>[
+                  FormBuilder(
+                    key: _fbKey,
+                    autovalidate: true,
+                    child: Column(
+                      children: <Widget>[
+                        FormBuilderTextField(
+                          attribute: "Edad",
+                          decoration: InputDecoration(labelText: "Edad"),
+                          keyboardType: TextInputType.number,
+                          validators: [
+                            FormBuilderValidators.numeric(),
+                            FormBuilderValidators.max(70),
+                            (val) {
+                              if (val == null || val.isEmpty) {
+                                return "Por favor especifique su edad";
+                              }
+                            }
+                          ],
+                        ),
+                        FormBuilderRadio(
+                          decoration: InputDecoration(
+                              labelText:
+                                  '¿Cuál es su último año de estudios aprobado?'),
+                          attribute: "estudiosNivel",
+                          validators: [FormBuilderValidators.required()],
+                          options: [
+                            "Primaria",
+                            "Secundaria",
+                            "Superior",
+                            "Ninguno",
+                            "Otro",
+                          ]
+                              .map(
+                                  (lang) => FormBuilderFieldOption(value: lang))
+                              .toList(growable: false),
+                        ),
+                        FormBuilderCheckboxList(
+                          decoration: InputDecoration(
+                              labelText:
+                                  "¿Qué ocupación o trabajo tiene usted?"),
+                          attribute: "ocupacion",
+                          options: [
+                            FormBuilderFieldOption(value: "Empleado/a"),
+                            FormBuilderFieldOption(value: "Artesano/a"),
+                            FormBuilderFieldOption(value: "Comerciante"),
+                            FormBuilderFieldOption(
+                                value: "Profesional independiente"),
+                            FormBuilderFieldOption(value: "Trabajador sexual"),
+                            FormBuilderFieldOption(value: "Estudiante"),
+                            FormBuilderFieldOption(value: "Otro"),
+                            FormBuilderFieldOption(value: "NR"),
+                          ],
+                        ),
+                        FormBuilderTextField(
+                          attribute: "especificarOcupacion",
+                          decoration: InputDecoration(
+                              labelText:
+                                  "Por favor escifique su ocupación o trabajo"),
+                          validators: [
+                            (val) {
+                              if (_fbKey.currentState.fields['ocupacion']
+                                          .currentState.value ==
+                                      "Otro" &&
+                                  (val == null || val.isEmpty))
+                                return "Por favor especifique su ocupación";
+                            },
+                          ],
+                        ),
 
-
-  Column formTwoBuilder(BuildContext context) {
-
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-              width: double.infinity,
-              child: Text("STEP 2"),
-          ),
-        ),
-        TextFormField(
-          controller: ctl_address,
-          decoration: const InputDecoration(
-              labelText: 'Step 2 Address'
-          ),
-        ),
-        TextFormField(
-          controller: ctl_city,
-          decoration: const InputDecoration(
-              labelText: 'Step 2 City'
-          ),
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FlatButton(
-                  color: Colors.blue,
-                  child: Text('Previous'),
-                  onPressed: () {nextPage(context);} ,
-                ),
-                Padding(padding: EdgeInsets.only(left: 8)),
-                FlatButton(
-                  color: Colors.blue,
-                  child: Text('Save'),
-                  onPressed: () {saveData(context);} ,
-                ),
-              ],
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              isActive: _currentStep >= 1,
+              state:
+                  _currentStep >= 1 ? StepState.complete : StepState.disabled,
             ),
-          ),
-        )
-      ],
+            new Step(
+              title: new Text('Historia de las relaciones'),
+              content: new Text('Formulario'),
+              isActive: _currentStep >= 2,
+              state:
+                  _currentStep >= 2 ? StepState.complete : StepState.disabled,
+            ),
+            new Step(
+              title: new Text('Referencia para la atención recibida'),
+              content: new Text('Formulario'),
+              isActive: _currentStep >= 3,
+              state:
+                  _currentStep >= 3 ? StepState.complete : StepState.disabled,
+            ),
+            new Step(
+              title: new Text('Prueba de VIH'),
+              content: new Text('Formulario'),
+              isActive: _currentStep >= 4,
+              state:
+                  _currentStep >= 4 ? StepState.complete : StepState.disabled,
+            ),
+          ],
+        ),
+      ),
     );
-
   }
-
-  @override
-  Widget build(BuildContext context) {
-
-    switch (_stepNumber) {
-      case 1:
-          return Form(
-              key: _formKey,
-              child:
-                this.formOneBuilder(context),
-          );
-          break;
-
-      case 2:
-        return Form(
-              key: _formKey,
-              child:
-                this.formTwoBuilder(context),
-        );
-        break;
-    }
-
-  }
-
-  void dispose() {
-
-    ctl_address.dispose();
-    ctl_age.dispose();
-    ctl_city.dispose();
-    ctl_name.dispose();
-
-    super.dispose();
-
-  }
-
-
 }
