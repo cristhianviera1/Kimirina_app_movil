@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: <Widget>[
                       Image.asset(
-                        "assets/login.png",
+                        "assets/gif/kimirina_logo.gif",
                         height: MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.height * 0.15,
                         fit: BoxFit.cover,
