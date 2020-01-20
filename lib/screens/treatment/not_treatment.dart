@@ -1,11 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
-
 import 'package:kimirina_app/routes/routes.dart';
-
-
-
 class NoTreatment extends StatelessWidget {
   
   
@@ -32,7 +28,7 @@ class NoTreatment extends StatelessWidget {
                     children: <Widget>[
                       Image.asset('assets/images/notratamiento.png'),
                       const SizedBox(height: 10.0),
-                      Text("¿Porqué?", style: TextStyle(
+                      Text("¿Por qué?", style: TextStyle(
                         color: Colors.deepOrange.shade700,
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold
@@ -50,7 +46,7 @@ class NoTreatment extends StatelessWidget {
                           highlightElevation: 0,
                           color: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                          child: Text("Contactanos"),
+                          child: Text("Contáctanos"),
                           onPressed: () => Navigator.of(context).pushNamed(chatDetailViewRoute),
                         ),
                       ),
