@@ -1,9 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-/**
- * Author: Damodar Lohani
- * profile: https://github.com/lohanidamodar
-  */
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
