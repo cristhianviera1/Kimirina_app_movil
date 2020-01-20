@@ -131,9 +131,6 @@ class NewsScreen extends StatelessWidget {
                           Expanded(
                           child: AutoSizeText("¡Latinoamérica y el Caribe: una región que no puede quedar atrás! Las redes y organizaciones regionales trabajando en América Latina y el Caribe Hispano han"),
                           ),
-                          
-                          
-                          
                         ],
                       ),
                     ),

@@ -12,3 +12,5 @@ const String yesTreatmentViewRoute= 'tratamiento';
 const String noTreatmentViewRoute = 'no tratamiento';
 const String chatListViewRoute = 'chat list';
 const String settingsViewRoute = 'configuracion';
+const String productsViewRoute = 'productos';
+const String agenciasViewRoute = "agencias";
