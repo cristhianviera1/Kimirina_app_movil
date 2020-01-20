@@ -29,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero, () async {
       CurrentProfile().verifyToken();
-      SharedPreferences prefs =  await SharedPreferences.getInstance();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
     });
     return Scaffold(
         backgroundColor: Color.fromRGBO(255, 255, 255, .9),
@@ -47,10 +47,15 @@ class ProfileScreen extends StatelessWidget {
                     top: 10,
                     right: 30,
                     child: FloatingActionButton(
-    child: Icon(Icons.settings),
-    elevation: 50.0,
-    onPressed: () => Navigator.of(context).pushNamed(settingsViewRoute),
-  ),
+                        backgroundColor: Colors.transparent,
+                        child: Icon(
+                          Icons.settings,
+                          color: Colors.white,
+                        ),
+                        elevation: 50.0,
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(settingsViewRoute);
+                        }),
                   ),
                   Column(
                     children: <Widget>[
@@ -66,7 +71,8 @@ class ProfileScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(4),
                       ),
-                      Text("_nombre",
+                      Text(
+                        "_nombre",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,

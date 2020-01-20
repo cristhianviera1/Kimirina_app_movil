@@ -4,8 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 class SettingsOnePage extends StatefulWidget {
-  static final String path = "lib/screens/profile/settings_page.dart";
-
   @override
   _SettingsOnePageState createState() => _SettingsOnePageState();
 }
@@ -98,7 +96,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                             Icons.lock_outline,
                             color: Colors.purple,
                           ),
-                          title: Text("Change Password"),
+                          title: Text("Cambiar Contraseña"),
                           trailing: Icon(Icons.keyboard_arrow_right),
                           onTap: () {
                             //open change password
@@ -110,7 +108,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                             FontAwesomeIcons.language,
                             color: Colors.purple,
                           ),
-                          title: Text("Change Language"),
+                          title: Text("Cambiar Nombre"),
                           trailing: Icon(Icons.keyboard_arrow_right),
                           onTap: () {
                             //open change language
@@ -122,7 +120,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                             Icons.location_on,
                             color: Colors.purple,
                           ),
-                          title: Text("Change Location"),
+                          title: Text("Cambiar Provincia"),
                           trailing: Icon(Icons.keyboard_arrow_right),
                           onTap: () {
                             //open change location
@@ -133,7 +131,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                   ),
                   const SizedBox(height: 20.0),
                   Text(
-                    "Notification Settings",
+                    "Configuración de notificaciones",
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -144,28 +142,22 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                     activeColor: Colors.purple,
                     contentPadding: const EdgeInsets.all(0),
                     value: true,
-                    title: Text("Received notification"),
+                    title: Text("Recibir notificaciones"),
                     onChanged: (val) {},
                   ),
-                  SwitchListTile(
-                    activeColor: Colors.purple,
-                    contentPadding: const EdgeInsets.all(0),
-                    value: false,
-                    title: Text("Received newsletter"),
-                    onChanged: null,
-                  ),
+                  
                   SwitchListTile(
                     activeColor: Colors.purple,
                     contentPadding: const EdgeInsets.all(0),
                     value: true,
-                    title: Text("Received Offer Notification"),
+                    title: Text("Notificaciones de oferta "),
                     onChanged: (val) {},
                   ),
                   SwitchListTile(
                     activeColor: Colors.purple,
                     contentPadding: const EdgeInsets.all(0),
                     value: true,
-                    title: Text("Received App Updates"),
+                    title: Text("Actualización"),
                     onChanged: null,
                   ),
                   const SizedBox(height: 60.0),

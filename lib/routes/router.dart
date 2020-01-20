@@ -8,6 +8,7 @@ import 'package:kimirina_app/screens/login/login_page.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
 import 'package:kimirina_app/screens/product/product_details.dart';
 import 'package:kimirina_app/screens/profile/form_page.dart';
+import 'package:kimirina_app/screens/profile/settings_page.dart';
 import 'package:kimirina_app/screens/treatment/not_treatment.dart';
 import 'package:kimirina_app/screens/vih/vih_question_page.dart';
 
@@ -27,14 +28,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => SignupScreen());
     case chatDetailViewRoute:
       return MaterialPageRoute(builder: (context) => ChatScreen());
-          case yesTreatmentViewRoute:
+    case yesTreatmentViewRoute:
       return MaterialPageRoute(builder: (context) => YesTreatment());
-                case noTreatmentViewRoute:
+    case noTreatmentViewRoute:
       return MaterialPageRoute(builder: (context) => NoTreatment());
-      case chatListViewRoute:
+    case chatListViewRoute:
       return MaterialPageRoute(builder: (context) => ChatList());
-      case settingsViewRoute:
-      return MaterialPageRoute(builder: (context) => ChatList());
+    case settingsViewRoute:
+      return MaterialPageRoute(builder: (context) => SettingsOnePage());
     case formViewRoute:
       return MaterialPageRoute(builder: (context) => FormPage());
     case vihQuestionViewRoute:
