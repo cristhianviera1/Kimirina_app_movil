@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var token = prefs.getString("token");
     if (token != null) {
       _apiService.verifyToken(token).then((isSucces) {
-        if (isSucces!=null) {
+        if (isSucces != null) {
           Navigator.of(context).pushNamed(navBarViewRoute);
         }
       });
@@ -83,14 +83,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.30) / 2),
-                          color: Color.fromRGBO(255,0, 0, 0.9)), //circulo esquina
+                          color:
+                              Color.fromRGBO(255, 0, 0, 0.9)), //circulo esquina
                       child: Center(
                         child: Container(
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: naranja),
+                              shape: BoxShape.circle, color: naranja),
                         ),
                       ),
                     )),
@@ -103,14 +103,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.36) / 2),
-                          color: Color.fromRGBO(255,0, 0, 0.9)), //Circulo Grande
+                          color:
+                              Color.fromRGBO(255, 0, 0, 0.9)), //Circulo Grande
                       child: Center(
                         child: Container(
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Color.fromRGBO(255,0, 0, 1.0)), //circulo centro
+                              color: Color.fromRGBO(
+                                  255, 0, 0, 1.0)), //circulo centro
                         ),
                       ),
                     )),
@@ -123,31 +125,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.15) / 2),
-                          color: Color.fromRGBO(255,0, 0, 0.9)),
+                          color: Color.fromRGBO(255, 0, 0, 0.9)),
                     )),
                 Container(
                   margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.15 - 50),
+                      top: MediaQuery.of(context).size.height * 0.15 - 80),
                   height: MediaQuery.of(context).size.height * 0.33,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: <Widget>[
                       Image.asset(
                         "assets/images/logoTransparente.png",
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        width: MediaQuery.of(context).size.height * 0.15,
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        width: MediaQuery.of(context).size.height * 0.25,
                         fit: BoxFit.cover,
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        "Bienvenido",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      )
                     ],
                   ),
                 ),
