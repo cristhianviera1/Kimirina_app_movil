@@ -28,10 +28,10 @@ Color secondaryDark = HexColor("#046D8A");
 Color tertyaryColor = HexColor("#FFD15C");
 
 
-Color kimirina = HexColor("#F03506");
-Color noticias = HexColor("#2D287C");
-Color chat = HexColor("#1A863D");
-Color perfil = HexColor("#6F005C");
+Color naranja = HexColor("#F03506"); //Naranja
+Color azul = HexColor("#2D287C"); //Azul
+Color verde = HexColor("#1A863D"); // Verde
+Color morado = HexColor("#6F005C"); // Morado
 
 const TextStyle estiloBotonesTexto = TextStyle(fontSize: 16);
 

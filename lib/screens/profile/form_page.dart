@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:kimirina_app/colors/colors.dart';
 
 class FormPage extends StatefulWidget {
   @override
@@ -14,8 +15,9 @@ class _FormPage extends State<FormPage> {
     return new MaterialApp(
       home: new Scaffold(
         appBar: new AppBar(
+          backgroundColor: azul,
             leading: new IconButton(
-                icon: new Icon(Icons.arrow_back, color: Colors.white),
+                icon: new Icon(Icons.arrow_back, color: Colors.white,),
                 onPressed: () => Navigator.of(context).pop())),
         body: new Stepper(
           type: StepperType.vertical,

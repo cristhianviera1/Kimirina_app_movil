@@ -154,13 +154,13 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
   Widget _buildItem(FancyBottomNavigationItem item, bool isSelected) {
     colors() {
       if (_selectedIndex == 0) {
-        activeColor = Color.fromRGBO(240, 53, 6, 1);
+        activeColor = naranja;
       } else if (_selectedIndex == 1) {
-        activeColor = Color.fromRGBO(45, 40, 124, 1);
+        activeColor = verde;
       } else if (_selectedIndex == 2) {
-        activeColor = Color.fromRGBO(26, 134, 61, 1);
+        activeColor = azul;
       } else if (_selectedIndex == 3) {
-        activeColor = Color.fromRGBO(111, 0, 92, 1);
+        activeColor = morado;
       }
     }
 
