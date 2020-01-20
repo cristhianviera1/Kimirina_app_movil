@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kimirina_app/colors/colors.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -118,7 +119,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       Container(
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(26, 134, 61, 1), shape: BoxShape.circle),
+                            color: morado, shape: BoxShape.circle),
                         child: InkWell(
                           child: Icon(
                             Icons.keyboard_voice,
@@ -219,7 +220,7 @@ class SentMessageWidget extends StatelessWidget {
                 maxWidth: MediaQuery.of(context).size.width * .6),
             padding: const EdgeInsets.all(15.0),
             decoration: BoxDecoration(
-              color: Color.fromRGBO(26, 134, 61, 1),
+              color: azul,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),

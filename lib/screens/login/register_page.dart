@@ -3,6 +3,7 @@ import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:kimirina_app/colors/colors.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -53,7 +54,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.20,
                     width: MediaQuery.of(context).size.width,
-                    color: Colors.deepPurple[300],
+                    color: naranja.withOpacity(0.5),
                   ),
                   clipper: RoundedClipper(60),
                 ),
@@ -61,7 +62,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.18,
                     width: MediaQuery.of(context).size.width,
-                    color: Colors.deepPurpleAccent,
+                    color: naranja,
                   ),
                   clipper: RoundedClipper(50),
                 ),
@@ -74,14 +75,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.15) / 2),
-                          color: Colors.deepPurple[300].withOpacity(0.3)),
+                          color: Color.fromRGBO(255, 0, 0, 0.9)),
                       child: Center(
                         child: Container(
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.deepPurpleAccent),
+                              color: naranja),
                         ),
                       ),
                     )),
@@ -94,14 +95,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.20) / 2),
-                          color: Colors.deepPurple[300].withOpacity(0.3)),
+                          color: Color.fromRGBO(255, 0, 0, 0.9)),
                       child: Center(
                         child: Container(
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.deepPurpleAccent),
+                              color: Color.fromRGBO(255, 0, 0, 3)),
                         ),
                       ),
                     )),
@@ -114,7 +115,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               (MediaQuery.of(context).size.height * 0.15) / 2),
-                          color: Colors.deepPurple[300].withOpacity(0.3)),
+                          color: Color.fromRGBO(255, 0, 0, 0.9)),
                     )),
                 Container(
                   margin: EdgeInsets.only(
@@ -124,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        "Sign Up",
+                        "",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -211,7 +212,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.065,
                           decoration: BoxDecoration(
-                              color: Colors.deepPurpleAccent,
+                              color: naranja,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(25))),
                           child: Center(
@@ -237,7 +238,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
-                                color: Colors.deepPurpleAccent,
+                                color: naranja,
                                 shape: BoxShape.circle),
                             child:
                                 Icon(Icons.arrow_back, color: Colors.white))),
