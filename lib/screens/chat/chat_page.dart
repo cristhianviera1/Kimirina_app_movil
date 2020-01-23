@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
@@ -7,7 +6,6 @@ class ChatList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
@@ -15,54 +13,23 @@ class ChatList extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  'Messages',
+                  'Mensajes',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
               ),
-             
             ],
           ),
         ),
-        _ChatItem(
-            'Bushra Martinez',
-            'assets/images/profile.jpg',
-            7,
-            true,
-            'On my way to the gym but I need to go to the supplement store to buy some BCAAs. On my way to the gym but I needed to stop at the supplement store to buy some BCAAs On my way to the gym but I needed to stop by the supplement store to buy some BCAAs.'),
-        _ChatItem(
-            'Zainab Khan',
-            'assets/images/profile.jpg',
-            2,
-            false,
-            'Rahhhh... I saw u with bushra'),
-        _ChatItem(
-            'Kylie Jenner',
-            'assets/images/profile.jpg',
-            0,
-            true,
-            'Great seeing you. I have to go now. I\'ll talk to you later.'),
-        _ChatItem(
-            'Chloe Sims',
-            'assets/images/profile.jpg',
-            0,
-            false,
-            'Please follow me on insta x'),
-        _ChatItem(
-            'Stefflon Don',
-            'assets/images/profile.jpg',
-            0,
-            false,
-            'Why haven\'t aliens visited our solar system? They looked at the reviews and we only have one star.'),
-        _ChatItem(
-            'kim kardashian',
-            'assets/images/profile.jpg',
-            0,
-            false,
-            'Please follow me on insta x'),
+        _ChatItem('Carlos Acosta', 'assets/images/login.png', 1, true,
+            'No tienes por que tener miedo, nosotros te podemos ayudar, pero el primer paso es que te hagas la prueba, no toma nada de tiempo y es 100% confiable'),
+            _ChatItem('Vanessa Zambrano', 'assets/images/login.png', 0, true,
+            ''),
+            _ChatItem('Franklin Sotomayor', 'assets/images/login.png', 0, true,
+            ''),
         Padding(
           padding: EdgeInsets.only(top: 40.0, bottom: 10),
           child: Text(
-            'no more messages',
+            'No tienes más mensajes',
             style: TextStyle(color: Colors.grey[350]),
             textAlign: TextAlign.center,
           ),
@@ -82,7 +49,6 @@ class _ChatItem extends StatelessWidget {
   Widget _activeIcon(isActive) {
     if (isActive) {
       return ClipRRect(
-        
         borderRadius: BorderRadius.circular(8),
         child: Container(
           padding: EdgeInsets.all(3),

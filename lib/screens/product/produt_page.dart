@@ -8,7 +8,6 @@ import 'package:kimirina_app/routes/routes.dart';
 
 class ProductScreen extends StatefulWidget {
   ProductScreen({Key key}) : super(key: key);
-  static final String path = "lib/src/pages/lists/list2.dart";
 
   _ProductScreen createState() => _ProductScreen();
 }
@@ -133,7 +132,7 @@ class _ProductScreen extends State<ProductScreen> {
   Widget buildList(BuildContext context, int index) {
     return GestureDetector(
       onTap: () {
-        showQuestionViH(context);
+        Navigator.of(context).pushNamed(productDetaisViewRoute);
       },
       child: Container(
         decoration: BoxDecoration(

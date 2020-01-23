@@ -61,7 +61,7 @@ class _AgenciesScreen extends State<AgenciesScreen>
               ],
             ),
             Positioned(
-              top: (MediaQuery.of(context).size.width / 1.2) - 24.0,
+              top: (MediaQuery.of(context).size.width / 1.2) - 100.0,
               bottom: 0,
               left: 0,
               right: 0,

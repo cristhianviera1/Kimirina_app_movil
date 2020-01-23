@@ -257,6 +257,8 @@ class FancyBottomNavigationItem {
 
 //Se pregunta si la persona tiene ViH
 Future<void> showQuestionViH(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool("ViHAnswer",true);
   Alert(
     context: context,
     image: Image.asset("assets/gif/kimirina_logo.gif"),
@@ -270,9 +272,7 @@ Future<void> showQuestionViH(BuildContext context) async {
             "SI",
             style: TextStyle(color: Colors.white),
           ),
-          onPressed: () async {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setBool("ViHAnswer", true);
+          onPressed: (){
               prefs.setBool("UserViH", true);
               Navigator.pop(myGlobals.scaffoldKey.currentContext);
               yesAlert(myGlobals.scaffoldKey.currentContext);
@@ -289,6 +289,7 @@ Future<void> showQuestionViH(BuildContext context) async {
               prefs.setBool("ViHAnswer", true);
               //Se guarda si el usuario tiene o no ViH
               prefs.setBool("UserViH", false);
+              Navigator.pop(context);
               noAlert(myGlobals.scaffoldKey.currentContext);
           }),
     ],
@@ -309,6 +310,7 @@ Future<Alert> noAlert(BuildContext context) {
             style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 22),
           ),
           onPressed: () {
+            Navigator.pop(context);
             Navigator.of(context).pushNamed(agenciasViewRoute);
           })
     ],

@@ -4,10 +4,7 @@ import "package:kimirina_app/widgets/network_image.dart";
 class ProductDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String image =
-        'https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/img%2F1.jpg?alt=media';
     return Scaffold(
-    
       body: SingleChildScrollView(
         child: Container(
           child: Stack(
@@ -15,10 +12,7 @@ class ProductDetailsPage extends StatelessWidget {
               Container(
                   height: 300,
                   width: double.infinity,
-                  child: PNetworkImage(
-                    image,
-                    fit: BoxFit.cover,
-                  )),
+                  child: Image.asset("assets/images/tratamiento.png")),
               Container(
                 margin: EdgeInsets.fromLTRB(16.0, 250.0, 16.0, 16.0),
                 decoration: BoxDecoration(
@@ -29,7 +23,7 @@ class ProductDetailsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Lorem ipsum dolor sit amet",
+                      "Asesoría en prevención de VIH e ITS",
                       style: Theme.of(context).textTheme.title,
                     ),
                     SizedBox(height: 10.0),

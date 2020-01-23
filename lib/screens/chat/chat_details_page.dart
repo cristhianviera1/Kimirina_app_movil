@@ -8,6 +8,13 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   bool _showBottom = false;
+  List<String> message;
+  TextEditingController textController;
+  ScrollController scrollController;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +50,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.phone),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.videocam),
-            onPressed: () {},
-          ),
           IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: () {},
@@ -94,21 +93,18 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                           child: Row(
                             children: <Widget>[
-                              IconButton(
-                                  icon: Icon(Icons.face), onPressed: () {}),
+                              SizedBox(
+                                width: 20.0,
+                              ),
                               Expanded(
                                 child: TextField(
                                   decoration: InputDecoration(
-                                      hintText: "Type Something...",
+                                      hintText: "Escribe un mensaje",
                                       border: InputBorder.none),
                                 ),
                               ),
                               IconButton(
                                 icon: Icon(Icons.photo_camera),
-                                onPressed: () {},
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.attach_file),
                                 onPressed: () {},
                               )
                             ],
@@ -122,7 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             color: morado, shape: BoxShape.circle),
                         child: InkWell(
                           child: Icon(
-                            Icons.keyboard_voice,
+                            Icons.send,
                             color: Colors.white,
                           ),
                           onLongPress: () {
@@ -175,7 +171,9 @@ class _ChatScreenState extends State<ChatScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
                               color: Colors.grey[200],
-                              border: Border.all(color: Color.fromRGBO(26, 134, 61, 1), width: 2),
+                              border: Border.all(
+                                  color: Color.fromRGBO(26, 134, 61, 1),
+                                  width: 2),
                             ),
                             child: IconButton(
                               icon: Icon(
@@ -196,6 +194,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
+
 class SentMessageWidget extends StatelessWidget {
   final int i;
   const SentMessageWidget({
@@ -327,7 +326,6 @@ class MyCircleAvatar extends StatelessWidget {
   }
 }
 
-
 List<IconData> icons = [
   Icons.image,
   Icons.camera,
@@ -338,33 +336,32 @@ List<IconData> icons = [
 
 List<Map<String, dynamic>> messages = [
   {
-    'status' : MessageType.received,
-    'contactImgUrl' : 'https://cdn.pixabay.com/photo/2015/01/08/18/29/entrepreneur-593358_960_720.jpg',
-    'contactName' : 'Client',
-    'message' : 'Hi mate, I\d like to hire you to create a mobile app for my business' ,
-    'time' : '08:43 AM'
+    'status': MessageType.sent,
+    'message': 'Hola, me podrías ayudar con algunas dudas?',
+    'time': '08:45 AM'
   },
   {
-    'status' : MessageType.sent,
-    'message' : 'Hi, I hope you are doing great!' ,
-    'time' : '08:45 AM'
+    'status': MessageType.received,
+    'contactImgUrl':
+        'https://cdn.pixabay.com/photo/2015/01/08/18/29/entrepreneur-593358_960_720.jpg',
+    'contactName': 'Brigadista',
+    'message': 'Claro, dime como puedo ayudarte',
+    'time': '08:47 AM'
   },
   {
-    'status' : MessageType.sent,
-    'message' : 'Please share with me the details of your project, as well as your time and budgets constraints.' ,
-    'time' : '08:45 AM'
+    'status': MessageType.sent,
+    'message':
+        'Tengo un poco de miedo acerca de hacerme la prueba de VIH pues hace un par de días estuve en una fiesta y la verdad no recuerdo que paso!!!',
+    'time': '08:48 AM'
   },
   {
-    'status' : MessageType.received,
-    'contactImgUrl' : 'https://cdn.pixabay.com/photo/2015/01/08/18/29/entrepreneur-593358_960_720.jpg',
-    'contactName' : 'Client',
-    'message' : 'Sure, let me send you a document that explains everything.' ,
-    'time' : '08:47 AM'
-  },
-  {
-    'status' : MessageType.sent,
-    'message' : 'Ok.' ,
-    'time' : '08:45 AM'
+    'status': MessageType.received,
+    'contactImgUrl':
+        'https://cdn.pixabay.com/photo/2015/01/08/18/29/entrepreneur-593358_960_720.jpg',
+    'contactName': 'Brigadista',
+    'message':
+        'No tienes por que tener miedo, nosotros te podemos ayudar, pero el primer paso es que te hagas la prueba, no toma nada de tiempo y es 100% confiable',
+    'time': '08:51 AM'
   },
 ];
 
@@ -448,6 +445,4 @@ List<Map<String, dynamic>> friendsList = [
   }
 ];
 
-
-
-enum MessageType {sent, received}
+enum MessageType { sent, received }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
-import 'package:kimirina_app/screens/agencies/agencias_page.dart';
+import 'package:kimirina_app/screens/agencies/test.dart';
+//import 'package:kimirina_app/screens/agencies/agencias_page.dart';
 import 'package:kimirina_app/screens/carrusel/carrusel_page.dart';
 import 'package:kimirina_app/screens/chat/chat_details_page.dart';
 import 'package:kimirina_app/screens/chat/chat_page.dart';
