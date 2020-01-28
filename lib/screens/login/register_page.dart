@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:kimirina_app/models/user_model.dart';
+import 'package:kimirina_app/models/register_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:kimirina_app/colors/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -18,6 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email;
   String _nombre;
+  String _edad;
   //String _password;
 
   @override
@@ -81,8 +85,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: naranja),
+                              shape: BoxShape.circle, color: naranja),
                         ),
                       ),
                     )),
@@ -200,6 +203,24 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     height: 10,
                   ),
+                  TextFormField(
+                    validator: validateAge,
+                    onSaved: (String val) {
+                      _edad = val;
+                    },
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      labelText: "Edad",
+                      contentPadding: new EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.height * 0.022,
+                          horizontal: 15.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: 15,
                   ),
@@ -238,8 +259,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
-                                color: naranja,
-                                shape: BoxShape.circle),
+                                color: naranja, shape: BoxShape.circle),
                             child:
                                 Icon(Icons.arrow_back, color: Colors.white))),
                   ),
@@ -260,52 +280,58 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
-//    If all data are correct then save data to out variables
+      //If all data are correct then save data to out variables
       _formKey.currentState.save();
-      User user = User(nombre: _nombre,email: _email, rol: "customer");
-      _apiService.registerUser(user).then((isSuccess) {
-        if (isSuccess) {
+      RegisterForm userReg =
+          RegisterForm(nombre: _nombre, email: _email, edad: _edad);
+      _apiService.registerUser(userReg).then((response) async {
+        if (jsonDecode(response)["error"] == false) {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          preferences.setString("userid", jsonDecode(response)["userId"]);
+          print(jsonDecode(response)["userId"]);
           return Alert(
             context: context,
             type: AlertType.success,
             title: "Registro exitoso",
-            desc: "Por favor revisa tu dirección de correo electrónico para confirmar.",
+            desc:
+                "Se ha envíado tu contraseña a tu dirección de correo.\n ¡No olvides cambiarla en tu primer inicio!",
             buttons: [
               DialogButton(
                 child: Text(
                   "Aceptar",
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                onPressed: ()=>Navigator.of(context).pushNamed(loginViewRoute),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(loginViewRoute),
                 width: 120,
               )
             ],
           ).show();
-        }else{
+        } else {
           return Alert(
-          context: context,
-          type: AlertType.error,
-          title: "El correo que ha ingresado ya se encuentra registrado",
-          desc: "¿Desea recuperar su contraseña?",
-          buttons: [
-            DialogButton(
-              child: Text(
-                "SI",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+            context: context,
+            type: AlertType.error,
+            title: "El correo que ha ingresado ya se encuentra registrado",
+            desc: "¿Desea recuperar su contraseña?",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "SI",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
               ),
-              onPressed: ()=>Navigator.pop(context), 
-              width: 120,
-            ),
-            DialogButton(
-              child: Text(
-                "NO",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              onPressed: ()=>Navigator.pop(context), 
-              width: 120,
-            )
-          ],
-        ).show();
+              DialogButton(
+                child: Text(
+                  "NO",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+              )
+            ],
+          ).show();
         }
       });
     } else {
@@ -324,6 +350,14 @@ class _SignupScreenState extends State<SignupScreen> {
       return 'Ingrese un email válido';
     else
       return null;
+  }
+
+  String validateAge(String value) {
+    if (int.parse(value) > 90 || int.parse(value) < 10) {
+      return "Ingrese una edad valida";
+    } else {
+      return null;
+    }
   }
 }
 

@@ -1,8 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/models/chat-list-response_model.dart';
+import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
+import 'package:kimirina_app/services/user_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ChatList extends StatelessWidget {
+class ChatList extends StatefulWidget {
+  @override
+  _ChatListState createState() => _ChatListState();
+}
+
+class _ChatListState extends State<ChatList> {
+  ApiService _apiService = ApiService();
+  List<ChatList> redenderChatList;
+  String selectedUserId = null;
+  List<User> chatListUsers = [];
+  List<Widget> userAvailables = new List();
+
+  bool loading = true;
+
+  @override
+  initState() {
+    getChatList();
+    super.initState();
+  }
+
+  Future getChatList() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var userId = preferences.getString("userid");
+    _apiService.getChatList(userId).then((response) {
+      renderChatList(response);
+      setState(() {
+        _userAvailable();
+      });
+      return response;
+    });
+  }
+
+  void renderChatList(ChatListResponse chatListResponse) {
+    if (chatListResponse.error == false) {
+      this.chatListUsers = chatListResponse.chatList;
+    }
+    print(this.chatListUsers);
+  }
+
+  void _userAvailable() {
+    chatListUsers
+        .map((user) => userAvailables.add(new _ChatItem(
+            user.nombre,
+            'assets/images/login.png',
+            1,
+            true,
+            'No tienes por que tener miedo, nosotros te podemos ayudar, pero el primer paso es que te hagas la prueba, no toma nada de tiempo y es 100% confiable')))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -20,12 +73,9 @@ class ChatList extends StatelessWidget {
             ],
           ),
         ),
-        _ChatItem('Carlos Acosta', 'assets/images/login.png', 1, true,
-            'No tienes por que tener miedo, nosotros te podemos ayudar, pero el primer paso es que te hagas la prueba, no toma nada de tiempo y es 100% confiable'),
-            _ChatItem('Vanessa Zambrano', 'assets/images/login.png', 0, true,
-            ''),
-            _ChatItem('Franklin Sotomayor', 'assets/images/login.png', 0, true,
-            ''),
+        Column(
+          children: userAvailables,
+        ),
         Padding(
           padding: EdgeInsets.only(top: 40.0, bottom: 10),
           child: Text(
@@ -36,6 +86,11 @@ class ChatList extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Future<String> _getUserId() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString("userid");
   }
 }
 

@@ -5,8 +5,8 @@ import 'package:kimirina_app/screens/chat/chat_page.dart';
 import 'package:kimirina_app/screens/news/news_page.dart';
 import 'package:kimirina_app/screens/product/produt_page.dart';
 import 'dart:async';
-
 import 'package:kimirina_app/screens/profile/profile_page.dart';
+import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,21 +17,42 @@ class NavBar extends StatefulWidget {
   _NavBar createState() => _NavBar();
 }
 
+
 class _NavBar extends State<NavBar> {
+
+
+  ApiService _apiService = ApiService();
   @override
   void dispose() {
     indexcontroller.close();
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   PageController pageController = PageController(initialPage: 0);
   StreamController<int> indexcontroller = StreamController<int>.broadcast();
   int index = 0;
+  @override
+  void initState() {
+    establishSocketConnection();
+    super.initState();
+  }
+
+  establishSocketConnection() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var userId = preferences.getString("userid");
+    try {
+      if (userId == '' || userId == 'undefined' || userId == null) {
+        Navigator.of(myGlobals.scaffoldKey.currentContext)
+            .pushNamed(loginViewRoute);
+      } else {
+        /* making socket connection by passing UserId. */
+        _apiService.connectSocket(userId);
+      }
+    } catch (error) {
+      print("Algo salió mal");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero, () async {
@@ -258,7 +279,7 @@ class FancyBottomNavigationItem {
 //Se pregunta si la persona tiene ViH
 Future<void> showQuestionViH(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool("ViHAnswer",true);
+  prefs.setBool("ViHAnswer", true);
   Alert(
     context: context,
     image: Image.asset("assets/gif/kimirina_logo.gif"),
@@ -272,10 +293,10 @@ Future<void> showQuestionViH(BuildContext context) async {
             "SI",
             style: TextStyle(color: Colors.white),
           ),
-          onPressed: (){
-              prefs.setBool("UserViH", true);
-              Navigator.pop(myGlobals.scaffoldKey.currentContext);
-              yesAlert(myGlobals.scaffoldKey.currentContext);
+          onPressed: () {
+            prefs.setBool("UserViH", true);
+            Navigator.pop(myGlobals.scaffoldKey.currentContext);
+            yesAlert(myGlobals.scaffoldKey.currentContext);
           }),
       DialogButton(
           color: tertyaryColor,
@@ -286,11 +307,11 @@ Future<void> showQuestionViH(BuildContext context) async {
           ),
           onPressed: () async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setBool("ViHAnswer", true);
-              //Se guarda si el usuario tiene o no ViH
-              prefs.setBool("UserViH", false);
-              Navigator.pop(context);
-              noAlert(myGlobals.scaffoldKey.currentContext);
+            prefs.setBool("ViHAnswer", true);
+            //Se guarda si el usuario tiene o no ViH
+            prefs.setBool("UserViH", false);
+            Navigator.pop(context);
+            noAlert(myGlobals.scaffoldKey.currentContext);
           }),
     ],
   ).show();
@@ -307,7 +328,8 @@ Future<Alert> noAlert(BuildContext context) {
           color: secondaryColor,
           child: Text(
             "¡Hazte la prueba!",
-            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 22),
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -358,18 +380,19 @@ Future<Alert> yesAlert(BuildContext contextYes) {
           height: 15,
         ),
         DialogButton(
-          child: Text(
-            "Todo en orden",
-            style: TextStyle(
-                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          color: tertyaryColor,
-          onPressed: () {
-            Navigator.pop(contextYes);
-            Navigator.of(contextYes).pushNamed(yesTreatmentViewRoute);
-          }           
-        )
+            child: Text(
+              "Todo en orden",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            color: tertyaryColor,
+            onPressed: () {
+              Navigator.pop(contextYes);
+              Navigator.of(contextYes).pushNamed(yesTreatmentViewRoute);
+            })
       ],
     ),
     buttons: [],

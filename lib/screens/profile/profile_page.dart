@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'form_page.dart';
 
 class CurrentProfile {
-  ApiService _apiService = ApiService();
+  /*ApiService _apiService = ApiService();
   verifyToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token") ?? null;
@@ -22,15 +22,15 @@ class CurrentProfile {
         }
       });
     }
-  }
+  }*/
 }
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero, () async {
-      CurrentProfile().verifyToken();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      //CurrentProfile().verifyToken();
+      //SharedPreferences prefs = await SharedPreferences.getInstance();
     });
     return Scaffold(
         //backgroundColor: Color.fromRGBO(255, 255, 255, .9),

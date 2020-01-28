@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/models/register_model.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
@@ -24,10 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     myFocusNode = FocusNode();
-    verifyToken();
+    //verifyToken();
   }
 
-  Future verifyToken() async {
+  /*Future verifyToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token");
     if (token != null) {
@@ -37,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       });
     }
-  }
+  }*/
 
   @override
   void dispose() {
@@ -319,19 +322,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _loginUser() {
-    User user = new User(email: _email, password: _password);
-    _apiService.loginUser(user).then((isSucces) async {
-      if (isSucces) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        var token = prefs.getString("token");
-        if (token != null) {
-          _apiService.verifyToken(token).then((isSucces) {
-            if (isSucces != null) {
-              print("Token de verificación");
-              print(isSucces);
-            }
-          });
-        }
+    RegisterForm userReg = new RegisterForm(email: _email,password: _password);
+    _apiService.loginUser(userReg).then((response) async {
+      var res =  jsonDecode(response)["error"];
+      if (res == false) {
+        print("entro alv");
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        preferences.setString("userid", jsonDecode(response)["userId"]);
         Navigator.of(context).pushNamed(navBarViewRoute);
       } else {
         return Alert(

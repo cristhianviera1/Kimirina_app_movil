@@ -1,5 +1,9 @@
 class User {
   String id;
+  String online;
+  String nombre;
+  User({this.id,this.online,this.nombre});
+  /*String id;
   String nombre;
   String email;
   String password;
@@ -28,5 +32,5 @@ class User {
     map['password'] = password;
     map['provincia'] = provincia;
     return map;
-  }
+  }*/
 }
