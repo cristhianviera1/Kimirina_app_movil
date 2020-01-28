@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
+import 'package:kimirina_app/screens/agencies/mapasPrueba.dart';
 import 'package:kimirina_app/screens/agencies/test.dart';
 //import 'package:kimirina_app/screens/agencies/agencias_page.dart';
 import 'package:kimirina_app/screens/carrusel/carrusel_page.dart';
@@ -39,6 +40,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => ChatList());
     case agenciasViewRoute:
       return MaterialPageRoute(builder: (context) => AgenciesScreen());
+      case mapsViewRoute:
+      return MaterialPageRoute(builder: (context) => MapsScreen());
     case settingsViewRoute:
       return MaterialPageRoute(builder: (context) => SettingsOnePage());
     case formViewRoute:

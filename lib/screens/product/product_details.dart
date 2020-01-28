@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/routes/routes.dart';
 import "package:kimirina_app/widgets/network_image.dart";
 
 class ProductDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: naranja,
+      ),
       body: SingleChildScrollView(
         child: Container(
           child: Stack(
@@ -37,6 +42,11 @@ class ProductDetailsPage extends StatelessWidget {
                       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis.",
                       textAlign: TextAlign.justify,
                     ),
+                    RaisedButton(
+                      onPressed: (){
+                        Navigator.of(context).pushNamed(agenciasViewRoute);
+                      },
+                    )
                   ],
                 ),
               ),

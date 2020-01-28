@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:kimirina_app/routes/routes.dart';
+import 'package:latlong/latlong.dart';
 import 'package:kimirina_app/colors/colors.dart';
 
 import 'design_course_app_theme.dart';
@@ -19,6 +22,12 @@ class AgenciesScreen extends StatelessWidget {
             SizedBox(height: 10),
             Text(
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tincidunt bibendum. Maecenas eu viverra orci. Duis diam leo, porta at justo vitae, euismod aliquam nulla.'),
+            SizedBox(height: 20,),
+            RaisedButton(
+              onPressed: (){
+               Navigator.of(context).pushNamed(mapsViewRoute);
+              },
+            )
           ],
         ),
       ),
@@ -194,6 +203,8 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
 
   MySliverAppBar({@required this.expandedHeight});
 
+  
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -217,6 +228,8 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
     );
   }
 
+  
+
   @override
   double get maxExtent => expandedHeight;
 
@@ -225,4 +238,7 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
+
+  
 }
+
