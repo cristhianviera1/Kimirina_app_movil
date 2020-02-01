@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:kimirina_app/models/ciudades_model.dart';
 import 'package:latlong/latlong.dart';
 import 'package:kimirina_app/colors/colors.dart';
 
-class MapsScreen extends StatelessWidget {
+class MapsScreen extends StatefulWidget {
     //final Agencias agencias;
-  
- // MapsScreen({Key key,@required this.agencias}):super(key:key);
+    final String agencieCity;
+    final double lat;
+    final double lng;
+    MapsScreen({Key key,@required this.agencieCity,this.lat,this.lng}):super(key:key);
 
   @override
+  _MapsScreenState createState() => _MapsScreenState();
+}
+
+class _MapsScreenState extends State<MapsScreen> {
+  @override
   Widget build(BuildContext context) {
+    print("Hail Hydra${widget.agencieCity}\n${widget.lat}-${widget.lng}");
      return Scaffold(
        appBar: AppBar(
-         title: Text("Centro Comunitario Quito"),
+         title: Text("Agencia de ${widget.agencieCity}"),
          backgroundColor: azul,
          
        ),
        body: new FlutterMap(
         options: new MapOptions(
-          center: new LatLng(-0.205294, -78.488857),
+          center: new LatLng(widget.lat,widget.lng),
           zoom: 18.0,
         ),
         layers: [
@@ -38,7 +45,7 @@ class MapsScreen extends StatelessWidget {
               new Marker(
                 width: 80.0,
                 height: 80.0,
-                point: new LatLng(-0.205294, -78.488857),
+                point: new LatLng(widget.lat, widget.lng),
                 builder: (ctx) =>
                 new Container(
                   child: Image.asset("assets/images/logoTransparente.png"),
@@ -52,7 +59,6 @@ class MapsScreen extends StatelessWidget {
      );
 
   }
-
 }
 
 /*class Agencias {
@@ -90,7 +96,7 @@ List<Map<String, dynamic>> agenciasCiudad = [
     
   },
   {
-    'ciudad': "machala",
+    'ciudad': "Machala",
     'coordenadas': '-3.260251, -79.957012'
   },
   {

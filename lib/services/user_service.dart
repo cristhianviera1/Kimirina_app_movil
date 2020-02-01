@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ApiService {
-  final String baseUrl = "http://192.168.100.220:4000";
+  final String baseUrl = "http://192.168.100.174:4000";
   static var socket;
 
   static final ApiService _apiService = new ApiService._internal();

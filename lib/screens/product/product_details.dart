@@ -42,11 +42,30 @@ class ProductDetailsPage extends StatelessWidget {
                       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis.",
                       textAlign: TextAlign.justify,
                     ),
-                    RaisedButton(
-                      onPressed: (){
+                    SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    child: GestureDetector(
+                       onTap: (){
                         Navigator.of(context).pushNamed(agenciasViewRoute);
                       },
-                    )
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.065,
+                          decoration: BoxDecoration(
+                              color: naranja,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25))),
+                          child: Center(
+                            child: Text(
+                              "Agencias",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ),
+                        )),
+                  )
+                  
                   ],
                 ),
               ),

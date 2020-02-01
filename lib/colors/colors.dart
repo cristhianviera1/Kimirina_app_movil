@@ -61,4 +61,6 @@ const chatBubbleGradient2 = const LinearGradient(
 const styleTextQuestions = const TextStyle(
   fontSize: 22,
   fontWeight: FontWeight.bold,
+
 );
+
