@@ -1,22 +1,22 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:kimirina_app/colors/colors.dart';
-import 'package:kimirina_app/models/register_model.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  bool loading = true;
   FocusNode myFocusNode;
   ApiService _apiService = ApiService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -26,25 +26,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    
     myFocusNode = FocusNode();
-    //verifyToken();
   }
-
-  /*Future verifyToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString("token");
-    if (token != null) {
-      _apiService.verifyToken(token).then((isSucces) {
-        if (isSucces != null) {
-          Navigator.of(context).pushNamed(navBarViewRoute);
-        }
-      });
-    }
-  }*/
-
   @override
   void dispose() {
-    // Clean up the focus node when the Form is disposed
     myFocusNode.dispose();
     super.dispose();
   }
@@ -262,7 +248,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: MediaQuery.of(context).size.height * 0.05,
                         child: GestureDetector(
                           onTap: () {
-                            print("signup");
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -305,7 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _value1 = false;
   bool _autoValidate = false;
-
+  ///redirect user to main screen
   void _value1Changed(bool value) => setState(() => _value1 = value);
 
   void _validateInputs() {
@@ -322,20 +307,19 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _loginUser() {
-    RegisterForm userReg = new RegisterForm(email: _email,password: _password);
+    User userReg = new User(correo: _email, password: _password);
     _apiService.loginUser(userReg).then((response) async {
-      var res =  jsonDecode(response)["error"];
-      if (res == false) {
-        print("entro alv");
+      if (response != null) {
         SharedPreferences preferences = await SharedPreferences.getInstance();
-        preferences.setString("userid", jsonDecode(response)["userId"]);
+        var tmpUsrId = jsonDecode(response)["id"];
+        preferences.setString("userid", tmpUsrId.toString());
         Navigator.of(context).pushNamed(navBarViewRoute);
       } else {
         return Alert(
           context: context,
           type: AlertType.warning,
           title: "Error al iniciar sesión",
-          desc: "Verifique su correo y contraseña.",
+          desc: "Por favor verifique que su correo y contraseña.",
           buttons: [
             DialogButton(
               child: Text(

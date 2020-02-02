@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
+import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -181,9 +182,10 @@ class _UserInfoState extends State<UserInfo> {
                         leading: Icon(FontAwesomeIcons.powerOff),
                         title: Text("Cerrar Sesión"),
                         onTap: () async {
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          prefs.setString("token", null);
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          var userId = prefs.getString("userid");
+                          Provider.of<ApiService>(context,listen: false).logout(userId);
+                          prefs.remove("userid");
                           Navigator.of(context).pushNamed(loginViewRoute);
                         },
                       ),

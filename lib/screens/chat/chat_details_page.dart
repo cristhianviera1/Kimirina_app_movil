@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:flutter_socket_io/flutter_socket_io.dart';
+import 'package:flutter_socket_io/socket_io_manager.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -7,442 +10,147 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  bool _showBottom = false;
-  List<String> message;
+  SocketIO socketIO;
+  List<String> messages;
+  double height, width;
   TextEditingController textController;
   ScrollController scrollController;
+
   @override
   void initState() {
+    //Initializing the message list
+    messages = List<String>();
+    //Initializing the TextEditingController and ScrollController
+    textController = TextEditingController();
+    scrollController = ScrollController();
+    //Creating the socket
+    /*socketIO = SocketIOManager().createSocketIO(
+      "http://192.168.0.103:4003", 
+      "/", 
+    );*/
+
+    socketIO = SocketIOManager().createSocketIO(
+      'https://kimirinachat.herokuapp.com/',
+      '/',
+    );
+    //Call init before doing anything with socket
+    socketIO.init();
+    //Subscribe to an event to listen to
+    socketIO.subscribe('receive_message', (jsonData) {
+      //Convert the JSON data received into a Map
+      Map<String, dynamic> data = json.decode(jsonData);
+      this.setState(() => messages.add(data['message']));
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 600),
+        curve: Curves.ease,
+      );
+    });
+    //Connect to the socket
+    socketIO.connect();
     super.initState();
   }
 
+  Widget buildSingleMessage(int index) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        padding: const EdgeInsets.all(20.0),
+        margin: const EdgeInsets.only(bottom: 20.0, left: 20.0),
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Text(
+          messages[index],
+          style: TextStyle(color: Colors.white, fontSize: 15.0),
+        ),
+      ),
+    );
+  }
+
+  Widget buildMessageList() {
+    return Container(
+      height: height * 0.8,
+      width: width,
+      child: ListView.builder(
+        controller: scrollController,
+        itemCount: messages.length,
+        itemBuilder: (BuildContext context, int index) {
+          return buildSingleMessage(index);
+        },
+      ),
+    );
+  }
+
+  Widget buildChatInput() {
+    return Container(
+      width: width * 0.7,
+      padding: const EdgeInsets.all(2.0),
+      margin: const EdgeInsets.only(left: 40.0),
+      child: TextField(
+        decoration: InputDecoration.collapsed(
+          hintText: 'Send a message...',
+        ),
+        controller: textController,
+      ),
+    );
+  }
+
+  Widget buildSendButton() {
+    return FloatingActionButton(
+      backgroundColor: Colors.deepPurple,
+      onPressed: () {
+        //Check if the textfield has text or not
+        if (textController.text.isNotEmpty) {
+          //Send the message as JSON data to send_message event
+          socketIO.sendMessage(
+              'send_message', json.encode({'message': textController.text}));
+          //Add the message to the list
+          this.setState(() => messages.add(textController.text));
+          textController.text = '';
+          //Scrolldown the list to show the latest message
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: Duration(milliseconds: 600),
+            curve: Curves.ease,
+          );
+        }
+      },
+      child: Icon(
+        Icons.send,
+        size: 30,
+      ),
+    );
+  }
+
+  Widget buildInputArea() {
+    return Container(
+      height: height * 0.1,
+      width: width,
+      child: Row(
+        children: <Widget>[
+          buildChatInput(),
+          buildSendButton(),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black54),
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
+      body: SingleChildScrollView(
+        child: Column(
           children: <Widget>[
-            MyCircleAvatar(
-              imgUrl: friendsList[0]['imgUrl'],
-            ),
-            SizedBox(width: 15),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Cybdom Tech",
-                  style: Theme.of(context).textTheme.subhead,
-                  overflow: TextOverflow.clip,
-                ),
-                Text(
-                  "Online",
-                  style: Theme.of(context).textTheme.subtitle.apply(
-                        color: Color.fromRGBO(26, 134, 61, 1),
-                      ),
-                )
-              ],
-            )
+            SizedBox(height: height * 0.1),
+            buildMessageList(),
+            buildInputArea(),
           ],
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Stack(
-        children: <Widget>[
-          Positioned.fill(
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(15),
-                    itemCount: messages.length,
-                    itemBuilder: (ctx, i) {
-                      if (messages[i]['status'] == MessageType.received) {
-                        return ReceivedMessagesWidget(i: i);
-                      } else {
-                        return SentMessageWidget(i: i);
-                      }
-                    },
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(15.0),
-                  height: 61,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(35.0),
-                            boxShadow: [
-                              BoxShadow(
-                                  offset: Offset(0, 3),
-                                  blurRadius: 5,
-                                  color: Colors.grey)
-                            ],
-                          ),
-                          child: Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 20.0,
-                              ),
-                              Expanded(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      hintText: "Escribe un mensaje",
-                                      border: InputBorder.none),
-                                ),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.photo_camera),
-                                onPressed: () {},
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 15),
-                      Container(
-                        padding: const EdgeInsets.all(15.0),
-                        decoration: BoxDecoration(
-                            color: morado, shape: BoxShape.circle),
-                        child: InkWell(
-                          child: Icon(
-                            Icons.send,
-                            color: Colors.white,
-                          ),
-                          onLongPress: () {
-                            setState(() {
-                              _showBottom = true;
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Positioned.fill(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _showBottom = false;
-                });
-              },
-            ),
-          ),
-          _showBottom
-              ? Positioned(
-                  bottom: 90,
-                  left: 25,
-                  right: 25,
-                  child: Container(
-                    padding: EdgeInsets.all(25.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 5),
-                            blurRadius: 15.0,
-                            color: Colors.grey)
-                      ],
-                    ),
-                    child: GridView.count(
-                      mainAxisSpacing: 21.0,
-                      crossAxisSpacing: 21.0,
-                      shrinkWrap: true,
-                      crossAxisCount: 3,
-                      children: List.generate(
-                        icons.length,
-                        (i) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: Colors.grey[200],
-                              border: Border.all(
-                                  color: Color.fromRGBO(26, 134, 61, 1),
-                                  width: 2),
-                            ),
-                            child: IconButton(
-                              icon: Icon(
-                                icons[i],
-                                color: Color.fromRGBO(26, 134, 61, 1),
-                              ),
-                              onPressed: () {},
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                )
-              : Container(),
-        ],
       ),
     );
   }
 }
-
-class SentMessageWidget extends StatelessWidget {
-  final int i;
-  const SentMessageWidget({
-    Key key,
-    this.i,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Text(
-            "${messages[i]['time']}",
-            style: Theme.of(context).textTheme.body2.apply(color: Colors.grey),
-          ),
-          SizedBox(width: 15),
-          Container(
-            constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * .6),
-            padding: const EdgeInsets.all(15.0),
-            decoration: BoxDecoration(
-              color: azul,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25),
-                topRight: Radius.circular(25),
-                bottomLeft: Radius.circular(25),
-              ),
-            ),
-            child: Text(
-              "${messages[i]['message']}",
-              style: Theme.of(context).textTheme.body2.apply(
-                    color: Colors.white,
-                  ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ReceivedMessagesWidget extends StatelessWidget {
-  final int i;
-  const ReceivedMessagesWidget({
-    Key key,
-    @required this.i,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7.0),
-      child: Row(
-        children: <Widget>[
-          MyCircleAvatar(
-            imgUrl: messages[i]['contactImgUrl'],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "${messages[i]['contactName']}",
-                style: Theme.of(context).textTheme.caption,
-              ),
-              Container(
-                constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * .6),
-                padding: const EdgeInsets.all(15.0),
-                decoration: BoxDecoration(
-                  color: Color(0xfff9f9f9),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(25),
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25),
-                  ),
-                ),
-                child: Text(
-                  "${messages[i]['message']}",
-                  style: Theme.of(context).textTheme.body1.apply(
-                        color: Colors.black87,
-                      ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(width: 15),
-          Text(
-            "${messages[i]['time']}",
-            style: Theme.of(context).textTheme.body2.apply(color: Colors.grey),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MyCircleAvatar extends StatelessWidget {
-  final String imgUrl;
-  const MyCircleAvatar({
-    Key key,
-    @required this.imgUrl,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: Colors.white,
-          width: 3,
-        ),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey.withOpacity(.3),
-              offset: Offset(0, 2),
-              blurRadius: 5)
-        ],
-      ),
-      child: CircleAvatar(
-        backgroundImage: NetworkImage("$imgUrl"),
-      ),
-    );
-  }
-}
-
-List<IconData> icons = [
-  Icons.image,
-  Icons.camera,
-  Icons.file_upload,
-  Icons.folder,
-  Icons.gif
-];
-
-List<Map<String, dynamic>> messages = [
-  {
-    'status': MessageType.sent,
-    'message': 'Hola, me podrías ayudar con algunas dudas?',
-    'time': '08:45 AM'
-  },
-  {
-    'status': MessageType.received,
-    'contactImgUrl':
-        'https://cdn.pixabay.com/photo/2015/01/08/18/29/entrepreneur-593358_960_720.jpg',
-    'contactName': 'Brigadista',
-    'message': 'Claro, dime como puedo ayudarte',
-    'time': '08:47 AM'
-  },
-  {
-    'status': MessageType.sent,
-    'message':
-        'Tengo un poco de miedo acerca de hacerme la prueba de VIH pues hace un par de días estuve en una fiesta y la verdad no recuerdo que paso!!!',
-    'time': '08:48 AM'
-  },
-  {
-    'status': MessageType.received,
-    'contactImgUrl':
-        'https://cdn.pixabay.com/photo/2015/01/08/18/29/entrepreneur-593358_960_720.jpg',
-    'contactName': 'Brigadista',
-    'message':
-        'No tienes por que tener miedo, nosotros te podemos ayudar, pero el primer paso es que te hagas la prueba, no toma nada de tiempo y es 100% confiable',
-    'time': '08:51 AM'
-  },
-];
-
-List<Map<String, dynamic>> friendsList = [
-  {
-    'imgUrl':
-        'https://cdn.pixabay.com/photo/2019/11/06/17/26/gear-4606749_960_720.jpg',
-    'username': 'Cybdom Tech',
-    'lastMsg': 'Hey, checkout my website: cybdom.tech ;)',
-    'seen': true,
-    'hasUnSeenMsgs': false,
-    'unseenCount': 0,
-    'lastMsgTime': '18:44',
-    'isOnline': true
-  },
-  {
-    'imgUrl':
-        'https://cdn.pixabay.com/photo/2019/11/11/04/33/africa-4617142_960_720.jpg',
-    'username': 'Flutter Dev',
-    'lastMsg': 'Hey, checkout my website: cybdom.tech ;)',
-    'seen': false,
-    'hasUnSeenMsgs': false,
-    'unseenCount': 0,
-    'lastMsgTime': '18:44',
-    'isOnline': false
-  },
-  {
-    'imgUrl':
-        'https://cdn.pixabay.com/photo/2019/11/05/08/52/adler-4603104_960_720.jpg',
-    'username': 'Dart Dev',
-    'lastMsg': 'Hey, checkout my website: cybdom.tech ;)',
-    'seen': false,
-    'hasUnSeenMsgs': true,
-    'unseenCount': 3,
-    'lastMsgTime': '18:44',
-    'isOnline': true
-  },
-  {
-    'imgUrl':
-        'https://cdn.pixabay.com/photo/2015/02/04/08/03/baby-623417_960_720.jpg',
-    'username': 'Designer',
-    'lastMsg': 'Hey, checkout my website: cybdom.tech ;)',
-    'seen': true,
-    'hasUnSeenMsgs': true,
-    'unseenCount': 2,
-    'lastMsgTime': '18:44',
-    'isOnline': true
-  },
-  {
-    'imgUrl':
-        'https://cdn.pixabay.com/photo/2012/03/04/01/01/baby-22194_960_720.jpg',
-    'username': 'FrontEnd Dev',
-    'lastMsg': 'Hey, checkout my website: cybdom.tech ;)',
-    'seen': false,
-    'hasUnSeenMsgs': true,
-    'unseenCount': 4,
-    'lastMsgTime': '18:44',
-    'isOnline': true
-  },
-  {
-    'imgUrl':
-        'https://cdn.pixabay.com/photo/2015/01/08/18/29/entrepreneur-593358_960_720.jpg',
-    'username': 'Full Stack Dev',
-    'lastMsg': 'Hey, checkout my website: cybdom.tech ;)',
-    'seen': false,
-    'hasUnSeenMsgs': false,
-    'unseenCount': 0,
-    'lastMsgTime': '18:44',
-    'isOnline': true
-  },
-  {
-    'imgUrl':
-        'https://cdn.pixabay.com/photo/2015/01/08/18/29/entrepreneur-593358_960_720.jpg',
-    'username': 'Backend Dev',
-    'lastMsg': 'Hey, checkout my website: cybdom.tech ;)',
-    'seen': false,
-    'hasUnSeenMsgs': true,
-    'unseenCount': 3,
-    'lastMsgTime': '18:44',
-    'isOnline': true
-  }
-];
-
-enum MessageType { sent, received }

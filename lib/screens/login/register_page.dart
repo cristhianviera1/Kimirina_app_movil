@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:kimirina_app/models/register_model.dart';
+import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -282,8 +282,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_formKey.currentState.validate()) {
       //If all data are correct then save data to out variables
       _formKey.currentState.save();
-      RegisterForm userReg =
-          RegisterForm(nombre: _nombre, email: _email, edad: _edad);
+      User userReg = User(nombre: _nombre, correo: _email, edad: _edad);
       _apiService.registerUser(userReg).then((response) async {
         if (jsonDecode(response)["error"] == false) {
           SharedPreferences preferences = await SharedPreferences.getInstance();

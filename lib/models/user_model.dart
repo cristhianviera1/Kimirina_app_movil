@@ -1,36 +1,32 @@
 class User {
   String id;
-  String online;
   String nombre;
-  User({this.id,this.online,this.nombre});
-  /*String id;
-  String nombre;
-  String email;
+  String correo;
   String password;
+  String edad;
+  String genero;
   String imagen;
-  String telefono;
-  String provincia;
-  String rol;
-  User({this.id, this.nombre, this.email, this.password,this.provincia,this.rol});
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      nombre: json['nombre'],
-      email: json['email'],
-      password: json['password'],
-      provincia: json['provincia'],
-    );
-  }
+  bool online;
+  User(
+      {
+      this.id,
+      this.nombre,
+      this.correo,
+      this.password,
+      this.edad,
+      this.genero,
+      this.imagen,
+      this.online});
   Map<String, dynamic> toJson() {
-    return {"id": id, "nombre": nombre, "email": email, "password": password,"provincia":provincia};
+    return {
+      "id":this.id,
+      "nombre":this.nombre,
+      "correo":this.correo,
+      "password":this.password,
+      "edad":this.edad,
+      "genero":this.genero,
+      "imagen":this.imagen,
+      "online":this.online
+    };
   }
-  Map toMap() {
-    var map = new Map<String, dynamic>();
-    map['id'] = id;
-    map['nombre'] = nombre;
-    map['email'] = email;
-    map['password'] = password;
-    map['provincia'] = provincia;
-    return map;
-  }*/
 }

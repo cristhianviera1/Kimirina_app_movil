@@ -9,7 +9,6 @@ import 'package:kimirina_app/screens/profile/profile_page.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../routes/routes.dart';
 
 class NavBar extends StatefulWidget {
@@ -17,10 +16,7 @@ class NavBar extends StatefulWidget {
   _NavBar createState() => _NavBar();
 }
 
-
 class _NavBar extends State<NavBar> {
-
-
   ApiService _apiService = ApiService();
   @override
   void dispose() {
@@ -28,12 +24,21 @@ class _NavBar extends State<NavBar> {
     super.dispose();
   }
 
+  SharedPreferences sharedPrefs;
+  var socket;
+  String userId;
   PageController pageController = PageController(initialPage: 0);
   StreamController<int> indexcontroller = StreamController<int>.broadcast();
   int index = 0;
   @override
   void initState() {
     establishSocketConnection();
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        sharedPrefs = prefs;
+        this.userId = sharedPrefs.getString("userid");
+      });
+    });
     super.initState();
   }
 
@@ -109,6 +114,10 @@ class _NavBar extends State<NavBar> {
             );
           }),
     );
+  }
+
+  void render(response) {
+    print(response);
   }
 }
 

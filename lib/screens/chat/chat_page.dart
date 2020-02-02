@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/colors/colors.dart';
-import 'package:kimirina_app/models/chat-list-response_model.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ChatList extends StatefulWidget {
   @override
@@ -12,52 +14,35 @@ class ChatList extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatList> {
-  ApiService _apiService = ApiService();
-  List<ChatList> redenderChatList;
-  String selectedUserId = null;
-  List<User> chatListUsers = [];
   List<Widget> userAvailables = new List();
-
+  List<User> userChatList = new List();
   bool loading = true;
-
+  bool firstChats = true;
+  SharedPreferences sharedPrefs;
+  String userId;
+  var socket;
   @override
   initState() {
-    getChatList();
-    super.initState();
-  }
-
-  Future getChatList() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    var userId = preferences.getString("userid");
-    _apiService.getChatList(userId).then((response) {
-      renderChatList(response);
+    SharedPreferences.getInstance().then((prefs) {
       setState(() {
-        _userAvailable();
+        sharedPrefs = prefs;
+        this.userId = sharedPrefs.getString("userid");
       });
-      return response;
     });
-  }
-
-  void renderChatList(ChatListResponse chatListResponse) {
-    if (chatListResponse.error == false) {
-      this.chatListUsers = chatListResponse.chatList;
-    }
-    print(this.chatListUsers);
-  }
-
-  void _userAvailable() {
-    chatListUsers
-        .map((user) => userAvailables.add(new _ChatItem(
-            user.nombre,
-            'assets/images/login.png',
-            1,
-            true,
-            'No tienes por que tener miedo, nosotros te podemos ayudar, pero el primer paso es que te hagas la prueba, no toma nada de tiempo y es 100% confiable')))
-        .toList();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    //Ejecuta la función para traer los chats
+    Provider.of<ApiService>(context).getChatList(userId);
+    //print(Provider.of<ApiService>(context).chatListUsers);
+    //Escucha los cambios del chat
+    //var tmpUserChatList = Provider.of<ApiService>(context).chatListUsers;
+    /*if (tmpUserChatList != null) {
+            //print(tmpUserChatList);
+          }*/
+    //Retorna el widget
     return ListView(
       children: <Widget>[
         Padding(
@@ -73,9 +58,8 @@ class _ChatListState extends State<ChatList> {
             ],
           ),
         ),
-        Column(
-          children: userAvailables,
-        ),
+        _ChatItem("Gabriel", " assets/images/profile.jpg", 0, true, ""),
+        //Column(children: userAvailables),
         Padding(
           padding: EdgeInsets.only(top: 40.0, bottom: 10),
           child: Text(
@@ -86,11 +70,6 @@ class _ChatListState extends State<ChatList> {
         )
       ],
     );
-  }
-
-  Future<String> _getUserId() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString("userid");
   }
 }
 
