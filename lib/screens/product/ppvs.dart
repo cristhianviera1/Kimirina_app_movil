@@ -3,7 +3,7 @@ import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import "package:kimirina_app/widgets/network_image.dart";
 
-class ProductDetailsPage extends StatelessWidget {
+class PpvsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,7 @@ class ProductDetailsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Asesoría en prevención de VIH e ITS",
+                      "Programa de atencion a PPVS",
                       style: Theme.of(context).textTheme.title,
                     ),
                     SizedBox(height: 10.0),
@@ -39,7 +39,7 @@ class ProductDetailsPage extends StatelessWidget {
                       height: 10.0,
                     ),
                     Text(
-                      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis.",
+                      "Kimirina oferta servicios de asesoría, atención y control de PPVS, preferentemente a migrantes que se encuentren en situación de tránsito dentro del territorio nacional, con la intención de brindar información relacionada al cuidado, la protección y el tratamiento del VIH.",
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(

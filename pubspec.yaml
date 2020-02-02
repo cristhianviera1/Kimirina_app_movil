@@ -37,6 +37,8 @@ dependencies:
   flutter_form_builder:
   flare_flutter: ^2.0.1
   provider:
+  flutter_map: ^0.8.2
+  image_picker: ^0.6.1+4
 
 dev_dependencies:
   flutter_launcher_icons:
@@ -91,6 +93,15 @@ flutter:
     - assets/images/questionBlue.png
     - assets/images/logoTransparente.png
     - assets/images/mapKimirina.png
+    - assets/images/agencia.png
+    - assets/images/usuario.png
+    - assets/images/npep.jpg
+    - assets/images/ppvs.png
+    - assets/images/atencionIts.png
+    - assets/images/npepdetails.jpg
+    - assets/images/prepdetails.jpg
+    - assets/images/pruebaIts.jpg
+    - assets/images/pruebaVih.jpg
 
 
 

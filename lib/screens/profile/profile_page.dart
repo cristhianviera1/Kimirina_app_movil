@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/colors/colors.dart';
@@ -6,6 +9,8 @@ import 'package:kimirina_app/services/user_service.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 import 'form_page.dart';
 
@@ -26,9 +31,54 @@ class CurrentProfile {
   }*/
 }
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  File _pickedImage;
+  File _decode;
+  bool _imagePicked = false;
   @override
   Widget build(BuildContext context) {
+    void _pickImage() async {
+      final imageSource = await showDialog<ImageSource>(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("Select the image source"),
+                actions: <Widget>[
+                  MaterialButton(
+                    child: Text("Camera"),
+                    onPressed: () => Navigator.pop(context, ImageSource.camera),
+                  ),
+                  MaterialButton(
+                    child: Text("Gallery"),
+                    onPressed: () =>
+                        Navigator.pop(context, ImageSource.gallery),
+                  )
+                ],
+              ));
+      if (imageSource != null) {
+        print(imageSource);
+        final file = await ImagePicker.pickImage(source: imageSource);
+        if (file != null) {
+          setState(() {
+            print("Una imagen si fue seleccionada");
+            _pickedImage = file;
+            _decode = file;
+            _imagePicked = true;
+            List<int> imageBytes = file.readAsBytesSync();
+            print(imageBytes);
+            String base64Image = base64Encode(imageBytes);
+            print(base64Image);
+            Uint8List decoded = base64Decode(base64Image);
+            print(decoded);
+          });
+        }
+      }
+    }
+
     Future.delayed(Duration.zero, () async {
       //CurrentProfile().verifyToken();
       //SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -36,59 +86,70 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
         //backgroundColor: Color.fromRGBO(255, 255, 255, .9),
         body: SafeArea(
-          child: ListView(
+      child: ListView(
+        children: <Widget>[
+          Stack(
             children: <Widget>[
-              Stack(
+              Container(
+                width: double.infinity,
+                height: 330,
+                color: morado,
+              ),
+              Positioned(
+                top: 10,
+                right: 30,
+                child: FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    child: Icon(
+                      Icons.settings,
+                      color: Colors.white,
+                    ),
+                    elevation: 50.0,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(settingsViewRoute);
+                    }),
+              ),
+              Column(
                 children: <Widget>[
                   Container(
-                    width: double.infinity,
-                    height: 330,
-                    color: morado,
+                    height: 150,
+                    margin: EdgeInsets.only(top: 60),
+                    padding: EdgeInsets.all(20.0),
+                    
+                    child: GestureDetector(
+                      onTap: () {
+                        _pickImage();
+                      },
+                      child: _imagePicked == false
+                          ? Image.asset("assets/images/usuario.png")
+                          : Image(image: new  FileImage(_decode)),
+                    ),
+                    //decoration: new BoxDecoration(
+
+                    //image: new DecorationImage(
+                    //  image: new FileImage(_pickedImage)
+                    //  )
+                    // ),
                   ),
-                  Positioned(
-                    top: 10,
-                    right: 30,
-                    child: FloatingActionButton(
-                        backgroundColor: Colors.transparent,
-                        child: Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                        ),
-                        elevation: 50.0,
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(settingsViewRoute);
-                        }),
+                  Padding(
+                    padding: EdgeInsets.all(4),
                   ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                          height: 100,
-                          margin: EdgeInsets.only(top: 60),
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.white,
-                            backgroundImage: NetworkImage(
-                                'https://ktusu.com/admin/uploads/slider/836295524.jpg'),
-                          )),
-                      Padding(
-                        padding: EdgeInsets.all(4),
-                      ),
-                      Text(
-                        "Gabriel Viera",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20),
-                        textAlign: TextAlign.center,
-                      ),
-                      UserInfo()
-                    ],
-                  )
+                  Text(
+                    "Gabriel Viera",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                  UserInfo()
                 ],
-              ),
+              )
             ],
           ),
-        ));
+        ],
+      ),
+    ));
   }
 }
 
@@ -160,7 +221,7 @@ class _UserInfoState extends State<UserInfo> {
                                       }).toList(),
                                       onChanged: (String newValue) {
                                         _provincia = newValue;
-                                        setState(() {});
+                                        //setState(() {});
                                         Navigator.pop(context);
                                       },
                                     ),

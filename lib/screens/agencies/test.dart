@@ -1,48 +1,130 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:kimirina_app/routes/routes.dart';
+import 'package:latlong/latlong.dart';
 import 'package:kimirina_app/colors/colors.dart';
 
 import 'design_course_app_theme.dart';
+import 'mapasPrueba.dart';
 
 class AgenciesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _card1 = Card(
       child: Padding(
-        padding: EdgeInsets.only(top: 36.0, left: 6.0, right: 6.0, bottom: 6.0),
+        padding: EdgeInsets.only(top: 5.0, left: 6.0, right: 6.0, bottom: 0.0),
         child: ExpansionTile(
           title: Text(
             'Quito',
             style: styleTextQuestions,
           ),
           children: <Widget>[
-            Image.asset("assets/images/mapKimirina.png"),
+            Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-            Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tincidunt bibendum. Maecenas eu viverra orci. Duis diam leo, porta at justo vitae, euismod aliquam nulla.'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                ' - Asesoría en Prevención de VIH e ITS',
+                textAlign: TextAlign.left, ),
+                Text(
+                ' - Pruebas Rápidad VIH'),
+                Text(
+                ' - Pruebas para ITS'),
+                Text(
+                ' - Asesoria, vinculación a tratamiento VIH'),
+                Text(
+                ' - Tratamiento ITS'),
+                Text(
+                ' - PREP'),
+                Text(
+                ' - Condones'),
+                Text(
+                ' - Lubricantes'),
+              ],
+            ),
+            
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FloatingActionButton(
+                  heroTag: "btn",
+                    backgroundColor: azul,
+                    child: const Icon(Icons.map),
+                    onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => MapsScreen(
+                                agencieCity: "Quito",
+                                lat: -0.205294,
+                                lng: -78.488857)));
+                    //Navigator.of(context).pushNamed(mapsViewRoute);
+                  })
+                ,SizedBox(height: 30)
+              ],
+            ),
           ],
         ),
       ),
     );
     final _card2 = Card(
       child: Padding(
-        padding: EdgeInsets.only(top: 36.0, left: 6.0, right: 6.0, bottom: 6.0),
+        padding: EdgeInsets.only(top: 5.0, left: 6.0, right: 6.0, bottom: 0.0),
         child: ExpansionTile(
           title: Text(
             'Guayaquil',
             style: styleTextQuestions,
           ),
           children: <Widget>[
-            Image.asset("assets/images/mapKimirina.png"),
+            Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-            Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tincidunt bibendum. Maecenas eu viverra orci. Duis diam leo, porta at justo vitae, euismod aliquam nulla.'),
+             Column(
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                ' - Asesoría en Prevención de VIH e ITS',
+                textAlign: TextAlign.left, ),
+                Text(
+                ' - Pruebas Rápidad VIH'),
+                Text(
+                ' - Pruebas para ITS'),
+                Text(
+                ' - Asesoria, vinculación a tratamiento VIH'),
+                Text(
+                ' - Tratamiento ITS'),
+                Text(
+                ' - PREP'),
+                Text(
+                ' - Condones'),
+                Text(
+                ' - Lubricantes'),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FloatingActionButton(
+                  heroTag: "btn1",
+                    backgroundColor: azul,
+                    child: const Icon(Icons.map),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MapsScreen(
+                                  agencieCity: "Guayaquil",
+                                  lat: -2.191523,
+                                  lng: -79.883687)));
+                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                    })
+              ],
+            ),
           ],
         ),
       ),
     );
     final _card3 = Card(
       child: Padding(
-        padding: EdgeInsets.only(top: 36.0, left: 6.0, right: 6.0, bottom: 6.0),
+        padding: EdgeInsets.only(top: 5.0, left: 6.0, right: 6.0, bottom: 0.0),
         child: ExpansionTile(
           title: Text(
             'Machala',
@@ -50,78 +132,268 @@ class AgenciesScreen extends StatelessWidget {
           ),
           initiallyExpanded: false,
           children: <Widget>[
-            Image.asset("assets/images/mapKimirina.png"),
+            Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-            Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tincidunt bibendum. Maecenas eu viverra orci. Duis diam leo, porta at justo vitae, euismod aliquam nulla.'),
+             Column(
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                ' - Asesoría en Prevención de VIH e ITS',
+                textAlign: TextAlign.left, ),
+                Text(
+                ' - Pruebas Rápidad VIH'),
+                Text(
+                ' - Pruebas para ITS'),
+                Text(
+                ' - Asesoria, vinculación a tratamiento VIH'),
+                Text(
+                ' - Tratamiento ITS'),
+                Text(
+                ' - PREP'),
+                Text(
+                ' - Condones'),
+                Text(
+                ' - Lubricantes'),
+              ],
+            ),
+           Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FloatingActionButton(
+                  heroTag: "btn2",
+                    backgroundColor: azul,
+                    child: const Icon(Icons.map),
+                     onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MapsScreen(
+                            agencieCity: " Machala",
+                            lat: -3.260251,
+                            lng: -79.957012)));
+                //Navigator.of(context).pushNamed(mapsViewRoute);
+              })
+              ],
+            ),
           ],
         ),
       ),
     );
     final _card4 = Card(
       child: Padding(
-        padding: EdgeInsets.only(top: 36.0, left: 6.0, right: 6.0, bottom: 6.0),
+        padding: EdgeInsets.only(top: 5.0, left: 6.0, right: 6.0, bottom: 0.0),
         child: ExpansionTile(
           title: Text(
             'Esmeraldas',
             style: styleTextQuestions,
           ),
           children: <Widget>[
-            Image.asset("assets/images/mapKimirina.png"),
+            Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-            Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tincidunt bibendum. Maecenas eu viverra orci. Duis diam leo, porta at justo vitae, euismod aliquam nulla.'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                ' - Asesoría en Prevención de VIH e ITS',
+                textAlign: TextAlign.left, ),
+                Text(
+                ' - Pruebas Rápidad VIH'),
+                Text(
+                ' - Pruebas para ITS'),
+                Text(
+                ' - Asesoria, vinculación a tratamiento VIH'),
+                Text(
+                ' - Tratamiento ITS'),
+                Text(
+                ' - PREP'),
+                Text(
+                ' - Condones'),
+                Text(
+                ' - Lubricantes'),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FloatingActionButton(
+                  heroTag: "btn3",
+                    backgroundColor: azul,
+                    child: const Icon(Icons.map),
+                     onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MapsScreen(
+                            agencieCity: " Esmeraldas",
+                            lat: -3.260251,
+                            lng: -79.957012)));
+                //Navigator.of(context).pushNamed(mapsViewRoute);
+              })
+              ],
+            ),
           ],
         ),
       ),
     );
     final _card5 = Card(
       child: Padding(
-        padding: EdgeInsets.only(top: 36.0, left: 6.0, right: 6.0, bottom: 6.0),
+        padding: EdgeInsets.only(top: 5.0, left: 6.0, right: 6.0, bottom: 0.0),
         child: ExpansionTile(
           title: Text(
             'Portoviejo',
             style: styleTextQuestions,
           ),
           children: <Widget>[
-            Image.asset("assets/images/mapKimirina.png"),
+            Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-            Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tincidunt bibendum. Maecenas eu viverra orci. Duis diam leo, porta at justo vitae, euismod aliquam nulla.'),
+             Column(
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                ' - Asesoría en Prevención de VIH e ITS',
+                textAlign: TextAlign.left, ),
+                Text(
+                ' - Pruebas Rápidad VIH'),
+                Text(
+                ' - Pruebas para ITS'),
+                Text(
+                ' - Asesoria, vinculación a tratamiento VIH'),
+                Text(
+                ' - Tratamiento ITS'),
+                Text(
+                ' - PREP'),
+                Text(
+                ' - Condones'),
+                Text(
+                ' - Lubricantes'),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FloatingActionButton(
+                  heroTag: "btn4",
+                    backgroundColor: azul,
+                    child: const Icon(Icons.map),
+                    onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MapsScreen(
+                            agencieCity: " Portoviejo",
+                            lat: -3.260251,
+                            lng: -79.957012)));
+                //Navigator.of(context).pushNamed(mapsViewRoute);
+              })
+              ],
+            ),
           ],
         ),
       ),
     );
     final _card6 = Card(
       child: Padding(
-        padding: EdgeInsets.only(top: 36.0, left: 6.0, right: 6.0, bottom: 6.0),
+        padding: EdgeInsets.only(top: 5.0, left: 6.0, right: 6.0, bottom: 0.0),
         child: ExpansionTile(
           title: Text(
             'Santo Domingo',
             style: styleTextQuestions,
           ),
           children: <Widget>[
-            Image.asset("assets/images/mapKimirina.png"),
+            Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-            Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tincidunt bibendum. Maecenas eu viverra orci. Duis diam leo, porta at justo vitae, euismod aliquam nulla.'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                ' - Asesoría en Prevención de VIH e ITS',
+                textAlign: TextAlign.left, ),
+                Text(
+                ' - Pruebas Rápidad VIH'),
+                Text(
+                ' - Pruebas para ITS'),
+                Text(
+                ' - Asesoria, vinculación a tratamiento VIH'),
+                Text(
+                ' - Tratamiento ITS'),
+                Text(
+                ' - PREP'),
+                Text(
+                ' - Condones'),
+                Text(
+                ' - Lubricantes'),
+              ],
+            ),
+             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FloatingActionButton(
+                  heroTag: "btn5",
+                    backgroundColor: azul,
+                    child: const Icon(Icons.map),
+                    onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MapsScreen(
+                            agencieCity: " Santo Domingo",
+                            lat: -3.260251,
+                            lng: -79.957012)));
+                //Navigator.of(context).pushNamed(mapsViewRoute);
+              })
+              ],
+            ),
           ],
         ),
       ),
     );
     final _card7 = Card(
       child: Padding(
-        padding: EdgeInsets.only(top: 36.0, left: 6.0, right: 6.0, bottom: 6.0),
+        padding: EdgeInsets.only(top: 5.0, left: 6.0, right: 6.0, bottom: 0.0),
         child: ExpansionTile(
           title: Text(
             'Santa Elena',
             style: styleTextQuestions,
           ),
           children: <Widget>[
-            Image.asset("assets/images/mapKimirina.png"),
+            Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-            Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tincidunt bibendum. Maecenas eu viverra orci. Duis diam leo, porta at justo vitae, euismod aliquam nulla.'),
+             Column(
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                ' - Asesoría en Prevención de VIH e ITS',
+                textAlign: TextAlign.left, ),
+                Text(
+                ' - Pruebas Rápidad VIH'),
+                Text(
+                ' - Pruebas para ITS'),
+                Text(
+                ' - Asesoria, vinculación a tratamiento VIH'),
+                Text(
+                ' - Tratamiento ITS'),
+                Text(
+                ' - PREP'),
+                Text(
+                ' - Condones'),
+                Text(
+                ' - Lubricantes'),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FloatingActionButton(
+                  heroTag: "btn6",
+                    backgroundColor: azul,
+                    child: const Icon(Icons.map),
+                    onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MapsScreen(
+                            agencieCity: " Santa Elena",
+                            lat: -3.260251,
+                            lng: -79.957012)));
+                //Navigator.of(context).pushNamed(mapsViewRoute);
+              })
+              ],
+            ),
           ],
         ),
       ),
@@ -209,7 +481,7 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
                 child: AppBar(
                   title: Text("Nuestras Agencias"),
                   centerTitle: true,
-                  backgroundColor: naranja,
+                  backgroundColor: azul,
                 ),
               )),
         ),

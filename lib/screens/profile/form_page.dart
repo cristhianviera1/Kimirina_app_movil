@@ -1,6 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:kimirina_app/colors/colors.dart';
+import 'package:flutter/services.dart';
 
 class FormPage extends StatefulWidget {
   @override
@@ -12,95 +14,81 @@ class _FormPage extends State<FormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          backgroundColor: azul,
-            leading: new IconButton(
-                icon: new Icon(Icons.arrow_back, color: Colors.white,),
-                onPressed: () => Navigator.of(context).pop())),
-        body: new Stepper(
+    return Scaffold(
+      appBar: new AppBar(
+          backgroundColor: naranja,
+          leading: new IconButton(
+              icon: new Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () => Navigator.of(context).pop())),
+      body: Theme(
+        data: ThemeData(primaryColor: naranja),
+        child: new Stepper(
           type: StepperType.vertical,
           currentStep: _currentStep,
           onStepTapped: (int step) => setState(() => _currentStep = step),
           onStepContinue:
-              _currentStep < 4 ? () => setState(() => _currentStep += 1) : null,
+              _currentStep < 6 ? () => setState(() => _currentStep += 1) : null,
           onStepCancel:
               _currentStep > 0 ? () => setState(() => _currentStep -= 1) : null,
           steps: <Step>[
             new Step(
-              title: new Text('Datos geográficos'),
-              content: new Text('Formulario'),
-              isActive: _currentStep >= 0,
-              state:
-                  _currentStep >= 0 ? StepState.complete : StepState.disabled,
-            ),
-            new Step(
-              title: new Text('Datos personales'),
+              title: new Text(''),
               content: Column(
                 children: <Widget>[
+                  Text(
+                    "¿En los últimos 6 meses se ha hecho la prueba de VIH?",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   FormBuilder(
                     autovalidate: true,
                     child: Column(
                       children: <Widget>[
-                        FormBuilderTextField(
-                          attribute: "Edad",
-                          decoration: InputDecoration(labelText: "Edad"),
-                          keyboardType: TextInputType.number,
-                          validators: [
-                            FormBuilderValidators.numeric(),
-                            FormBuilderValidators.max(70),
-                            (val) {
-                              if (val == null || val.isEmpty) {
-                                return "Por favor especifique su edad";
-                              }
-                            }
-                          ],
-                        ),
                         FormBuilderRadio(
-                          decoration: InputDecoration(
-                              labelText:
-                                  '¿Cuál es su último año de estudios aprobado?'),
-                          attribute: "estudiosNivel",
+                          attribute: "pregunta1",
                           validators: [FormBuilderValidators.required()],
                           options: [
-                            "Primaria",
-                            "Secundaria",
-                            "Superior",
-                            "Ninguno",
-                            "Otro",
+                            "Si",
+                            "No",
                           ]
                               .map(
                                   (lang) => FormBuilderFieldOption(value: lang))
                               .toList(growable: false),
                         ),
-                        FormBuilderCheckboxList(
-                          decoration: InputDecoration(
-                              labelText:
-                                  "¿Qué ocupación o trabajo tiene usted?"),
-                          attribute: "ocupacion",
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              isActive: _currentStep >= 0,
+              state:
+                  _currentStep >= 0 ? StepState.complete : StepState.disabled,
+            ),
+            new Step(
+              title: new Text(''),
+              content: Column(
+                children: <Widget>[
+                  Text(
+                    "¿En los últimos 6 meses usted ha tenido, alguna infección de transmisión sexual?",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  FormBuilder(
+                    autovalidate: true,
+                    child: Column(
+                      children: <Widget>[
+                        FormBuilderRadio(
+                          attribute: "pregunta2",
+                          validators: [FormBuilderValidators.required()],
                           options: [
-                            FormBuilderFieldOption(value: "Empleado/a"),
-                            FormBuilderFieldOption(value: "Artesano/a"),
-                            FormBuilderFieldOption(value: "Comerciante"),
-                            FormBuilderFieldOption(
-                                value: "Profesional independiente"),
-                            FormBuilderFieldOption(value: "Trabajador sexual"),
-                            FormBuilderFieldOption(value: "Estudiante"),
-                            FormBuilderFieldOption(value: "Otro"),
-                            FormBuilderFieldOption(value: "NR"),
-                          ],
+                            "Si",
+                            "No",
+                          ]
+                              .map(
+                                  (lang) => FormBuilderFieldOption(value: lang))
+                              .toList(growable: false),
                         ),
-                        FormBuilderTextField(
-                          attribute: "especificarOcupacion",
-                          decoration: InputDecoration(
-                              labelText:
-                                  "Por favor escifique su ocupación o trabajo"),
-                          validators: [
-                      
-                          ],
-                        ),
-
                       ],
                     ),
                   ),
@@ -111,25 +99,165 @@ class _FormPage extends State<FormPage> {
                   _currentStep >= 1 ? StepState.complete : StepState.disabled,
             ),
             new Step(
-              title: new Text('Historia de las relaciones'),
-              content: new Text('Formulario'),
+              title: new Text(''),
+              content: Column(
+                children: <Widget>[
+                  Text(
+                    "¿En los últimos 6 meses, ha tenido sexo anal o vaginal sin protección?",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  FormBuilder(
+                    autovalidate: true,
+                    child: Column(
+                      children: <Widget>[
+                        FormBuilderRadio(
+                          attribute: "pregunta3",
+                          validators: [FormBuilderValidators.required()],
+                          options: [
+                            "Si",
+                            "No",
+                          ]
+                              .map(
+                                  (lang) => FormBuilderFieldOption(value: lang))
+                              .toList(growable: false),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               isActive: _currentStep >= 2,
               state:
                   _currentStep >= 2 ? StepState.complete : StepState.disabled,
             ),
             new Step(
-              title: new Text('Referencia para la atención recibida'),
-              content: new Text('Formulario'),
+              title: new Text(''),
+              content: Column(
+                children: <Widget>[
+                  Text(
+                    "¿En los últimos 6 meses, usted ha tenido una pareja VIH positivo?",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  FormBuilder(
+                    autovalidate: true,
+                    child: Column(
+                      children: <Widget>[
+                        FormBuilderRadio(
+                          attribute: "pregunta4",
+                          validators: [FormBuilderValidators.required()],
+                          options: [
+                            "Si",
+                            "No",
+                          ]
+                              .map(
+                                  (lang) => FormBuilderFieldOption(value: lang))
+                              .toList(growable: false),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               isActive: _currentStep >= 3,
               state:
                   _currentStep >= 3 ? StepState.complete : StepState.disabled,
             ),
             new Step(
-              title: new Text('Prueba de VIH'),
-              content: new Text('Formulario'),
+              title: new Text(''),
+              content: Column(
+                children: <Widget>[
+                  Text(
+                    "¿Usted utilizó condón, en su última relación sexual?",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  FormBuilder(
+                    autovalidate: true,
+                    child: Column(
+                      children: <Widget>[
+                        FormBuilderRadio(
+                          attribute: "pregunta5",
+                          validators: [FormBuilderValidators.required()],
+                          options: [
+                            "Si",
+                            "No",
+                          ]
+                              .map(
+                                  (lang) => FormBuilderFieldOption(value: lang))
+                              .toList(growable: false),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               isActive: _currentStep >= 4,
               state:
                   _currentStep >= 4 ? StepState.complete : StepState.disabled,
+            ),
+            new Step(
+              title: new Text(''),
+              content: Column(
+                children: <Widget>[
+                  Text(
+                    "¿En los últimos 6 meses ha recibido Transfusiones de sangre?",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  FormBuilder(
+                    autovalidate: true,
+                    child: Column(
+                      children: <Widget>[
+                        FormBuilderRadio(
+                          attribute: "pregunta6",
+                          validators: [FormBuilderValidators.required()],
+                          options: [
+                            "Si",
+                            "No",
+                          ]
+                              .map(
+                                  (lang) => FormBuilderFieldOption(value: lang))
+                              .toList(growable: false),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              isActive: _currentStep >= 5,
+              state:
+                  _currentStep >= 5 ? StepState.complete : StepState.disabled,
+            ),
+            new Step(
+              title: new Text(''),
+              content: Column(
+                children: <Widget>[
+                  Text(
+                    "De los siguientes servicios que oferta Kimirina ¿Cuál ha utilizado usted?",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  FormBuilder(
+                    autovalidate: true,
+                    child: Column(
+                      children: <Widget>[
+                        FormBuilderCheckboxList(
+                          attribute: "pregunta7",
+                          options: [
+                            FormBuilderFieldOption(value: "PrEP"),
+                            FormBuilderFieldOption(value: "nPEP"),
+                            FormBuilderFieldOption(value: "Atención médica"),
+                            FormBuilderFieldOption(value: "ITS"),
+                            FormBuilderFieldOption(
+                                value: "Prueba rápida de VIH"),
+                            FormBuilderFieldOption(value: "Asesoría de pares"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              isActive: _currentStep >= 6,
+              state:
+                  _currentStep >= 6 ? StepState.complete : StepState.disabled,
             ),
           ],
         ),

@@ -3,7 +3,7 @@ import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import "package:kimirina_app/widgets/network_image.dart";
 
-class ProductDetailsPage extends StatelessWidget {
+class PruebaRapidaVihPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +17,7 @@ class ProductDetailsPage extends StatelessWidget {
               Container(
                   height: 300,
                   width: double.infinity,
-                  child: Image.asset("assets/images/tratamiento.png")),
+                  child: Image.asset("assets/images/pruebaVih.jpg")),
               Container(
                 margin: EdgeInsets.fromLTRB(16.0, 250.0, 16.0, 16.0),
                 decoration: BoxDecoration(
@@ -28,7 +28,7 @@ class ProductDetailsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Asesoría en prevención de VIH e ITS",
+                      "Pruebas Rápidas VIH",
                       style: Theme.of(context).textTheme.title,
                     ),
                     SizedBox(height: 10.0),
@@ -39,7 +39,7 @@ class ProductDetailsPage extends StatelessWidget {
                       height: 10.0,
                     ),
                     Text(
-                      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis.",
+                      "Es un tipo de prueba de anticuerpos y/o antígenos contra el VIH, empleada para detectar la infección causada por ese virus. Una prueba rápida permite detectar anticuerpos contra el VIH en la sangre en menos de 30 minutos. Los resultados positivos deben confirmarse con una segunda prueba para poder darle a una persona un diagnóstico definitivo de infección por el VIH.",
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(

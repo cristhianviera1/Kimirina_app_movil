@@ -3,7 +3,7 @@ import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import "package:kimirina_app/widgets/network_image.dart";
 
-class ProductDetailsPage extends StatelessWidget {
+class AtencionItsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +17,7 @@ class ProductDetailsPage extends StatelessWidget {
               Container(
                   height: 300,
                   width: double.infinity,
-                  child: Image.asset("assets/images/tratamiento.png")),
+                  child: Image.asset("assets/images/atencionIts.png")),
               Container(
                 margin: EdgeInsets.fromLTRB(16.0, 250.0, 16.0, 16.0),
                 decoration: BoxDecoration(
@@ -28,7 +28,7 @@ class ProductDetailsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Asesoría en prevención de VIH e ITS",
+                      "Atención a personas con ITS",
                       style: Theme.of(context).textTheme.title,
                     ),
                     SizedBox(height: 10.0),
@@ -39,7 +39,7 @@ class ProductDetailsPage extends StatelessWidget {
                       height: 10.0,
                     ),
                     Text(
-                      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis.",
+                      "Kimirina oferta el servicio y la derivación médica para el tratamiento oportuno de una ITS, con el objetivo de solventar la infección y prevenir una futura transmisión.",
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(

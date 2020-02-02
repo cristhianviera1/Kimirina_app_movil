@@ -23,58 +23,58 @@ class _ProductScreen extends State<ProductScreen> {
     {
       "name": "Asesoría en Prevención de VIH e ITS",
       "type":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "En respuesta a la epidemia del VIH, con capacidades...",
       "logoText":
-          "assets/images/asesorias.png"
+          "assets/images/asesorias.png",
+      "route": productDetaisViewRoute
     },
     {
-      "name": "Pruebas Rápidad VIH",
+      "name": "Pruebas Rápidas VIH",
       "type":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Esta prueba es empleada para detectar la infección causada por ese virus, permite detectar anticuerpos contra el VIH en la sangre en menos de 30 minutos",
       "logoText":
-          "assets/images/pruebaRapida.jpg"
+          "assets/images/pruebaRapida.jpg",
+      "route": pruebaRapidaVihViewRoute
     },
     {
-      "name": "Pruebas para ITS",
+      "name": "Pruebas rapidas ITS",
       "type":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Es un tipo de prueba de anticuerpos, contra virus o bacterias, causantes de infecciones de transmisión sexual.",
       "logoText":
-          "assets/images/its.png"
+          "assets/images/its.png",
+      "route": pruebaRapidaItsViewRoute
     },
     {
-      "name": "Asesoria, vinculación a tratamiento VIH",
+      "name": "Atención a personas con ITS",
       "type":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Se oferta el servicio y la derivación médica...",
       "logoText":
-          "assets/images/vinculacion.png"
+          "assets/images/vinculacion.png",
+      "route": atencionItsViewRoute
     },
     {
-      "name": "Tratamiento ITS",
+      "name": "PrEP",
       "type":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Esta dirigida a personas negativas para VIH que buscan prevenir una futura infección.",
       "logoText":
-          "assets/images/tratamiento.png"
+          "assets/images/prep.png",
+      "route": prepViewRoute
     },
     {
-      "name": "PREP",
+      "name": "nPEP",
       "type":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Consiste tomar medicamentos contra el VIH dentro de 72 horas después de una posible...",
       "logoText":
-          "assets/images/prep.png"
+          "assets/images/npep.jpg",
+      "route": npepViewRoute
     },
     {
-      "name": "Condones",
+      "name": "Programa de atencion a PPVS",
       "type":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Kimirina oferta servicios de asesoría, atención y control de PPVS.",
       "logoText":
-          "assets/images/condones.jpg"
-    },
-    {
-      "name": "Lubricantes",
-      "type":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "logoText":
-          "assets/images/lubricantes.png"
+          "assets/images/ppvs.png",
+      "route": ppvsViewRoute
     },
   ];
 
@@ -132,7 +132,7 @@ class _ProductScreen extends State<ProductScreen> {
   Widget buildList(BuildContext context, int index) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(productDetaisViewRoute);
+        Navigator.of(context).pushNamed(schoolLists[index]['route']);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -147,11 +147,11 @@ class _ProductScreen extends State<ProductScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              width: 50,
-              height: 50,
-              margin: EdgeInsets.only(right: 15),
+              width: 70,
+              height: 70,
+              margin: EdgeInsets.only(right: 15, top:10),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: BorderRadius.circular(70),
                 border: Border.all(width: 3, color: secondary),
                 image: DecorationImage(
                   image: new AssetImage(schoolLists[index]['logoText']),
@@ -171,10 +171,10 @@ class _ProductScreen extends State<ProductScreen> {
                         fontSize: 18),
                   ),
                   SizedBox(
-                    height: 6,
+                    height: 7,
                   ),
                   SizedBox(
-                    height: 6,
+                    height: 7,
                   ),
                   Row(
                     children: <Widget>[

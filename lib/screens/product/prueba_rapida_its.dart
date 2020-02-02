@@ -3,7 +3,7 @@ import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import "package:kimirina_app/widgets/network_image.dart";
 
-class ProductDetailsPage extends StatelessWidget {
+class PruebaRapidaItsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +17,7 @@ class ProductDetailsPage extends StatelessWidget {
               Container(
                   height: 300,
                   width: double.infinity,
-                  child: Image.asset("assets/images/tratamiento.png")),
+                  child: Image.asset("assets/images/pruebaIts.jpg")),
               Container(
                 margin: EdgeInsets.fromLTRB(16.0, 250.0, 16.0, 16.0),
                 decoration: BoxDecoration(
@@ -28,7 +28,7 @@ class ProductDetailsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Asesoría en prevención de VIH e ITS",
+                      "Pruebas rapidas ITS",
                       style: Theme.of(context).textTheme.title,
                     ),
                     SizedBox(height: 10.0),
@@ -39,8 +39,11 @@ class ProductDetailsPage extends StatelessWidget {
                       height: 10.0,
                     ),
                     Text(
-                      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, ullam? Fuga doloremque repellendus aut sequi officiis dignissimos, enim assumenda tenetur reprehenderit quam error, accusamus ipsa? Officiis voluptatum sequi voluptas omnis.",
+                      "Tipo de prueba de anticuerpos, contra virus o bacterias, causantes de infecciones de transmisión sexual , empleada para detectar la infección causada por ese virus o bacteria. Kimirina oferta este tipo de pruebas rápidas junto con  servicios de consejería y atención médica   con la intención de brindar información relacionada al cuidado, la protección y el tratamiento de las siguientes ITS: ",
                       textAlign: TextAlign.justify,
+                    ),
+                    Text("Hepatitis B, Hepatitis C y Sifilis",
+                    textAlign: TextAlign.justify,
                     ),
                     SizedBox(
                     height: 15,
