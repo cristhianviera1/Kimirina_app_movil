@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/colors/colors.dart';
@@ -34,6 +37,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   File _pickedImage;
+  File _decode;
   bool _imagePicked = false;
   @override
   Widget build(BuildContext context) {
@@ -61,7 +65,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           setState(() {
             print("Una imagen si fue seleccionada");
             _pickedImage = file;
+            _decode = file;
             _imagePicked = true;
+            List<int> imageBytes = file.readAsBytesSync();
+            print(imageBytes);
+            String base64Image = base64Encode(imageBytes);
+            print(base64Image);
+            Uint8List decoded = base64Decode(base64Image);
+            print(decoded);
           });
         }
       }
@@ -110,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                       child: _imagePicked == false
                           ? Image.asset("assets/images/usuario.png")
-                          : Image(image: new  FileImage(_pickedImage)),
+                          : Image(image: new  FileImage(_decode)),
                     ),
                     //decoration: new BoxDecoration(
 
