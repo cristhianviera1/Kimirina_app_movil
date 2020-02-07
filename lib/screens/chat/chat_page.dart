@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
-import 'package:kimirina_app/services/user_service.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -20,28 +18,21 @@ class _ChatListState extends State<ChatList> {
   bool firstChats = true;
   SharedPreferences sharedPrefs;
   String userId;
+
   var socket;
   @override
   initState() {
-    SharedPreferences.getInstance().then((prefs) {
-      setState(() {
-        sharedPrefs = prefs;
-        this.userId = sharedPrefs.getString("userid");
-      });
+    socket = io.io("http://192.168.43.213:4000");
+    socket.emit("getChats", ("5e37880958673b63065de807"));
+    socket.on("getChats_response", (data) {
+      print("$data");
     });
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    //Ejecuta la función para traer los chats
-    Provider.of<ApiService>(context).getChatList(userId);
-    //print(Provider.of<ApiService>(context).chatListUsers);
-    //Escucha los cambios del chat
-    //var tmpUserChatList = Provider.of<ApiService>(context).chatListUsers;
-    /*if (tmpUserChatList != null) {
-            //print(tmpUserChatList);
-          }*/
     //Retorna el widget
     return ListView(
       children: <Widget>[
@@ -58,7 +49,7 @@ class _ChatListState extends State<ChatList> {
             ],
           ),
         ),
-        _ChatItem("Gabriel", " assets/images/profile.jpg", 0, true, ""),
+        _ChatItem("Usuario", "assets/images/usuario.png", 0, true, ""),
         //Column(children: userAvailables),
         Padding(
           padding: EdgeInsets.only(top: 40.0, bottom: 10),

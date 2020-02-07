@@ -312,7 +312,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (response != null) {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         var tmpUsrId = jsonDecode(response)["id"];
-        preferences.setString("userid", tmpUsrId.toString());
+        preferences.setString("userid", tmpUsrId);
         Navigator.of(context).pushNamed(navBarViewRoute);
       } else {
         return Alert(

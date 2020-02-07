@@ -39,6 +39,7 @@ dependencies:
   provider:
   flutter_map: ^0.8.2
   image_picker: ^0.6.1+4
+  url_launcher: ^5.4.1
 
 dev_dependencies:
   flutter_launcher_icons:
@@ -102,6 +103,7 @@ flutter:
     - assets/images/prepdetails.jpg
     - assets/images/pruebaIts.jpg
     - assets/images/pruebaVih.jpg
+    - assets/images/sinDiscriminacion.png
 
 
 

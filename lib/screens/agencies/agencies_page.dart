@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:kimirina_app/routes/routes.dart';
-import 'package:latlong/latlong.dart';
 import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/utils/googleMap.dart';
 
 import 'design_course_app_theme.dart';
 import 'mapasPrueba.dart';
@@ -22,45 +20,40 @@ class AgenciesScreen extends StatelessWidget {
             Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                ' - Asesoría en Prevención de VIH e ITS',
-                textAlign: TextAlign.left, ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                ' - Pruebas Rápidad VIH'),
-                Text(
-                ' - Pruebas para ITS'),
-                Text(
-                ' - Asesoria, vinculación a tratamiento VIH'),
-                Text(
-                ' - Tratamiento ITS'),
-                Text(
-                ' - PREP'),
-                Text(
-                ' - Condones'),
-                Text(
-                ' - Lubricantes'),
+                  ' - Asesoría en Prevención de VIH e ITS',
+                  textAlign: TextAlign.left,
+                ),
+                Text(' - Pruebas Rápidad VIH'),
+                Text(' - Pruebas para ITS'),
+                Text(' - Asesoria, vinculación a tratamiento VIH'),
+                Text(' - Tratamiento ITS'),
+                Text(' - PREP'),
+                Text(' - Condones'),
+                Text(' - Lubricantes'),
               ],
             ),
-            
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FloatingActionButton(
-                  heroTag: "btn",
+                    heroTag: "btn",
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => MapsScreen(
-                                agencieCity: "Quito",
-                                lat: -0.205294,
-                                lng: -78.488857)));
-                    //Navigator.of(context).pushNamed(mapsViewRoute);
-                  })
-                ,SizedBox(height: 30)
+                      MapUtils.openMap(-0.205294, -78.488857);
+                      /*Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MapsScreen(
+                                  agencieCity: "Quito",
+                                  lat: -0.205294,
+                                  lng: -78.488857)));*/
+                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                    }),
+                SizedBox(height: 30)
               ],
             ),
           ],
@@ -78,32 +71,27 @@ class AgenciesScreen extends StatelessWidget {
           children: <Widget>[
             Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-             Column(
-              crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                ' - Asesoría en Prevención de VIH e ITS',
-                textAlign: TextAlign.left, ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                ' - Pruebas Rápidad VIH'),
-                Text(
-                ' - Pruebas para ITS'),
-                Text(
-                ' - Asesoria, vinculación a tratamiento VIH'),
-                Text(
-                ' - Tratamiento ITS'),
-                Text(
-                ' - PREP'),
-                Text(
-                ' - Condones'),
-                Text(
-                ' - Lubricantes'),
+                  ' - Asesoría en Prevención de VIH e ITS',
+                  textAlign: TextAlign.left,
+                ),
+                Text(' - Pruebas Rápidad VIH'),
+                Text(' - Pruebas para ITS'),
+                Text(' - Asesoria, vinculación a tratamiento VIH'),
+                Text(' - Tratamiento ITS'),
+                Text(' - PREP'),
+                Text(' - Condones'),
+                Text(' - Lubricantes'),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FloatingActionButton(
-                  heroTag: "btn1",
+                    heroTag: "btn1",
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
@@ -134,44 +122,39 @@ class AgenciesScreen extends StatelessWidget {
           children: <Widget>[
             Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-             Column(
-              crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                ' - Asesoría en Prevención de VIH e ITS',
-                textAlign: TextAlign.left, ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                ' - Pruebas Rápidad VIH'),
-                Text(
-                ' - Pruebas para ITS'),
-                Text(
-                ' - Asesoria, vinculación a tratamiento VIH'),
-                Text(
-                ' - Tratamiento ITS'),
-                Text(
-                ' - PREP'),
-                Text(
-                ' - Condones'),
-                Text(
-                ' - Lubricantes'),
+                  ' - Asesoría en Prevención de VIH e ITS',
+                  textAlign: TextAlign.left,
+                ),
+                Text(' - Pruebas Rápidad VIH'),
+                Text(' - Pruebas para ITS'),
+                Text(' - Asesoria, vinculación a tratamiento VIH'),
+                Text(' - Tratamiento ITS'),
+                Text(' - PREP'),
+                Text(' - Condones'),
+                Text(' - Lubricantes'),
               ],
             ),
-           Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FloatingActionButton(
-                  heroTag: "btn2",
+                    heroTag: "btn2",
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
-                     onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MapsScreen(
-                            agencieCity: " Machala",
-                            lat: -3.260251,
-                            lng: -79.957012)));
-                //Navigator.of(context).pushNamed(mapsViewRoute);
-              })
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MapsScreen(
+                                  agencieCity: " Machala",
+                                  lat: -3.260251,
+                                  lng: -79.957012)));
+                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                    })
               ],
             ),
           ],
@@ -190,43 +173,38 @@ class AgenciesScreen extends StatelessWidget {
             Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                ' - Asesoría en Prevención de VIH e ITS',
-                textAlign: TextAlign.left, ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                ' - Pruebas Rápidad VIH'),
-                Text(
-                ' - Pruebas para ITS'),
-                Text(
-                ' - Asesoria, vinculación a tratamiento VIH'),
-                Text(
-                ' - Tratamiento ITS'),
-                Text(
-                ' - PREP'),
-                Text(
-                ' - Condones'),
-                Text(
-                ' - Lubricantes'),
+                  ' - Asesoría en Prevención de VIH e ITS',
+                  textAlign: TextAlign.left,
+                ),
+                Text(' - Pruebas Rápidad VIH'),
+                Text(' - Pruebas para ITS'),
+                Text(' - Asesoria, vinculación a tratamiento VIH'),
+                Text(' - Tratamiento ITS'),
+                Text(' - PREP'),
+                Text(' - Condones'),
+                Text(' - Lubricantes'),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FloatingActionButton(
-                  heroTag: "btn3",
+                    heroTag: "btn3",
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
-                     onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MapsScreen(
-                            agencieCity: " Esmeraldas",
-                            lat: -3.260251,
-                            lng: -79.957012)));
-                //Navigator.of(context).pushNamed(mapsViewRoute);
-              })
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MapsScreen(
+                                  agencieCity: " Esmeraldas",
+                                  lat: -3.260251,
+                                  lng: -79.957012)));
+                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                    })
               ],
             ),
           ],
@@ -244,44 +222,39 @@ class AgenciesScreen extends StatelessWidget {
           children: <Widget>[
             Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-             Column(
-              crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                ' - Asesoría en Prevención de VIH e ITS',
-                textAlign: TextAlign.left, ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                ' - Pruebas Rápidad VIH'),
-                Text(
-                ' - Pruebas para ITS'),
-                Text(
-                ' - Asesoria, vinculación a tratamiento VIH'),
-                Text(
-                ' - Tratamiento ITS'),
-                Text(
-                ' - PREP'),
-                Text(
-                ' - Condones'),
-                Text(
-                ' - Lubricantes'),
+                  ' - Asesoría en Prevención de VIH e ITS',
+                  textAlign: TextAlign.left,
+                ),
+                Text(' - Pruebas Rápidad VIH'),
+                Text(' - Pruebas para ITS'),
+                Text(' - Asesoria, vinculación a tratamiento VIH'),
+                Text(' - Tratamiento ITS'),
+                Text(' - PREP'),
+                Text(' - Condones'),
+                Text(' - Lubricantes'),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FloatingActionButton(
-                  heroTag: "btn4",
+                    heroTag: "btn4",
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MapsScreen(
-                            agencieCity: " Portoviejo",
-                            lat: -3.260251,
-                            lng: -79.957012)));
-                //Navigator.of(context).pushNamed(mapsViewRoute);
-              })
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MapsScreen(
+                                  agencieCity: " Portoviejo",
+                                  lat: -3.260251,
+                                  lng: -79.957012)));
+                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                    })
               ],
             ),
           ],
@@ -300,43 +273,38 @@ class AgenciesScreen extends StatelessWidget {
             Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                ' - Asesoría en Prevención de VIH e ITS',
-                textAlign: TextAlign.left, ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                ' - Pruebas Rápidad VIH'),
-                Text(
-                ' - Pruebas para ITS'),
-                Text(
-                ' - Asesoria, vinculación a tratamiento VIH'),
-                Text(
-                ' - Tratamiento ITS'),
-                Text(
-                ' - PREP'),
-                Text(
-                ' - Condones'),
-                Text(
-                ' - Lubricantes'),
+                  ' - Asesoría en Prevención de VIH e ITS',
+                  textAlign: TextAlign.left,
+                ),
+                Text(' - Pruebas Rápidad VIH'),
+                Text(' - Pruebas para ITS'),
+                Text(' - Asesoria, vinculación a tratamiento VIH'),
+                Text(' - Tratamiento ITS'),
+                Text(' - PREP'),
+                Text(' - Condones'),
+                Text(' - Lubricantes'),
               ],
             ),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FloatingActionButton(
-                  heroTag: "btn5",
+                    heroTag: "btn5",
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MapsScreen(
-                            agencieCity: " Santo Domingo",
-                            lat: -3.260251,
-                            lng: -79.957012)));
-                //Navigator.of(context).pushNamed(mapsViewRoute);
-              })
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MapsScreen(
+                                  agencieCity: " Santo Domingo",
+                                  lat: -3.260251,
+                                  lng: -79.957012)));
+                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                    })
               ],
             ),
           ],
@@ -354,44 +322,39 @@ class AgenciesScreen extends StatelessWidget {
           children: <Widget>[
             Image.asset("assets/images/agencia.png"),
             SizedBox(height: 10),
-             Column(
-              crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                ' - Asesoría en Prevención de VIH e ITS',
-                textAlign: TextAlign.left, ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                ' - Pruebas Rápidad VIH'),
-                Text(
-                ' - Pruebas para ITS'),
-                Text(
-                ' - Asesoria, vinculación a tratamiento VIH'),
-                Text(
-                ' - Tratamiento ITS'),
-                Text(
-                ' - PREP'),
-                Text(
-                ' - Condones'),
-                Text(
-                ' - Lubricantes'),
+                  ' - Asesoría en Prevención de VIH e ITS',
+                  textAlign: TextAlign.left,
+                ),
+                Text(' - Pruebas Rápidad VIH'),
+                Text(' - Pruebas para ITS'),
+                Text(' - Asesoria, vinculación a tratamiento VIH'),
+                Text(' - Tratamiento ITS'),
+                Text(' - PREP'),
+                Text(' - Condones'),
+                Text(' - Lubricantes'),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FloatingActionButton(
-                  heroTag: "btn6",
+                    heroTag: "btn6",
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MapsScreen(
-                            agencieCity: " Santa Elena",
-                            lat: -3.260251,
-                            lng: -79.957012)));
-                //Navigator.of(context).pushNamed(mapsViewRoute);
-              })
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MapsScreen(
+                                  agencieCity: " Santa Elena",
+                                  lat: -3.260251,
+                                  lng: -79.957012)));
+                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                    })
               ],
             ),
           ],

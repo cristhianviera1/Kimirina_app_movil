@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_socket_io/flutter_socket_io.dart';
-import 'package:flutter_socket_io/socket_io_manager.dart';
+import 'package:kimirina_app/colors/colors.dart';
+
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -10,11 +11,11 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  SocketIO socketIO;
   List<String> messages;
   double height, width;
   TextEditingController textController;
   ScrollController scrollController;
+  var socket;
 
   @override
   void initState() {
@@ -24,19 +25,8 @@ class _ChatScreenState extends State<ChatScreen> {
     textController = TextEditingController();
     scrollController = ScrollController();
     //Creating the socket
-    /*socketIO = SocketIOManager().createSocketIO(
-      "http://192.168.0.103:4003", 
-      "/", 
-    );*/
-
-    socketIO = SocketIOManager().createSocketIO(
-      'https://kimirinachat.herokuapp.com/',
-      '/',
-    );
-    //Call init before doing anything with socket
-    socketIO.init();
-    //Subscribe to an event to listen to
-    socketIO.subscribe('receive_message', (jsonData) {
+    socket = io.io("http://192.168.43.213:4000");
+    socket.on("receive_message", (jsonData) {
       //Convert the JSON data received into a Map
       Map<String, dynamic> data = json.decode(jsonData);
       this.setState(() => messages.add(data['message']));
@@ -46,19 +36,26 @@ class _ChatScreenState extends State<ChatScreen> {
         curve: Curves.ease,
       );
     });
-    //Connect to the socket
-    socketIO.connect();
     super.initState();
   }
 
   Widget buildSingleMessage(int index) {
+    var aligment;
+    var color;
+    if (index % 2 == 0) {
+      aligment = Alignment.centerLeft;
+      color = Colors.deepPurple;
+    } else if (index % 2 == 1) {
+      aligment = Alignment.topRight;
+      color = Colors.purple;
+    }
     return Container(
-      alignment: Alignment.centerLeft,
+      alignment: aligment,
       child: Container(
         padding: const EdgeInsets.all(20.0),
-        margin: const EdgeInsets.only(bottom: 20.0, left: 20.0),
+        margin: const EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
         decoration: BoxDecoration(
-          color: Colors.deepPurple,
+          color: color,
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: Text(
@@ -71,7 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget buildMessageList() {
     return Container(
-      height: height * 0.8,
+      height: height * 0.78,
       width: width,
       child: ListView.builder(
         controller: scrollController,
@@ -99,13 +96,15 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget buildSendButton() {
     return FloatingActionButton(
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: morado,
       onPressed: () {
         //Check if the textfield has text or not
         if (textController.text.isNotEmpty) {
+          socket.emit(
+              "send_message", json.encode({"message": textController.text,"userIdSend":"5e37888258673b63065de80e","userIdReceive":"5e37880958673b63065de807"}));
           //Send the message as JSON data to send_message event
-          socketIO.sendMessage(
-              'send_message', json.encode({'message': textController.text}));
+          /*socketIO.sendMessage(
+              'send_message', json.encode({'message': textController.text}));*/
           //Add the message to the list
           this.setState(() => messages.add(textController.text));
           textController.text = '';
@@ -142,10 +141,14 @@ class _ChatScreenState extends State<ChatScreen> {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Usuario"),
+        backgroundColor: morado,
+        ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SizedBox(height: height * 0.1),
+            //SizedBox(height: height * 0.1),
             buildMessageList(),
             buildInputArea(),
           ],

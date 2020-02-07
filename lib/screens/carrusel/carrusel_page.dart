@@ -13,8 +13,6 @@ class CarruselPage extends StatefulWidget {
 }
 
 class _CarruselPageState extends State<CarruselPage> {
-
-
   @override
   void initState() {
     super.initState();
@@ -25,12 +23,15 @@ class _CarruselPageState extends State<CarruselPage> {
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
       bubbleBackgroundColor: naranja,
-      title: Container(),
+      //title: Container(),
       body: Column(
         children: <Widget>[
           Text(
             'Kimirina',
             style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 10,
           ),
           Text(
             'Kimirina es una organización comunitaria especializada en la respuesta a la epidemia del VIH, con capacidades técnicas, metodologías, abordajes, ',
@@ -39,7 +40,7 @@ class _CarruselPageState extends State<CarruselPage> {
         ],
       ),
       mainImage: Image.asset('assets/gif/kimirina_logo.gif'),
-      textStyle: TextStyle(color: Colors.black),
+      textStyle: TextStyle(color: Colors.black), title: Text(""),
     ),
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
@@ -48,8 +49,11 @@ class _CarruselPageState extends State<CarruselPage> {
       body: Column(
         children: <Widget>[
           Text('Confidencialidad'),
+          SizedBox(
+            height: 10,
+          ),
           Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'Kimirina respeta y valora la confianza con nuestra corporación brindando la seguridad de la privacidad de la información de cada usuario',
             style: TextStyle(color: Colors.black54, fontSize: 16.0),
           ),
         ],
@@ -68,8 +72,11 @@ class _CarruselPageState extends State<CarruselPage> {
       body: Column(
         children: <Widget>[
           Text('Confianza'),
+          SizedBox(
+            height: 10,
+          ),
           Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'Kimirina con más de 20 años de experiencia es la primera corporación Ecuatoriana especializada en el VIH',
             style: TextStyle(color: Colors.black54, fontSize: 16.0),
           ),
         ],
@@ -88,6 +95,9 @@ class _CarruselPageState extends State<CarruselPage> {
       body: Column(
         children: <Widget>[
           Text('Sin Discriminación'),
+          SizedBox(
+            height: 10,
+          ),
           Text(
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             style: TextStyle(color: Colors.black54, fontSize: 16.0),
@@ -95,8 +105,8 @@ class _CarruselPageState extends State<CarruselPage> {
         ],
       ),
       mainImage: Image.asset(
-        'assets/images/image3.jpg',
-        width: 285.0,
+        'assets/images/sinDiscriminacion.png',
+        width: 400.0,
         alignment: Alignment.center,
       ),
       textStyle: TextStyle(color: Colors.black),
@@ -115,14 +125,15 @@ class _CarruselPageState extends State<CarruselPage> {
                 updateFirstOpen();
                 Navigator.of(context).pushNamed(loginViewRoute);
               },
-              showSkipButton: false,
+              showSkipButton: true,
               doneText: Text(
                 "Empezar",
               ),
+              skipText: Text("Omitir"),
               pageButtonsColor: naranja,
               pageButtonTextStyles: new TextStyle(
                 // color: naranja,
-                fontSize: 16.0,
+                fontSize: 13.0,
                 fontFamily: "Regular",
               ),
             ),

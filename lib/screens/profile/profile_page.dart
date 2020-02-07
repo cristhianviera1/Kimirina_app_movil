@@ -255,7 +255,7 @@ class _UserInfoState extends State<UserInfo> {
                             color: Color.fromRGBO(240, 53, 6, 1)),
                         title: Text("¿Nos ayudas con más información?"),
                         subtitle: Text(
-                            "Así podemos crear planes de prevención y campañas de tratamiento"),
+                            "Toda la información será completamente confidencial y con fines de estudio"),
                         onTap: () {
                           Navigator.of(context).pushNamed(formViewRoute);
                         },
