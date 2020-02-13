@@ -22,13 +22,8 @@ class _ChatListState extends State<ChatList> {
   var socket;
   @override
   initState() {
-    socket = io.io("http://192.168.43.213:4000");
-    socket.emit("getChats", ("5e37880958673b63065de807"));
-    socket.on("getChats_response", (data) {
-      print("$data");
-    });
-
     super.initState();
+    getSharedPreferences();
   }
 
   @override
@@ -49,8 +44,8 @@ class _ChatListState extends State<ChatList> {
             ],
           ),
         ),
-        _ChatItem("Usuario", "assets/images/usuario.png", 0, true, ""),
-        //Column(children: userAvailables),
+        //_ChatItem("Usuario", "assets/images/usuario.png", 0, true, ""),
+        Column(children: userAvailables),
         Padding(
           padding: EdgeInsets.only(top: 40.0, bottom: 10),
           child: Text(
@@ -61,6 +56,23 @@ class _ChatListState extends State<ChatList> {
         )
       ],
     );
+  }
+
+  getSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getString("userid");
+    socket = io.io("http://192.168.0.101:4000");
+    socket.emit("getChats", (userId));
+    socket.on("getChats_response", (data) {
+      if (data != null || data != "undefined") {
+        setState(() {
+          for (var usr in data) {
+            userAvailables.add(_ChatItem(
+                usr["nombre"], "assets/login.png", 0, usr["online"], ""));
+          }
+        });
+      }
+    });
   }
 }
 
@@ -146,12 +158,6 @@ class _ChatItem extends StatelessWidget {
                     ],
                   )),
             ),
-            Column(
-              children: <Widget>[
-                Text('15 min', style: TextStyle(color: Colors.grey[350])),
-                _UnreadIndicator(this.unread),
-              ],
-            )
           ],
         ),
       ),

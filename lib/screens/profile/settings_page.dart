@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/services/user_service.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SettingsOnePage extends StatefulWidget {
   @override
@@ -10,10 +12,15 @@ class SettingsOnePage extends StatefulWidget {
 
 class _SettingsOnePageState extends State<SettingsOnePage> {
   bool _dark;
-
+  FocusNode focusNode2;
+  FocusNode focusNode3;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _password;
   @override
   void initState() {
     super.initState();
+    focusNode2 = FocusNode();
+    focusNode3 = FocusNode();
     _dark = false;
   }
 
@@ -39,7 +46,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
           iconTheme: IconThemeData(color: _dark ? Colors.white : Colors.black),
           backgroundColor: Colors.transparent,
           title: Text(
-            'Settings',
+            'Configuración',
             style: TextStyle(color: _dark ? Colors.white : Colors.black),
           ),
           actions: <Widget>[
@@ -61,34 +68,6 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Card(
-                    elevation: 8.0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    color: morado,
-                    child: ListTile(
-                      onTap: () {
-                        //open edit profile
-                      },
-                      title: Text(
-                        "Gabriel Viera",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      leading: CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.white,
-                        backgroundImage: NetworkImage(
-                            'https://ktusu.com/admin/uploads/slider/836295524.jpg'),
-                      ),
-                      trailing: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 10.0),
                   Card(
                     elevation: 4.0,
@@ -105,6 +84,121 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                           title: Text("Cambiar Contraseña"),
                           trailing: Icon(Icons.keyboard_arrow_right),
                           onTap: () {
+                            Alert(
+                                context: context,
+                                title: "Contraseña",
+                                content: Column(
+                                  children: <Widget>[
+                                    Form(
+                                      key: _formKey,
+                                      autovalidate: _autoValidate,
+                                      child: Column(
+                                        children: <Widget>[
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          TextFormField(
+                                            validator: validatePassword,
+                                            onSaved: (String val) {
+                                              _password = val;
+                                            },
+                                            focusNode: focusNode2,
+                                            obscureText: true,
+                                            keyboardType: TextInputType.text,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            decoration: InputDecoration(
+                                              labelText: "Contraseña",
+                                              contentPadding:
+                                                  new EdgeInsets.symmetric(
+                                                      vertical:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.022,
+                                                      horizontal: 15.0),
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(25)),
+                                              ),
+                                            ),
+                                            onFieldSubmitted: (String value) {
+                                              FocusScope.of(context)
+                                                  .requestFocus(focusNode3);
+                                            },
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          TextFormField(
+                                            validator: validateSamePassword,
+                                            onSaved: (String val) {
+                                              _password = val;
+                                            },
+                                            focusNode: focusNode3,
+                                            obscureText: true,
+                                            keyboardType: TextInputType.text,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textInputAction:
+                                                TextInputAction.done,
+                                            decoration: InputDecoration(
+                                              labelText: "Confirmar contraseña",
+                                              contentPadding:
+                                                  new EdgeInsets.symmetric(
+                                                      vertical:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.022,
+                                                      horizontal: 15.0),
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(25)),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          Container(
+                                            child: GestureDetector(
+                                                onTap: () {
+                                                  print("pressed");
+                                                  _validateInputs();
+                                                },
+                                                child: Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.065,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors
+                                                          .deepPurpleAccent,
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  25))),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Cambiar contraseña",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 16),
+                                                    ),
+                                                  ),
+                                                )),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                buttons: []).show();
                             //open change password
                           },
                         ),
@@ -118,18 +212,6 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                           trailing: Icon(Icons.keyboard_arrow_right),
                           onTap: () {
                             //open change language
-                          },
-                        ),
-                        _buildDivider(),
-                        ListTile(
-                          leading: Icon(
-                            Icons.location_on,
-                            color: morado,
-                          ),
-                          title: Text("Cambiar Provincia"),
-                          trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () {
-                            //open change location
                           },
                         ),
                       ],
@@ -190,5 +272,72 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
       height: 1.0,
       color: Colors.grey.shade400,
     );
+  }
+
+  String validatePassword(String value) {
+    if (value.length < 6)
+      return 'El password debe tener un mínimo de 6 caracteres';
+    else
+      _password = value;
+    return null;
+  }
+
+  String validateSamePassword(String value) {
+    if (_password != value) {
+      return "Las contraseñas no coinciden";
+    } else {
+      return null;
+    }
+  }
+
+  bool _value1 = false;
+  bool _autoValidate = false;
+
+  void _value1Changed(bool value) => setState(() => _value1 = value);
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      ApiService().updatePassword(_password).then((response) {
+        if (response) {
+          Navigator.pop(context);
+          return Alert(
+            context: context,
+            type: AlertType.success,
+            title: "Se ha actualizado exitósamente su contraseña",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "Aceptar",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+              )
+            ],
+          ).show();
+        } else {
+          Navigator.pop(context);
+          return Alert(
+            context: context,
+            type: AlertType.warning,
+            title: "Error al Actualizar su contraseña",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "Aceptar",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+              )
+            ],
+          ).show();
+        }
+      });
+    } else {
+      setState(() {
+        _autoValidate = true;
+      });
+    }
   }
 }

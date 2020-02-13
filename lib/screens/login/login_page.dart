@@ -311,9 +311,22 @@ class _LoginScreenState extends State<LoginScreen> {
     _apiService.loginUser(userReg).then((response) async {
       if (response != null) {
         SharedPreferences preferences = await SharedPreferences.getInstance();
+        print(response);
         var tmpUsrId = jsonDecode(response)["id"];
+        var nombre =jsonDecode(response)["nombre"];
+        var correo =jsonDecode(response)["correo"];
+        var imagen =jsonDecode(response)["imagen"];
+        var edad =jsonDecode(response)["edad"];
+        var genero =jsonDecode(response)["genero"];
+        var rol = jsonDecode(response)["rol"];
         preferences.setString("userid", tmpUsrId);
-        Navigator.of(context).pushNamed(navBarViewRoute);
+        preferences.setString("nombre", nombre);
+        preferences.setString("correo", correo);
+        preferences.setString("imagen", imagen);
+        preferences.setString("edad", edad);
+        preferences.setString("genero", genero);
+        preferences.setString("rol", rol);
+        Navigator.of(context).pushReplacementNamed(navBarViewRoute);
       } else {
         return Alert(
           context: context,

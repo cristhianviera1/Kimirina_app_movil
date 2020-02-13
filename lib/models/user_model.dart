@@ -8,8 +8,7 @@ class User {
   String imagen;
   bool online;
   User(
-      {
-      this.id,
+      {this.id,
       this.nombre,
       this.correo,
       this.password,
@@ -17,16 +16,20 @@ class User {
       this.genero,
       this.imagen,
       this.online});
+
+  factory User.fromJson(dynamic json) {
+    return new User(id:json["id"],nombre: json["nombre"]as String, );
+  }
   Map<String, dynamic> toJson() {
     return {
-      "id":this.id,
-      "nombre":this.nombre,
-      "correo":this.correo,
-      "password":this.password,
-      "edad":this.edad,
-      "genero":this.genero,
-      "imagen":this.imagen,
-      "online":this.online
+      "id": this.id,
+      "nombre": this.nombre,
+      "correo": this.correo,
+      "password": this.password,
+      "edad": this.edad,
+      "genero": this.genero,
+      "imagen": this.imagen,
+      "online": this.online
     };
   }
 }

@@ -25,7 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
     textController = TextEditingController();
     scrollController = ScrollController();
     //Creating the socket
-    socket = io.io("http://192.168.43.213:4000");
+    socket = io.io("http://192.168.0.101:4000");
     socket.on("receive_message", (jsonData) {
       //Convert the JSON data received into a Map
       Map<String, dynamic> data = json.decode(jsonData);

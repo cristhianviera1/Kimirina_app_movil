@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ApiService with ChangeNotifier {
-  final String baseUrl = "http://192.168.43.213:4000";
+  final String baseUrl = "http://192.168.0.101:4000";
   List<User> _chatListUsers = new List();
   List<User> get chatListUsers => _chatListUsers;
   void set chatListUsers(newValue) {
@@ -28,6 +28,7 @@ class ApiService with ChangeNotifier {
     final jsonData = data.toJson();
     return json.encode(jsonData);
   }
+
   //RegisterUser
   Future registerUser(User userReg) async {
     final response = await http.post("$baseUrl/usuario",
@@ -64,6 +65,32 @@ class ApiService with ChangeNotifier {
       return false;
     }
   }
+  //updUser
+  Future<bool> updateUser(User user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getString("userid")??"";
+    final response = await http.post("$baseUrl/usuario/$id",
+        headers: {"content-type": "application/json"},
+        body: jsonEncode(user));
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  //updatePassword
+  Future<bool> updatePassword(String pass) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getString("userid")??"";
+    final response = await http.post("$baseUrl/usuario/updPassword",
+        headers: {"content-type": "application/json"},
+        body: jsonEncode({"id":id,"password":pass}));
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   //SOCKET.IO
   Future<void> connectSocket(String userId) async {
@@ -73,15 +100,17 @@ class ApiService with ChangeNotifier {
     });
     socket.emit("connection", {"msg": "Se ha conectado el usuario: " + userId});
   }
+
   Stream getChatList(userId) async* {
     if (userId != null) {
       this.socket.emit('chat-list', {"userId": userId});
     }
-    yield socket.on('chat-list-response', (response){
+    yield socket.on('chat-list-response', (response) {
       response.stream();
       return response;
     });
   }
+
   Future logout(userId) {
     print(userId);
     this.socket.emit('logout', {"userId": userId});
@@ -89,5 +118,4 @@ class ApiService with ChangeNotifier {
       print(data);
     });
   }
-
 }

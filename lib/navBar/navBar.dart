@@ -39,6 +39,7 @@ class _NavBar extends State<NavBar> {
         this.userId = sharedPrefs.getString("userid");
       });
     });
+    
     super.initState();
   }
 
@@ -47,7 +48,7 @@ class _NavBar extends State<NavBar> {
     var userId = preferences.getString("userid");
     try {
       if (userId == '' || userId == 'undefined' || userId == null) {
-        Navigator.of(myGlobals.scaffoldKey.currentContext)
+        Navigator.of(scaffoldKey.currentContext)
             .pushNamed(loginViewRoute);
       } else {
         /* making socket connection by passing UserId. */
@@ -68,7 +69,7 @@ class _NavBar extends State<NavBar> {
       }
     });
     return Scaffold(
-      key: myGlobals.scaffoldKey,
+      key: scaffoldKey,
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
@@ -304,8 +305,8 @@ Future<void> showQuestionViH(BuildContext context) async {
           ),
           onPressed: () {
             prefs.setBool("UserViH", true);
-            Navigator.pop(myGlobals.scaffoldKey.currentContext);
-            yesAlert(myGlobals.scaffoldKey.currentContext);
+            Navigator.pop(scaffoldKey.currentContext);
+            yesAlert(scaffoldKey.currentContext);
           }),
       DialogButton(
           color: tertyaryColor,
@@ -320,7 +321,7 @@ Future<void> showQuestionViH(BuildContext context) async {
             //Se guarda si el usuario tiene o no ViH
             prefs.setBool("UserViH", false);
             Navigator.pop(context);
-            noAlert(myGlobals.scaffoldKey.currentContext);
+            noAlert(scaffoldKey.currentContext);
           }),
     ],
   ).show();
@@ -408,13 +409,17 @@ Future<Alert> yesAlert(BuildContext contextYes) {
   ).show();
 }
 
+
+
+GlobalKey scaffoldKey = GlobalKey();
+
 //Se define una variable global para tener el contexto inicial de la clase
-final MyGlobals myGlobals = new MyGlobals();
+/*final MyGlobals myGlobals = new MyGlobals();
 
 class MyGlobals {
-  GlobalKey _scaffoldKey;
+  GlobalKey scaffoldKey;
   MyGlobals() {
-    _scaffoldKey = GlobalKey();
+    scaffoldKey = GlobalKey();
   }
-  GlobalKey get scaffoldKey => _scaffoldKey;
-}
+  GlobalKey get scaffoldKey => scaffoldKey;
+}*/

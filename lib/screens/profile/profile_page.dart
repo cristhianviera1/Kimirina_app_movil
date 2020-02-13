@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/models/user_model.dart';
+import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:provider/provider.dart';
@@ -12,34 +14,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
-import 'form_page.dart';
-
-class CurrentProfile {
-  /*ApiService _apiService = ApiService();
-  verifyToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString("token") ?? null;
-    if (token != null) {
-      _apiService.verifyToken(token).then((response) {
-        if (response != null) {
-          prefs.setString("nombre", response.nombre);
-          prefs.setString("email", response.id);
-          prefs.setString("id", response.email);
-        }
-      });
-    }
-  }*/
-}
-
 class ProfileScreen extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String _nombre;
+  String _correo;
+  String _imagen;
+  String _edad;
+  String _genero;
   File _pickedImage;
-  File _decode;
+  Uint8List _decode;
   bool _imagePicked = false;
+  @override
+  void initState() {
+    super.initState();
+    getPreferences();
+  }
+
   @override
   Widget build(BuildContext context) {
     void _pickImage() async {
@@ -49,11 +43,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: Text("Select the image source"),
                 actions: <Widget>[
                   MaterialButton(
-                    child: Text("Camera"),
+                    child: Text("Cámara"),
                     onPressed: () => Navigator.pop(context, ImageSource.camera),
                   ),
                   MaterialButton(
-                    child: Text("Gallery"),
+                    child: Text("Galeria"),
                     onPressed: () =>
                         Navigator.pop(context, ImageSource.gallery),
                   )
@@ -62,29 +56,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (imageSource != null) {
         print(imageSource);
         final file = await ImagePicker.pickImage(source: imageSource);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
         if (file != null) {
           setState(() {
             print("Una imagen si fue seleccionada");
             _pickedImage = file;
-            _decode = file;
             _imagePicked = true;
             List<int> imageBytes = file.readAsBytesSync();
             print(imageBytes);
             String base64Image = base64Encode(imageBytes);
+            this._decode = base64Decode(base64Image);
+            prefs.setString("imagen", base64Image);
             print(base64Image);
-            Uint8List decoded = base64Decode(base64Image);
-            print(decoded);
+            var user = new User(imagen: base64Image);
+            ApiService().updateUser(user).then((response){
+              if(response){
+                Alert(
+                  context: context,
+                  title: "Se ha actualizado la imagen de perfil",
+                  type: AlertType.success,
+                ).show();
+              }else{
+                Alert(
+                  context: context,
+                  title: "Ha ocurrido un error",
+                  desc: "Por favor vuelva a intentarlo",
+                  type: AlertType.error,
+                ).show();
+              }
+            });
           });
         }
       }
     }
 
-    Future.delayed(Duration.zero, () async {
-      //CurrentProfile().verifyToken();
-      //SharedPreferences prefs = await SharedPreferences.getInstance();
-    });
     return Scaffold(
-        //backgroundColor: Color.fromRGBO(255, 255, 255, .9),
         body: SafeArea(
       child: ListView(
         children: <Widget>[
@@ -114,35 +120,112 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Container(
                     height: 150,
                     margin: EdgeInsets.only(top: 60),
-                    padding: EdgeInsets.all(20.0),
-                    
+                    padding: EdgeInsets.all(10.0),
                     child: GestureDetector(
                       onTap: () {
                         _pickImage();
                       },
                       child: _imagePicked == false
                           ? Image.asset("assets/images/usuario.png")
-                          : Image(image: new  FileImage(_decode)),
+                          : ClipRRect(
+                              borderRadius: new BorderRadius.circular(10.0),
+                              child: Image.memory(_decode)
+                            ) 
                     ),
-                    //decoration: new BoxDecoration(
-
-                    //image: new DecorationImage(
-                    //  image: new FileImage(_pickedImage)
-                    //  )
-                    // ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(4),
                   ),
                   Text(
-                    "Gabriel Viera",
+                    _nombre ?? "Usuario",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                         fontSize: 20),
                     textAlign: TextAlign.center,
                   ),
-                  UserInfo()
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: <Widget>[
+                        Card(
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.all(15),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Información del usuario",
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                                Divider(
+                                  color: Colors.black38,
+                                ),
+                                Container(
+                                    child: Column(
+                                  children: <Widget>[
+                                    ListTile(
+                                      leading: Icon(Icons.email),
+                                      title: Text("Correo"),
+                                      subtitle: Text(_correo ?? "correo"),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(Icons.email),
+                                      title: Text("Edad"),
+                                      subtitle: Text(_edad ?? "Edad"),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(Icons.email),
+                                      title: Text("Genero"),
+                                      subtitle: Text(_genero ?? "Genero"),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(FontAwesomeIcons.powerOff),
+                                      title: Text("Cerrar Sesión"),
+                                      onTap: () async {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        var userId = prefs.getString("userid");
+                                        Provider.of<ApiService>(context,
+                                                listen: false)
+                                            .logout(userId);
+                                        prefs.remove("userid");
+                                        Navigator.pop(
+                                            scaffoldKey.currentContext);
+                                        Navigator.of(context)
+                                            .pushNamed(loginViewRoute);
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading: Icon(FontAwesomeIcons.kaggle,
+                                          color: Color.fromRGBO(240, 53, 6, 1)),
+                                      title: Text(
+                                          "¿Nos ayudas con más información?"),
+                                      subtitle: Text(
+                                          "Toda la información será completamente confidencial y con fines de estudio"),
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .pushNamed(formViewRoute);
+                                      },
+                                    )
+                                  ],
+                                ))
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
                 ],
               )
             ],
@@ -151,123 +234,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     ));
   }
-}
 
-class UserInfo extends StatefulWidget {
-  @override
-  _UserInfoState createState() => _UserInfoState();
-}
-
-class _UserInfoState extends State<UserInfo> {
-  String _provincia = "Pichincha";
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        children: <Widget>[
-          Card(
-            child: Container(
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.all(15),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Información del usuario",
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  Divider(
-                    color: Colors.black38,
-                  ),
-                  Container(
-                      child: Column(
-                    children: <Widget>[
-                      ListTile(
-                          leading: Icon(Icons.my_location),
-                          title: Text("Provincia"),
-                          subtitle: Text("$_provincia"),
-                          onTap: () {
-                            Alert(
-                                context: context,
-                                title: "Provincia",
-                                content: Column(
-                                  children: <Widget>[
-                                    DropdownButton(
-                                      value: _provincia,
-                                      icon: Icon(Icons.arrow_downward),
-                                      underline: Container(
-                                        height: 2,
-                                        color: Colors.deepPurpleAccent,
-                                      ),
-                                      items: <String>[
-                                        'Pichincha',
-                                        'Guayas',
-                                        'Loja',
-                                        'Esmeraldas'
-                                      ].map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String newValue) {
-                                        _provincia = newValue;
-                                        //setState(() {});
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                buttons: []).show();
-                          }),
-                      ListTile(
-                        leading: Icon(Icons.email),
-                        title: Text("Correo"),
-                        subtitle: Text("cristhian.viera1@gmail.com"),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.phone),
-                        title: Text("Phone"),
-                        subtitle: Text("0988677461"),
-                      ),
-                      ListTile(
-                        leading: Icon(FontAwesomeIcons.powerOff),
-                        title: Text("Cerrar Sesión"),
-                        onTap: () async {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          var userId = prefs.getString("userid");
-                          Provider.of<ApiService>(context,listen: false).logout(userId);
-                          prefs.remove("userid");
-                          Navigator.of(context).pushNamed(loginViewRoute);
-                        },
-                      ),
-                      ListTile(
-                        leading: Icon(FontAwesomeIcons.kaggle,
-                            color: Color.fromRGBO(240, 53, 6, 1)),
-                        title: Text("¿Nos ayudas con más información?"),
-                        subtitle: Text(
-                            "Toda la información será completamente confidencial y con fines de estudio"),
-                        onTap: () {
-                          Navigator.of(context).pushNamed(formViewRoute);
-                        },
-                      )
-                    ],
-                  ))
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+  void getPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      this._nombre = prefs.getString("nombre");
+      this._correo = prefs.getString("correo");
+      this._imagen = prefs.getString("imagen");
+      /*if(this._imagen != null){
+        this._decode = base64Decode(this._imagen);
+        _imagePicked=true;
+      }*/
+      this._edad = prefs.getString("edad");
+      this._genero = prefs.getString("genero");
+    });
   }
 }
