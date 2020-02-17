@@ -9,13 +9,13 @@ import 'package:kimirina_app/screens/login/register_page.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   bool loading = true;
   FocusNode myFocusNode;
   ApiService _apiService = ApiService();
@@ -26,9 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    
+    checkUserLogin();
     myFocusNode = FocusNode();
   }
+
   @override
   void dispose() {
     myFocusNode.dispose();
@@ -290,6 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _value1 = false;
   bool _autoValidate = false;
+
   ///redirect user to main screen
   void _value1Changed(bool value) => setState(() => _value1 = value);
 
@@ -313,11 +315,11 @@ class _LoginScreenState extends State<LoginScreen> {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         print(response);
         var tmpUsrId = jsonDecode(response)["id"];
-        var nombre =jsonDecode(response)["nombre"];
-        var correo =jsonDecode(response)["correo"];
-        var imagen =jsonDecode(response)["imagen"];
-        var edad =jsonDecode(response)["edad"];
-        var genero =jsonDecode(response)["genero"];
+        var nombre = jsonDecode(response)["nombre"];
+        var correo = jsonDecode(response)["correo"];
+        var imagen = jsonDecode(response)["imagen"];
+        var edad = jsonDecode(response)["edad"];
+        var genero = jsonDecode(response)["genero"];
         var rol = jsonDecode(response)["rol"];
         preferences.setString("userid", tmpUsrId);
         preferences.setString("nombre", nombre);
@@ -363,6 +365,18 @@ class _LoginScreenState extends State<LoginScreen> {
       return 'La contraseña debe tener al menos 6 caracteres';
     else
       return null;
+  }
+
+  void checkUserLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getString("userdId") ?? "";
+    if (id != null || id != "") {
+      ApiService().userSessionCheck(id).then((response){
+        if(response){
+          Navigator.of(context).pushNamed(navBarViewRoute);
+        }
+      });
+    }
   }
 }
 
