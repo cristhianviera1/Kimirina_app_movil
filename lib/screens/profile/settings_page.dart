@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/services/user_service.dart';
@@ -11,6 +11,7 @@ class SettingsOnePage extends StatefulWidget {
 }
 
 class _SettingsOnePageState extends State<SettingsOnePage> {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   bool _dark;
   FocusNode focusNode2;
   FocusNode focusNode3;
@@ -18,10 +19,42 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
   String _password;
   @override
   void initState() {
+    flutterLocalNotificationsPlugin = new  FlutterLocalNotificationsPlugin();
+    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOS = new IOSInitializationSettings();
+    var initSetttings = new InitializationSettings(android, iOS);
+    flutterLocalNotificationsPlugin.initialize(initSetttings, onSelectNotification: onSelectNotification);
     super.initState();
     focusNode2 = FocusNode();
     focusNode3 = FocusNode();
     _dark = false;
+  }
+
+  Future onSelectNotification(String payload) {
+    debugPrint("payload : $payload");
+    showDialog(
+      context: context,
+      builder: (_) => new AlertDialog(
+        title: new Text('Notification'),
+        content: new Text('$payload'),
+      ),
+    );
+    return null;
+  }
+
+  showNotification() async {
+    var android = new AndroidNotificationDetails('channelId', 'channelName', 'channelDescription', priority: Priority.High,importance: Importance.Max);
+    var iOS = new IOSNotificationDetails();
+    var plataform = new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(0,'Primera notificacion', 'Flutter Notificacion', plataform, payload: 'hola q hace');
+  }
+
+  activarNotificaciones(bool estado) async {
+    if(estado == false) {
+      await flutterLocalNotificationsPlugin.cancelAll();
+    } else{
+      showNotification();
+    }
   }
 
   Brightness _getBrightness() {
@@ -231,8 +264,8 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                     contentPadding: const EdgeInsets.all(0),
                     value: oneNotification,
                     title: Text("Recibir notificaciones"),
-                    onChanged: (val) {
-                      oneNotification = true;
+                    onChanged: (bool oneNotification) {
+                      activarNotificaciones(oneNotification);
                     },
                   ),
                   SwitchListTile(
