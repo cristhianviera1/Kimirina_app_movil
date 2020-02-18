@@ -9,11 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ApiService with ChangeNotifier {
-<<<<<<< HEAD
-  final String baseUrl = "http://192.168.0.110:4000";
-=======
   final String baseUrl = "http://192.168.0.103:4000";
->>>>>>> df1eae1de277432cf5663617b1f058c573a7ed60
   List<User> _chatListUsers = new List();
   List<User> get chatListUsers => _chatListUsers;
   void set chatListUsers(newValue) {

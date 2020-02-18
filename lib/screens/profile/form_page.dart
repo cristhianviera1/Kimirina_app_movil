@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:flutter/services.dart';
-<<<<<<< HEAD
 import 'package:kimirina_app/services/user_service.dart';
-=======
 import 'package:rflutter_alert/rflutter_alert.dart';
->>>>>>> df1eae1de277432cf5663617b1f058c573a7ed60
 
 class FormPage extends StatefulWidget {
   @override
