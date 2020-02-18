@@ -9,7 +9,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ApiService with ChangeNotifier {
+<<<<<<< HEAD
   final String baseUrl = "http://192.168.0.110:4000";
+=======
+  final String baseUrl = "http://192.168.0.103:4000";
+>>>>>>> df1eae1de277432cf5663617b1f058c573a7ed60
   List<User> _chatListUsers = new List();
   List<User> get chatListUsers => _chatListUsers;
   void set chatListUsers(newValue) {
@@ -68,8 +72,6 @@ class ApiService with ChangeNotifier {
   }
 
   Future<bool> userSessionCheck(userId) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    final userId = preferences.getString("userid") ?? "";
     final response = await http.post("$baseUrl/userSessionCheck",
         headers: {"content-type": "application/json"},
         body: jsonEncode({"userId": userId}));
@@ -79,30 +81,57 @@ class ApiService with ChangeNotifier {
       return false;
     }
   }
+
   //updUser
   Future<bool> updateUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var id = prefs.getString("userid")??"";
+    var id = prefs.getString("userid") ?? "";
     final response = await http.post("$baseUrl/usuario/$id",
-        headers: {"content-type": "application/json"},
-        body: jsonEncode(user));
+        headers: {"content-type": "application/json"}, body: jsonEncode(user));
     if (response.statusCode == 200) {
       return true;
     } else {
       return false;
     }
   }
+
   //updatePassword
   Future<bool> updatePassword(String pass) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var id = prefs.getString("userid")??"";
+    var id = prefs.getString("userid") ?? "";
     final response = await http.post("$baseUrl/usuario/updPassword",
         headers: {"content-type": "application/json"},
-        body: jsonEncode({"id":id,"password":pass}));
+        body: jsonEncode({"id": id, "password": pass}));
     if (response.statusCode == 200) {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future getChats() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getString("userid") ?? "";
+    final response = await http.post("$baseUrl/usuario/chats",
+        headers: {"content-type": "application/json"},
+        body: jsonEncode({"id": id}));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      return jsonDecode(response.body);
+    }
+  }
+
+  Future getChat(String idReceive) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getString("userid");
+    final response = await http.post("$baseUrl/usuario/chat",
+        headers: {"content-type": "application/json"},
+        body: jsonEncode({"id": id,"idReceive":idReceive}));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      return jsonDecode(response.body);
     }
   }
 
@@ -136,7 +165,6 @@ class ApiService with ChangeNotifier {
   }
 
   Future logout(userId) {
-    print(userId);
     this.socket.emit('logout', {"userId": userId});
     this.socket.on('logout-response', (data) {
       print(data);

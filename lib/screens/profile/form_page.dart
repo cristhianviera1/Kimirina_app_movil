@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:flutter/services.dart';
+<<<<<<< HEAD
 import 'package:kimirina_app/services/user_service.dart';
+=======
+import 'package:rflutter_alert/rflutter_alert.dart';
+>>>>>>> df1eae1de277432cf5663617b1f058c573a7ed60
 
 class FormPage extends StatefulWidget {
   @override
@@ -44,6 +48,46 @@ class _FormPage extends State<FormPage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget buildNextButton(onStepContinue) {
+      if (_currentStep < 6) {
+        return FlatButton(
+          color: naranja,
+          child: Text(
+            "Siguiente",
+            style: TextStyle(color: Colors.white),
+          ),
+          onPressed: onStepContinue,
+        );
+      } else if (_currentStep == 6) {
+        return FlatButton(
+          color: naranja,
+          child: Text(
+            "Guardar",
+            style: TextStyle(color: Colors.white),
+          ),
+          onPressed: () {
+            Alert(context: context, title: "FIN").show();
+          },
+        );
+      }
+    }
+
+    Widget buildCancelButton(onStepCancel) {
+      if (_currentStep < 1) {
+        return FlatButton(
+          child: Text(""),
+          onPressed: onStepCancel,
+        );
+      }else{
+          return FlatButton(
+          child: Text(
+            "Atras",
+          ),
+          onPressed: onStepCancel,
+        );
+      }
+    }
+
     return Scaffold(
       appBar: new AppBar(
           backgroundColor: naranja,
@@ -60,9 +104,23 @@ class _FormPage extends State<FormPage> {
           currentStep: _currentStep,
           onStepTapped: (int step) => setState(() => _currentStep = step),
           onStepContinue:
-              _currentStep < 6 ? () => setState(() => _currentStep += 1) : null,
+              _currentStep < 7 ? () => setState(() => _currentStep += 1) : null,
           onStepCancel:
               _currentStep > 0 ? () => setState(() => _currentStep -= 1) : null,
+          controlsBuilder: (BuildContext context,
+              {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+            return Row(
+              children: <Widget>[
+                SizedBox(
+                  height: 80,
+                ),
+                Container(
+                  child: buildNextButton(onStepContinue),
+                ),
+                buildCancelButton(onStepCancel)
+              ],
+            );
+          },
           steps: <Step>[
             new Step(
               title: new Text(''),
@@ -78,7 +136,10 @@ class _FormPage extends State<FormPage> {
                       children: <Widget>[
                         FormBuilderRadio(
                           attribute: "pregunta1",
-                          validators: [FormBuilderValidators.required()],
+                          validators: [
+                            FormBuilderValidators.required(
+                                errorText: "El campo no puede quedar vacío")
+                          ],
                           options: [
                             "Si",
                             "No",
@@ -110,7 +171,10 @@ class _FormPage extends State<FormPage> {
                       children: <Widget>[
                         FormBuilderRadio(
                           attribute: "pregunta2",
-                          validators: [FormBuilderValidators.required()],
+                          validators: [
+                            FormBuilderValidators.required(
+                                errorText: "El campo no puede quedar vacío")
+                          ],
                           options: [
                             "Si",
                             "No",
@@ -142,7 +206,10 @@ class _FormPage extends State<FormPage> {
                       children: <Widget>[
                         FormBuilderRadio(
                           attribute: "pregunta3",
-                          validators: [FormBuilderValidators.required()],
+                          validators: [
+                            FormBuilderValidators.required(
+                                errorText: "El campo no puede quedar vacío")
+                          ],
                           options: [
                             "Si",
                             "No",
@@ -174,7 +241,10 @@ class _FormPage extends State<FormPage> {
                       children: <Widget>[
                         FormBuilderRadio(
                           attribute: "pregunta4",
-                          validators: [FormBuilderValidators.required()],
+                          validators: [
+                            FormBuilderValidators.required(
+                                errorText: "Este campo no puede quedar vacío")
+                          ],
                           options: [
                             "Si",
                             "No",
@@ -206,7 +276,10 @@ class _FormPage extends State<FormPage> {
                       children: <Widget>[
                         FormBuilderRadio(
                           attribute: "pregunta5",
-                          validators: [FormBuilderValidators.required()],
+                          validators: [
+                            FormBuilderValidators.required(
+                                errorText: "Este campo no puede quedar vacío")
+                          ],
                           options: [
                             "Si",
                             "No",
@@ -238,7 +311,10 @@ class _FormPage extends State<FormPage> {
                       children: <Widget>[
                         FormBuilderRadio(
                           attribute: "pregunta6",
-                          validators: [FormBuilderValidators.required()],
+                          validators: [
+                            FormBuilderValidators.required(
+                                errorText: "Este campo no puede quedar vacío")
+                          ],
                           options: [
                             "Si",
                             "No",

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/models/user_model.dart';
-import 'package:kimirina_app/routes/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:socket_io_client/socket_io_client.dart' as io;
+import 'chat_details_page.dart';
 
 class ChatList extends StatefulWidget {
   @override
@@ -44,7 +43,6 @@ class _ChatListState extends State<ChatList> {
             ],
           ),
         ),
-        //_ChatItem("Usuario", "assets/images/usuario.png", 0, true, ""),
         Column(children: userAvailables),
         Padding(
           padding: EdgeInsets.only(top: 40.0, bottom: 10),
@@ -61,27 +59,30 @@ class _ChatListState extends State<ChatList> {
   getSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userid");
-    socket = io.io("http://192.168.0.101:4000");
+    socket = io.io("http://192.168.0.103:4000");
     socket.emit("getChats", (userId));
     socket.on("getChats_response", (data) {
       if (data != null || data != "undefined") {
-        setState(() {
-          for (var usr in data) {
-            userAvailables.add(_ChatItem(
-                usr["nombre"], "assets/login.png", 0, usr["online"], ""));
-          }
-        });
+        if (userAvailables.length == 0) {
+          setState(() {
+            for (var usr in data) {
+              userAvailables.add(_ChatItem(usr["nombre"], "assets/login.png", 0,
+                  usr["online"], "", usr["_id"]));
+            }
+          });
+        }
       }
     });
   }
 }
 
 class _ChatItem extends StatelessWidget {
-  final String imgURL, name, message;
+  final String imgURL, name, message, id;
   final int unread;
   final bool active;
 
-  _ChatItem(this.name, this.imgURL, this.unread, this.active, this.message);
+  _ChatItem(
+      this.name, this.imgURL, this.unread, this.active, this.message, this.id);
 
   Widget _activeIcon(isActive) {
     if (isActive) {
@@ -109,7 +110,14 @@ class _ChatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(chatDetailViewRoute);
+        print("$id\n$name");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => ChatScreen(
+                      id: id,
+                      nombre: name,
+                    )));
       },
       child: Padding(
         padding: EdgeInsets.all(20),
@@ -122,7 +130,7 @@ class _ChatItem extends StatelessWidget {
                 children: <Widget>[
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed(chatDetailViewRoute);
+                      //Navigator.of(context).pushNamed(chatDetailViewRoute);
                     },
                     child: CircleAvatar(
                       backgroundImage: AssetImage(this.imgURL),

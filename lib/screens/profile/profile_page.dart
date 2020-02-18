@@ -8,7 +8,7 @@ import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
-import 'package:provider/provider.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
@@ -191,18 +191,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       leading: Icon(FontAwesomeIcons.powerOff),
                                       title: Text("Cerrar Sesión"),
                                       onTap: () async {
-                                        SharedPreferences prefs =
-                                            await SharedPreferences
-                                                .getInstance();
+                                        SharedPreferences prefs = await SharedPreferences.getInstance();
                                         var userId = prefs.getString("userid");
-                                        Provider.of<ApiService>(context,
-                                                listen: false)
-                                            .logout(userId);
+                                        var socket = io.io("http://192.168.0.103:4000");
+                                        socket.emit('logout', {"userId": userId});
+                                        //Provider.of<ApiService>(context,listen: false).logout(userId);
                                         prefs.remove("userid");
-                                        Navigator.pop(
-                                            scaffoldKey.currentContext);
-                                        Navigator.of(context)
-                                            .pushNamed(loginViewRoute);
+                                        Navigator.pop(scaffoldKey.currentContext);
+                                        Navigator.of(context).pushNamed(loginViewRoute);
                                       },
                                     ),
                                     ListTile(
