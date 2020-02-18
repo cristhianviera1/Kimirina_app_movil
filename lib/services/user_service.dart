@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:kimirina_app/models/user_model.dart';
+import 'package:kimirina_app/models/formulario_model.dart';
+import 'package:kimirina_app/models/novedades_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ApiService with ChangeNotifier {
-  final String baseUrl = "http://192.168.0.101:4000";
+  final String baseUrl = "http://192.168.0.110:4000";
   List<User> _chatListUsers = new List();
   List<User> get chatListUsers => _chatListUsers;
   void set chatListUsers(newValue) {
@@ -34,6 +36,18 @@ class ApiService with ChangeNotifier {
     final response = await http.post("$baseUrl/usuario",
         headers: {"content-type": "application/json"},
         body: anyToJson(userReg));
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return response.body;
+    }
+  }
+
+  //guardar formulario
+    Future storeForm(Formulario formReg) async {
+    final response = await http.post("$baseUrl/formulario",
+        headers: {"content-type": "application/json"},
+        body: anyToJson(formReg));
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -109,6 +123,16 @@ class ApiService with ChangeNotifier {
       response.stream();
       return response;
     });
+  }
+
+  Future getNovedades() async {
+    final response = await http.get("$baseUrl/novedades");
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+      
+    } else {
+      return json.decode(response.body);
+    }
   }
 
   Future logout(userId) {

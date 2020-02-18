@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:flutter/services.dart';
+import 'package:kimirina_app/services/user_service.dart';
 
 class FormPage extends StatefulWidget {
   @override
@@ -10,6 +11,35 @@ class FormPage extends StatefulWidget {
 }
 
 class _FormPage extends State<FormPage> {
+  ApiService _apiService = ApiService();
+  FocusNode focusNode1;
+  FocusNode focusNode2;
+  FocusNode focusNode3;
+  FocusNode focusNode4;
+  FocusNode focusNode5;
+  FocusNode focusNode6;
+  FocusNode focusNode7;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _pregunta1;
+  String _pregunta2;
+  String _pregunta3;
+  String _pregunta4;
+  String _pregunta5;
+  String _pregunta6;
+  String _pregunta7;
+  
+  @override
+  void initState() {
+    super.initState();
+
+    focusNode1 = FocusNode();
+    focusNode2 = FocusNode();
+    focusNode3 = FocusNode();
+    focusNode4 = FocusNode();
+    focusNode5 = FocusNode();
+    focusNode6 = FocusNode();
+    focusNode7 = FocusNode();
+  }
   int _currentStep = 0;
 
   @override

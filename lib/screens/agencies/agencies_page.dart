@@ -95,14 +95,15 @@ class AgenciesScreen extends StatelessWidget {
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
-                      Navigator.push(
+                      MapUtils.openMap(-2.191523, -79.883687);
+                     /* Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => MapsScreen(
                                   agencieCity: "Guayaquil",
                                   lat: -2.191523,
                                   lng: -79.883687)));
-                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                      //Navigator.of(context).pushNamed(mapsViewRoute);*/
                     })
               ],
             ),
@@ -146,14 +147,15 @@ class AgenciesScreen extends StatelessWidget {
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
-                      Navigator.push(
+                      MapUtils.openMap(-3.260251, -79.957012);
+                      /*Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => MapsScreen(
                                   agencieCity: " Machala",
                                   lat: -3.260251,
                                   lng: -79.957012)));
-                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                      //Navigator.of(context).pushNamed(mapsViewRoute);*/
                     })
               ],
             ),
@@ -196,14 +198,15 @@ class AgenciesScreen extends StatelessWidget {
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
-                      Navigator.push(
+                      MapUtils.openMap(-2.191523, -79.883687);
+                     /* Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => MapsScreen(
                                   agencieCity: " Esmeraldas",
                                   lat: -3.260251,
                                   lng: -79.957012)));
-                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                      //Navigator.of(context).pushNamed(mapsViewRoute);*/
                     })
               ],
             ),
@@ -246,14 +249,15 @@ class AgenciesScreen extends StatelessWidget {
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
-                      Navigator.push(
+                       MapUtils.openMap(-2.191523, -79.883687);
+                     /* Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => MapsScreen(
                                   agencieCity: " Portoviejo",
                                   lat: -3.260251,
                                   lng: -79.957012)));
-                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                      //Navigator.of(context).pushNamed(mapsViewRoute);*/
                     })
               ],
             ),
@@ -296,14 +300,15 @@ class AgenciesScreen extends StatelessWidget {
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
-                      Navigator.push(
+                       MapUtils.openMap(-2.191523, -79.883687);
+                     /* Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => MapsScreen(
                                   agencieCity: " Santo Domingo",
                                   lat: -3.260251,
                                   lng: -79.957012)));
-                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                      //Navigator.of(context).pushNamed(mapsViewRoute);*/
                     })
               ],
             ),
@@ -346,14 +351,15 @@ class AgenciesScreen extends StatelessWidget {
                     backgroundColor: azul,
                     child: const Icon(Icons.map),
                     onPressed: () {
-                      Navigator.push(
+                       MapUtils.openMap(-2.191523, -79.883687);
+                     /* Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => MapsScreen(
                                   agencieCity: " Santa Elena",
                                   lat: -3.260251,
                                   lng: -79.957012)));
-                      //Navigator.of(context).pushNamed(mapsViewRoute);
+                      //Navigator.of(context).pushNamed(mapsViewRoute);*/
                     })
               ],
             ),
