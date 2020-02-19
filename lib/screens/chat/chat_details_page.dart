@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/services/user_service.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
@@ -28,6 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
     getSharedPreferences();
     //Initializing the message list
     messages = List();
+
     //Initializing the TextEditingController and ScrollController
     textController = TextEditingController();
     scrollController = ScrollController();
@@ -40,9 +43,28 @@ class _ChatScreenState extends State<ChatScreen> {
         print("Número de chats:\n${messages.length}");
       });
     });
-    //Creating the socket
-
     super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.nombre) ?? "Usuario",
+        backgroundColor: morado,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            //SizedBox(height: height * 0.1),
+            buildMessageList(),
+            buildInputArea()
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildSingleMessage(int index) {
@@ -55,14 +77,6 @@ class _ChatScreenState extends State<ChatScreen> {
       aligment = Alignment.centerLeft;
       color = Colors.deepPurple;
     }
-    /*
-    if (index % 2 == 0) {
-      aligment = Alignment.centerLeft;
-      color = Colors.deepPurple;
-    } else if (index % 2 == 1) {
-      aligment = Alignment.topRight;
-      color = Colors.purple;
-    }*/
     return Container(
       alignment: aligment,
       child: Container(
@@ -82,7 +96,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget buildMessageList() {
     return Container(
-      height: height * 0.78,
+      height: height * 0.77,
       width: width,
       child: ListView.builder(
         controller: scrollController,
@@ -90,95 +104,6 @@ class _ChatScreenState extends State<ChatScreen> {
         itemBuilder: (BuildContext context, int index) {
           return buildSingleMessage(index);
         },
-      ),
-    );
-  }
-
-  Widget buildChatInput() {
-    return Container(
-      width: width * 0.7,
-      padding: const EdgeInsets.all(2.0),
-      margin: const EdgeInsets.only(left: 40.0),
-      child: TextField(
-        decoration: InputDecoration.collapsed(
-          hintText: 'Send a message...',
-        ),
-        controller: textController,
-      ),
-    );
-  }
-
-  Widget buildSendButton() {
-    return FloatingActionButton(
-      backgroundColor: morado,
-      onPressed: () {
-        //Check if the textfield has text or not
-        if (textController.text.isNotEmpty) {
-          /*socket.emit(
-              "send_message",
-              json.encode({
-                "message": textController.text,
-                "userIdSend": this.userId,
-                "userIdReceive": widget.id
-              }));*/
-          socket.emit(
-              'send_message',
-              json.encode({
-                "message": textController.text,
-                "userIdReceive": widget.id,
-                "userIdSend": this.userId
-              }));
-          this.setState(() => messages.add({
-                "message": textController.text,
-                "userIdSend": this.userId,
-                "userIdReceive": widget.id
-              }));
-          textController.text = '';
-          //Scrolldown the list to show the latest message
-          scrollController.animateTo(
-            scrollController.position.maxScrollExtent,
-            duration: Duration(milliseconds: 600),
-            curve: Curves.ease,
-          );
-        }
-      },
-      child: Icon(
-        Icons.send,
-        size: 30,
-      ),
-    );
-  }
-
-  Widget buildInputArea() {
-    return Container(
-      height: height * 0.1,
-      width: width,
-      child: Row(
-        children: <Widget>[
-          buildChatInput(),
-          buildSendButton(),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.nombre) ?? "Usuario",
-        backgroundColor: morado,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            //SizedBox(height: height * 0.1),
-            buildMessageList(),
-            buildInputArea(),
-          ],
-        ),
       ),
     );
   }
@@ -197,13 +122,107 @@ class _ChatScreenState extends State<ChatScreen> {
                 "userIdSend": jsonData['userIdSend'],
                 "userIdReceive": jsonData['userIdReceive']
               }));
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent * 1.2,
+            duration: Duration(milliseconds: 600),
+            curve: Curves.ease,
+          );
         }
       });
     });
   }
+
   @override
   void dispose() {
     Navigator.pop(context);
     super.dispose();
+  }
+
+  void _scrollToEnd() {
+    if (!scrollController.hasClients) {
+      return;
+    }
+
+    var scrollPosition = scrollController.position;
+
+    if (scrollPosition.maxScrollExtent > scrollPosition.minScrollExtent) {
+      scrollController.animateTo(
+        scrollPosition.maxScrollExtent,
+        duration: new Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  buildInputArea() {
+    return Container(
+      margin: EdgeInsets.only(left: 25, right: 25, top: 5, bottom: 5),
+      height: 50,
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(35.0),
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 3), blurRadius: 5, color: Colors.grey)
+                ],
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.photo_camera),
+                    onPressed: () {},
+                  ),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: "Escribe algo...",
+                          border: InputBorder.none),
+                      controller: textController,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: 15),
+          Container(
+            padding: const EdgeInsets.all(15.0),
+            decoration: BoxDecoration(color: morado, shape: BoxShape.circle),
+            child: InkWell(
+              child: Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
+              onTap: () {
+                if (textController.text.isNotEmpty) {
+                  socket.emit(
+                      'send_message',
+                      json.encode({
+                        "message": textController.text,
+                        "userIdReceive": widget.id,
+                        "userIdSend": this.userId
+                      }));
+                  this.setState(() => messages.add({
+                        "message": textController.text,
+                        "userIdSend": this.userId,
+                        "userIdReceive": widget.id
+                      }));
+                  textController.text = '';
+                  scrollController.animateTo(
+                    scrollController.position.maxScrollExtent * 1.2,
+                    duration: Duration(milliseconds: 600),
+                    curve: Curves.ease,
+                  );
+                }
+              },
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

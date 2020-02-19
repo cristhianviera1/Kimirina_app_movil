@@ -60,8 +60,9 @@ class _ChatListState extends State<ChatList> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userid");
     socket = io.io("http://192.168.0.103:4000");
-    socket.emit("getChats", (userId));
+    socket.emit("getUserList", (userId));
     socket.on("getChats_response", (data) {
+      print(data);
       if (data != null || data != "undefined") {
         if (userAvailables.length == 0) {
           setState(() {
@@ -72,6 +73,9 @@ class _ChatListState extends State<ChatList> {
           });
         }
       }
+    });
+    socket.on("updateOfUser",(data){
+      print(data);
     });
   }
 }
