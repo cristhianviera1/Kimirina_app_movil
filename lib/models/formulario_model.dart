@@ -8,7 +8,7 @@ class Formulario {
   String pregunta4;
   String pregunta5;
   String pregunta6;
-  String pregunta7;
+  List<dynamic> pregunta7;
   Formulario(
       {this.id,
       this.personaLlena,
