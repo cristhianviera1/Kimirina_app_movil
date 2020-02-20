@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -59,7 +60,7 @@ class _ChatListState extends State<ChatList> {
   getSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userid");
-    socket = io.io("http://192.168.100.220:4000");
+    socket = io.io(urlApiRest);
     socket.emit("getUserList", (userId));
     socket.on("getChats_response", (data) {
       print(data);
@@ -71,7 +72,7 @@ class _ChatListState extends State<ChatList> {
               if(usr["imagen"]!=""){
                 foto = usr["imagen"];
               }else{
-                foto = 'https://ktusu.com/admin/uploads/slider/836295524.jpg';
+                foto = 'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
               }
               userAvailables.add(_ChatItem(usr["nombre"], foto, 0,
                   usr["online"], "", usr["_id"]));

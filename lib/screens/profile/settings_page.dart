@@ -82,16 +82,6 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
             'Configuración',
             style: TextStyle(color: _dark ? Colors.white : Colors.black),
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(FontAwesomeIcons.moon),
-              onPressed: () {
-                setState(() {
-                  _dark = !_dark;
-                });
-              },
-            )
-          ],
         ),
         body: Stack(
           fit: StackFit.expand,
@@ -235,18 +225,6 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                             //open change password
                           },
                         ),
-                        _buildDivider(),
-                        ListTile(
-                          leading: Icon(
-                            FontAwesomeIcons.language,
-                            color: morado,
-                          ),
-                          title: Text("Cambiar Nombre"),
-                          trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () {
-                            //open change language
-                          },
-                        ),
                       ],
                     ),
                   ),
@@ -263,27 +241,9 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                     activeColor: morado,
                     contentPadding: const EdgeInsets.all(0),
                     value: oneNotification,
-                    title: Text("Recibir notificaciones"),
+                    title: Text("Recordatorio de prueba ViH"),
                     onChanged: (bool oneNotification) {
                       activarNotificaciones(oneNotification);
-                    },
-                  ),
-                  SwitchListTile(
-                    activeColor: morado,
-                    contentPadding: const EdgeInsets.all(0),
-                    value: twoNotification,
-                    title: Text("Promociones"),
-                    onChanged: (val) {
-                      twoNotification = true;
-                    },
-                  ),
-                  SwitchListTile(
-                    activeColor: morado,
-                    contentPadding: const EdgeInsets.all(0),
-                    value: threeNotification,
-                    title: Text("Recordatorio de prueba VIH"),
-                    onChanged: (val) {
-                      threeNotification = true;
                     },
                   ),
                   const SizedBox(height: 60.0),

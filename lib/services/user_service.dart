@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:dio/dio.dart';
+import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/models/formulario_model.dart';
 import 'package:path/path.dart';
@@ -11,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ApiService with ChangeNotifier {
-  final String baseUrl = "http://192.168.100.220:4000";
+  final String baseUrl = urlApiRest;
   List<User> _chatListUsers = new List();
   List<User> get chatListUsers => _chatListUsers;
   void set chatListUsers(newValue) {

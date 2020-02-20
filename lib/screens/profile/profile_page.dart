@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
@@ -28,8 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _genero;
   File _pickedImage;
   bool _imagePicked = false;
-
-  String imageOfUser = 'https://ktusu.com/admin/uploads/slider/836295524.jpg';
+  String imageOfUser = 'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
   @override
   void initState() {
     super.initState();
@@ -175,12 +175,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       subtitle: Text(_correo ?? "correo"),
                                     ),
                                     ListTile(
-                                      leading: Icon(Icons.email),
+                                      leading: Icon(Icons.calendar_today),
                                       title: Text("Edad"),
                                       subtitle: Text(_edad ?? "Edad"),
                                     ),
                                     ListTile(
-                                      leading: Icon(Icons.email),
+                                      leading: Icon(Icons.people),
                                       title: Text("Genero"),
                                       subtitle: Text(_genero ?? "Genero"),
                                     ),
@@ -193,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 .getInstance();
                                         var userId = prefs.getString("userid");
                                         var socket =
-                                            io.io("http://192.168.0.103:4000");
+                                            io.io(urlApiRest);
                                         socket
                                             .emit('logout', {"userId": userId});
                                         socket.on("updateOfUser", (data) {

@@ -53,12 +53,13 @@ class _NewsScreenState extends State<NewsScreen> {
       ),
       backgroundColor: bgColor,
       body: ListView(
-          padding: const EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 16.0),
-          children: <Widget>[
-            Column(
-              children: novedadesCards,
-            )
-          ],),
+        padding: const EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 16.0),
+        children: <Widget>[
+          Column(
+            children: novedadesCards,
+          )
+        ],
+      ),
     );
   }
 
@@ -66,8 +67,8 @@ class _NewsScreenState extends State<NewsScreen> {
     ApiService().getNovedades().then((value) {
       setState(() {
         for (var novedad in value) {
-          novedadesCards
-              .add(new _NovedadItem(novedad["titulo"], novedad["descripcion"],novedad["imagen"], novedad["link"]));
+          novedadesCards.add(new _NovedadItem(novedad["titulo"],
+              novedad["descripcion"], novedad["imagen"], novedad["link"]));
           print(novedadesCards[0]);
         }
       });
@@ -88,7 +89,7 @@ class _NovedadItem extends StatelessWidget {
     fontWeight: FontWeight.w500,
     color: Colors.grey.shade800,
   );
-  _NovedadItem(this.titulo, this.descripcion,this.imagen, this.link);
+  _NovedadItem(this.titulo, this.descripcion, this.imagen, this.link);
   @override
   Widget build(BuildContext context) {
     // imagenDecodificada = base64.decode(imagen.toString());
@@ -101,17 +102,16 @@ class _NovedadItem extends StatelessWidget {
         children: <Widget>[
           Column(
             children: <Widget>[
-             Container(
-                      height: 200.0,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10.0),
-                            topRight: Radius.circular(10.0),
-                          ),
-                          image: DecorationImage(
-                            image: new NetworkImage(this.imagen)
-                          )),
+              Container(
+                height: 200.0,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0),
                     ),
+                    image:
+                        DecorationImage(image: new NetworkImage(this.imagen))),
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
@@ -121,21 +121,28 @@ class _NovedadItem extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
+                child: Column(
                   children: <Widget>[
-                    Expanded(
-                      child: AutoSizeText(descripcion),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: AutoSizeText(descripcion),
+                        ),
+                      ],
                     ),
-                    
+                    const SizedBox(height: 20.0),
+                    Text("Ver más..."),
+                    GestureDetector(
+                        child: Text(link,
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Colors.blue)),
+                        onTap: () {
+                          launch(link);
+                        }),
                   ],
                 ),
               ),
-              const SizedBox(height: 20.0),
-              GestureDetector(
-  child: Text(link, style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue)),
-  onTap: () { launch(link);
-  }
-),
               const SizedBox(height: 20.0),
             ],
           ),

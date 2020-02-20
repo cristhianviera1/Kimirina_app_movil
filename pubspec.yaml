@@ -69,24 +69,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/image1.jpg
-    - assets/images/image2.jpg
-    - assets/images/image3.jpg
-    - assets/images/logo.png
-    - assets/login.png
-    - assets/images/profile.jpg
     - assets/gif/kimirina_logo.gif
-    - assets/images/prep.png
-    - assets/images/asesorias.png
-    - assets/images/pruebaRapida.jpg
-    - assets/images/condones.jpg
-    - assets/images/its.png
-    - assets/images/vinculacion.png
-    - assets/images/tratamiento.png
-    - assets/images/lubricantes.png
-    - assets/images/pacto_global.jpg
-    - assets/images/2_15_2_SISTEMA_NACIONES-UNIDAS.jpg
-    - assets/images/convenio_kimirina_embajada.jpg
     - assets/images/questions.png
     - assets/images/imgSeccion_13.png
     - assets/images/notratamiento.png
@@ -98,16 +81,7 @@ flutter:
     - assets/animations/logo.gif
     - assets/images/questionBlue.png
     - assets/images/logoTransparente.png
-    - assets/images/mapKimirina.png
     - assets/images/agencia.png
-    - assets/images/usuario.png
-    - assets/images/npep.jpg
-    - assets/images/ppvs.png
-    - assets/images/atencionIts.png
-    - assets/images/npepdetails.jpg
-    - assets/images/prepdetails.jpg
-    - assets/images/pruebaIts.jpg
-    - assets/images/pruebaVih.jpg
     - assets/images/sinDiscriminacion.png
 
 

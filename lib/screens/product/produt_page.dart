@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
+import 'package:kimirina_app/screens/product/product_details.dart';
 import 'package:kimirina_app/services/user_service.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -131,7 +132,17 @@ class _ProductScreen extends State<ProductScreen> {
   Widget buildList(BuildContext context, int index) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(schoolLists[index]['route']);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => ProductDetailsPage(
+                      titulo: schoolLists[index]['name'],
+                      descripcion: schoolLists[index]['type'],
+                      imagenUrl: schoolLists[index]['logoText'],
+                      link: schoolLists[index]['link'],
+                      observaciones: schoolLists[index]['observaciones'],
+                      precio: schoolLists[index]['precio'],
+                    )));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -209,7 +220,9 @@ class _ProductScreen extends State<ProductScreen> {
             "name": producto["titulo"],
             "type": producto["descripcion"],
             "logoText": producto["imagen"],
-            "route": ppvsViewRoute
+            "link": producto["link"],
+            "observaciones": producto["observaciones"],
+            "precio": producto["precio"],
           });
         }
       });

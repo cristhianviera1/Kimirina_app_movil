@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -172,7 +173,7 @@ class _ChatScreenState extends State<ChatScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       this.userId = prefs.getString("userid");
-      socket = io.io("http://192.168.100.220:4000");
+      socket = io.io(urlApiRest);
       socket.emit("loginRoom", (this.userId));
       socket.on("receive_message", (jsonData) {
         if (jsonData['userIdReceive'] == this.userId) {

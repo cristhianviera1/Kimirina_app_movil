@@ -23,7 +23,6 @@ class _CarruselPageState extends State<CarruselPage> {
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
       bubbleBackgroundColor: naranja,
-      //title: Container(),
       body: Column(
         children: <Widget>[
           Text(
@@ -34,19 +33,24 @@ class _CarruselPageState extends State<CarruselPage> {
             height: 10,
           ),
           Text(
-            'Kimirina es una organización comunitaria especializada en la respuesta a la epidemia del VIH, con capacidades técnicas, metodologías, abordajes, ',
+            'Kimirina es una organización comunitaria especializada en la respuesta a la epidemia del VIH, con capacidades técnicas, metodologías y abordajes',
             style: TextStyle(color: Colors.black54, fontSize: 16.0),
           ),
         ],
       ),
+      titleTextStyle: TextStyle(color: Colors.black,fontSize: 0),
       mainImage: Image.asset('assets/gif/kimirina_logo.gif'),
       textStyle: TextStyle(color: Colors.black), title: Text(""),
     ),
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
-      bubbleBackgroundColor: naranja,
-      title: Container(),
+      bubbleBackgroundColor: morado,
+      title: Container(
+        height: 0,
+        width: 0,
+      ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Text('Confidencialidad'),
           SizedBox(
@@ -59,15 +63,15 @@ class _CarruselPageState extends State<CarruselPage> {
         ],
       ),
       mainImage: FlareActor("assets/animations/Lock_Animation.flr",
-          alignment: Alignment.center,
-          fit: BoxFit.contain,
+          alignment: Alignment.topCenter,
+          fit: BoxFit.fitWidth,
           animation: "Untitled"),
       textStyle: TextStyle(color: Colors.black),
     ),
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
       iconColor: null,
-      bubbleBackgroundColor: naranja,
+      bubbleBackgroundColor: azul,
       title: Container(),
       body: Column(
         children: <Widget>[
@@ -83,14 +87,14 @@ class _CarruselPageState extends State<CarruselPage> {
       ),
       mainImage: FlareActor("assets/animations/handShake.flr",
           alignment: Alignment.center,
-          fit: BoxFit.contain,
+          fit: BoxFit.fitWidth,
           animation: "Untitled"),
       textStyle: TextStyle(color: Colors.black),
     ),
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
       iconColor: null,
-      bubbleBackgroundColor: naranja,
+      bubbleBackgroundColor: verde,
       title: Container(),
       body: Column(
         children: <Widget>[
@@ -99,14 +103,14 @@ class _CarruselPageState extends State<CarruselPage> {
             height: 10,
           ),
           Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'Nuestras políticas se adaptan basadas en la importancia de caminar juntos hacia un norte que asegura la justicia y la equidad entre hombres, mujeres y toda su diversidad',
             style: TextStyle(color: Colors.black54, fontSize: 16.0),
           ),
         ],
       ),
       mainImage: Image.asset(
         'assets/images/sinDiscriminacion.png',
-        width: 400.0,
+        fit: BoxFit.fitWidth,
         alignment: Alignment.center,
       ),
       textStyle: TextStyle(color: Colors.black),
@@ -118,6 +122,7 @@ class _CarruselPageState extends State<CarruselPage> {
     return Scaffold(
       body: SafeArea(
         child: Stack(
+          alignment: Alignment.topCenter,
           children: <Widget>[
             IntroViewsFlutter(
               pages,
