@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class User {
   String id;
   String nombre;
@@ -5,7 +7,7 @@ class User {
   String password;
   String edad;
   String genero;
-  String imagen;
+  File imagen;
   bool online;
   User(
       {this.id,

@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -46,6 +49,47 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
   }
 
+  void _pickImage() async {
+    final imageSource = await showDialog<ImageSource>(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Selecciona una fuente"),
+              actions: <Widget>[
+                MaterialButton(
+                  child: Text("Cámara"),
+                  onPressed: () => Navigator.pop(context, ImageSource.camera),
+                ),
+                MaterialButton(
+                  child: Text("Galeria"),
+                  onPressed: () => Navigator.pop(context, ImageSource.gallery),
+                )
+              ],
+            ));
+    if (imageSource != null) {
+      File file = await ImagePicker.pickImage(source: imageSource);
+      if (file != null) {
+        setState(() {
+          List<int> imageBytes = file.readAsBytesSync();
+          String base64Image = base64Encode(imageBytes);
+          messages.add({
+            "message": base64Image,
+            "imagen": true,
+            "userIdSend": this.userId,
+            "userIdReceive": widget.id
+          });
+          socket.emit(
+              'send_message',
+              json.encode({
+                "imagen": true,
+                "message": base64Image,
+                "userIdReceive": widget.id,
+                "userIdSend": this.userId
+              }));
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -77,21 +121,37 @@ class _ChatScreenState extends State<ChatScreen> {
       aligment = Alignment.centerLeft;
       color = Colors.deepPurple;
     }
-    return Container(
-      alignment: aligment,
-      child: Container(
-        padding: const EdgeInsets.all(20.0),
-        margin: const EdgeInsets.only(bottom: 20.0, left: 20.0, right: 20.0),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(20.0),
+    if (messages[index]["imagen"] == true) {
+      Uint8List bytes = base64.decode(messages[index]["message"]);
+      return Container(
+        alignment: aligment,
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.only(bottom: 20.0, left: 20.0, right: 20.0),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Image.memory(bytes),
         ),
-        child: Text(
-          messages[index]["message"],
-          style: TextStyle(color: Colors.white, fontSize: 15.0),
+      );
+    } else {
+      return Container(
+        alignment: aligment,
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.only(bottom: 20.0, left: 20.0, right: 20.0),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Text(
+            messages[index]["message"],
+            style: TextStyle(color: Colors.white, fontSize: 15.0),
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   Widget buildMessageList() {
@@ -112,16 +172,18 @@ class _ChatScreenState extends State<ChatScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       this.userId = prefs.getString("userid");
-      socket = io.io("http://192.168.0.103:4000");
+      socket = io.io("http://192.168.100.220:4000");
       socket.emit("loginRoom", (this.userId));
       socket.on("receive_message", (jsonData) {
-        print("------\n${jsonData['message']}\n-------\n");
         if (jsonData['userIdReceive'] == this.userId) {
-          setState(() => messages.add({
-                "message": jsonData['message'],
-                "userIdSend": jsonData['userIdSend'],
-                "userIdReceive": jsonData['userIdReceive']
-              }));
+          setState(() {
+            messages.add({
+              "imagen": jsonData['imagen'],
+              "message": jsonData['message'],
+              "userIdSend": jsonData['userIdSend'],
+              "userIdReceive": jsonData['userIdReceive']
+            });
+          });
           scrollController.animateTo(
             scrollController.position.maxScrollExtent * 1.2,
             duration: Duration(milliseconds: 600),
@@ -174,7 +236,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   IconButton(
                     icon: Icon(Icons.photo_camera),
-                    onPressed: () {},
+                    onPressed: () {
+                      _pickImage();
+                    },
                   ),
                   Expanded(
                     child: TextField(
@@ -203,11 +267,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       'send_message',
                       json.encode({
                         "message": textController.text,
+                        "imagen": false,
                         "userIdReceive": widget.id,
                         "userIdSend": this.userId
                       }));
                   this.setState(() => messages.add({
                         "message": textController.text,
+                        "imagen": false,
                         "userIdSend": this.userId,
                         "userIdReceive": widget.id
                       }));

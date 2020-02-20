@@ -8,6 +8,7 @@ import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email;
   String _password;
+  var socket;
 
   @override
   void initState() {
@@ -311,7 +313,25 @@ class _LoginScreenState extends State<LoginScreen> {
   void _loginUser() {
     User userReg = new User(correo: _email, password: _password);
     _apiService.loginUser(userReg).then((response) async {
-      if (response != null) {
+      if (response == "inaccesible") {
+        return Alert(
+          context: context,
+          type: AlertType.warning,
+          title: "No se pudo conectar",
+          desc: "Por favor revise su conexión a internet.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Aceptar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      }
+      if (response != "error") {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         print(response);
         var tmpUsrId = jsonDecode(response)["id"];
@@ -371,8 +391,8 @@ class _LoginScreenState extends State<LoginScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = prefs.getString("userdId") ?? "";
     if (id != null || id != "") {
-      ApiService().userSessionCheck(id).then((response){
-        if(response){
+      ApiService().userSessionCheck(id).then((response) {
+        if (response) {
           Navigator.of(context).pushNamed(navBarViewRoute);
         }
       });

@@ -20,14 +20,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String _id;
   String _nombre;
   String _correo;
   String _imagen;
   String _edad;
   String _genero;
   File _pickedImage;
-  Uint8List _decode;
   bool _imagePicked = false;
+
+  String imageOfUser = 'https://ktusu.com/admin/uploads/slider/836295524.jpg';
   @override
   void initState() {
     super.initState();
@@ -40,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final imageSource = await showDialog<ImageSource>(
           context: context,
           builder: (context) => AlertDialog(
-                title: Text("Select the image source"),
+                title: Text("Seleccione una fuente"),
                 actions: <Widget>[
                   MaterialButton(
                     child: Text("Cámara"),
@@ -54,29 +56,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ));
       if (imageSource != null) {
-        print(imageSource);
-        final file = await ImagePicker.pickImage(source: imageSource);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
+        File file = await ImagePicker.pickImage(source: imageSource);
         if (file != null) {
           setState(() {
-            print("Una imagen si fue seleccionada");
             _pickedImage = file;
             _imagePicked = true;
-            List<int> imageBytes = file.readAsBytesSync();
-            print(imageBytes);
-            String base64Image = base64Encode(imageBytes);
-            this._decode = base64Decode(base64Image);
-            prefs.setString("imagen", base64Image);
-            print(base64Image);
-            var user = new User(imagen: base64Image);
-            ApiService().updateUser(user).then((response){
-              if(response){
+            var user = new User(id: this._id, imagen: file);
+            ApiService().uploadImage(user).then((response) {
+              if (response) {
                 Alert(
                   context: context,
                   title: "Se ha actualizado la imagen de perfil",
                   type: AlertType.success,
                 ).show();
-              }else{
+              } else {
                 Alert(
                   context: context,
                   title: "Ha ocurrido un error",
@@ -122,16 +115,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     margin: EdgeInsets.only(top: 60),
                     padding: EdgeInsets.all(10.0),
                     child: GestureDetector(
-                      onTap: () {
-                        _pickImage();
-                      },
-                      child: _imagePicked == false
-                          ? Image.asset("assets/images/usuario.png")
-                          : ClipRRect(
-                              borderRadius: new BorderRadius.circular(10.0),
-                              child: Image.memory(_decode)
-                            ) 
-                    ),
+                        onTap: () {
+                          _pickImage();
+                        },
+                        child: _imagePicked == false
+                            ? CircleAvatar(
+                                radius: 70,
+                                backgroundColor: Colors.white,
+                                backgroundImage: NetworkImage(imageOfUser),
+                              )
+                            : ClipRRect(
+                                borderRadius: new BorderRadius.circular(10.0),
+                                child:
+                                    Image(image: new FileImage(_pickedImage)),
+                              )),
                   ),
                   Padding(
                     padding: EdgeInsets.all(4),
@@ -191,14 +188,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       leading: Icon(FontAwesomeIcons.powerOff),
                                       title: Text("Cerrar Sesión"),
                                       onTap: () async {
-                                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
                                         var userId = prefs.getString("userid");
-                                        var socket = io.io("http://192.168.0.103:4000");
-                                        socket.emit('logout', {"userId": userId});
+                                        var socket =
+                                            io.io("http://192.168.0.103:4000");
+                                        socket
+                                            .emit('logout', {"userId": userId});
+                                        socket.on("updateOfUser", (data) {
+                                        });
                                         //Provider.of<ApiService>(context,listen: false).logout(userId);
                                         prefs.remove("userid");
-                                        Navigator.pop(scaffoldKey.currentContext);
-                                        Navigator.of(context).pushNamed(loginViewRoute);
+                                        Navigator.pop(
+                                            scaffoldKey.currentContext);
+                                        Navigator.of(context)
+                                            .pushNamed(loginViewRoute);
                                       },
                                     ),
                                     ListTile(
@@ -234,13 +239,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void getPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
+      this._id = prefs.getString("userid");
       this._nombre = prefs.getString("nombre");
       this._correo = prefs.getString("correo");
       this._imagen = prefs.getString("imagen");
-      /*if(this._imagen != null){
-        this._decode = base64Decode(this._imagen);
-        _imagePicked=true;
-      }*/
+      if(this._imagen != null || this._imagen != ""){
+        this.imageOfUser = this._imagen;
+      }
+      print(this._imagen);
       this._edad = prefs.getString("edad");
       this._genero = prefs.getString("genero");
     });

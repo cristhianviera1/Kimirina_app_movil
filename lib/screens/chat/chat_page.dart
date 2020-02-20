@@ -59,7 +59,7 @@ class _ChatListState extends State<ChatList> {
   getSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userid");
-    socket = io.io("http://192.168.0.103:4000");
+    socket = io.io("http://192.168.100.220:4000");
     socket.emit("getUserList", (userId));
     socket.on("getChats_response", (data) {
       print(data);
@@ -67,14 +67,20 @@ class _ChatListState extends State<ChatList> {
         if (userAvailables.length == 0) {
           setState(() {
             for (var usr in data) {
-              userAvailables.add(_ChatItem(usr["nombre"], "assets/login.png", 0,
+              var foto;
+              if(usr["imagen"]!=""){
+                foto = usr["imagen"];
+              }else{
+                foto = 'https://ktusu.com/admin/uploads/slider/836295524.jpg';
+              }
+              userAvailables.add(_ChatItem(usr["nombre"], foto, 0,
                   usr["online"], "", usr["_id"]));
             }
           });
         }
       }
     });
-    socket.on("updateOfUser",(data){
+    socket.on("updateOfUser", (data) {
       print(data);
     });
   }
@@ -87,6 +93,7 @@ class _ChatItem extends StatelessWidget {
 
   _ChatItem(
       this.name, this.imgURL, this.unread, this.active, this.message, this.id);
+
 
   Widget _activeIcon(isActive) {
     if (isActive) {
@@ -109,7 +116,6 @@ class _ChatItem extends StatelessWidget {
       return Container();
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -137,8 +143,9 @@ class _ChatItem extends StatelessWidget {
                       //Navigator.of(context).pushNamed(chatDetailViewRoute);
                     },
                     child: CircleAvatar(
-                      backgroundImage: AssetImage(this.imgURL),
-                      radius: 30.0,
+                      radius: 25,
+                      backgroundColor: Colors.white,
+                      backgroundImage: NetworkImage(this.imgURL),
                     ),
                   ),
                   Positioned(

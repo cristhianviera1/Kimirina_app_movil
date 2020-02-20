@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/agencies/agencies_page.dart';
-import 'package:kimirina_app/screens/agencies/mapasPrueba.dart';
 import 'package:kimirina_app/screens/carrusel/carrusel_page.dart';
-import 'package:kimirina_app/screens/chat/chat_details_page.dart';
 import 'package:kimirina_app/screens/chat/chat_page.dart';
 import 'package:kimirina_app/screens/login/login_page.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
@@ -50,8 +48,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //fin de paginas de productos
     case registerViewRoute:
       return MaterialPageRoute(builder: (context) => SignupScreen());
-    case chatDetailViewRoute:
-      return MaterialPageRoute(builder: (context) => ChatScreen());
     case yesTreatmentViewRoute:
       return MaterialPageRoute(builder: (context) => YesTreatment());
     case noTreatmentViewRoute:

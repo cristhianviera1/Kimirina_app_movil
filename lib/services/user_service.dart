@@ -2,14 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:dio/dio.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/models/formulario_model.dart';
-import 'package:kimirina_app/models/novedades_model.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ApiService with ChangeNotifier {
-  final String baseUrl = "http://192.168.0.103:4000";
+  final String baseUrl = "http://192.168.100.220:4000";
   List<User> _chatListUsers = new List();
   List<User> get chatListUsers => _chatListUsers;
   void set chatListUsers(newValue) {
@@ -44,7 +46,7 @@ class ApiService with ChangeNotifier {
   }
 
   //guardar formulario
-    Future storeForm(Formulario formReg) async {
+  Future storeForm(Formulario formReg) async {
     final response = await http.post("$baseUrl/formulario",
         headers: {"content-type": "application/json"},
         body: anyToJson(formReg));
@@ -55,41 +57,68 @@ class ApiService with ChangeNotifier {
     }
   }
 
-  //LoginUser
-  Future loginUser(User userReg) async {
-    final response = await http.post("$baseUrl/usuario/login",
-        headers: {"content-type": "application/json"},
-        body: anyToJson(userReg));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      return response.body;
+  checkConnect() async {
+    try {
+      print(await http.read(baseUrl));
+    } catch (err) {
+      return "unaccesible";
     }
   }
 
-  Future<bool> userSessionCheck(userId) async {
-    final response = await http.post("$baseUrl/userSessionCheck",
-        headers: {"content-type": "application/json"},
-        body: jsonEncode({"userId": userId}));
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
+  //LoginUser
+  Future loginUser(User userReg) async {
+    try {
+      final response = await http.post("$baseUrl/usuario/login",
+          headers: {"content-type": "application/json"},
+          body: anyToJson(userReg));
+      if (response.statusCode == 200) {
+        return response.body;
+      }
+    } catch (err) {
+      return "inaccesible";
+    }
+  }
+
+  userSessionCheck(userId) async {
+    this.checkConnect();
+    try {
+      final response = await http.post("$baseUrl/userSessionCheck",
+          headers: {"content-type": "application/json"},
+          body: jsonEncode({"userId": userId}));
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (err) {
+      return "inaccesible";
     }
   }
 
   //updUser
   Future<bool> updateUser(User user) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var id = prefs.getString("userid") ?? "";
-    final response = await http.post("$baseUrl/usuario/$id",
-        headers: {"content-type": "application/json"}, body: jsonEncode(user));
+    final response = await http.post("$baseUrl/usuario/${user.id}",
+        headers: {"content-type": "application/json"}, body: user.imagen);
     if (response.statusCode == 200) {
       return true;
     } else {
       return false;
     }
   }
+
+  uploadImage(User user) async {
+    print(user.id);
+    String fileName = basename(user.imagen.path);
+    print("File base name: $fileName");
+    try {
+      FormData formData = new FormData.from({"image": new UploadFileInfo(user.imagen, fileName)});
+      var response = await Dio().put("$baseUrl/usuario/imagen/${user.id}", data: formData);
+      print("File upload response: $response");
+      return response.data;
+    } catch (e) {
+      print("Exception Caught: $e");
+      return;
+    }
+  }
+  
 
   //updatePassword
   Future<bool> updatePassword(String pass) async {
@@ -123,7 +152,7 @@ class ApiService with ChangeNotifier {
     var id = prefs.getString("userid");
     final response = await http.post("$baseUrl/usuario/chat",
         headers: {"content-type": "application/json"},
-        body: jsonEncode({"id": id,"idReceive":idReceive}));
+        body: jsonEncode({"id": id, "idReceive": idReceive}));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
@@ -154,7 +183,6 @@ class ApiService with ChangeNotifier {
     final response = await http.get("$baseUrl/novedades");
     if (response.statusCode == 200) {
       return json.decode(response.body);
-      
     } else {
       return json.decode(response.body);
     }
