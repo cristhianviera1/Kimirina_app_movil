@@ -4,6 +4,7 @@ import 'package:kimirina_app/colors/colors.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:kimirina_app/services/user_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsScreen extends StatefulWidget {
   static final String path = "lib/src/pages/blog/sports_news1.dart";
@@ -66,7 +67,7 @@ class _NewsScreenState extends State<NewsScreen> {
       setState(() {
         for (var novedad in value) {
           novedadesCards
-              .add(new _NovedadItem(novedad["titulo"], novedad["descripcion"],novedad["imagen"]));
+              .add(new _NovedadItem(novedad["titulo"], novedad["descripcion"],novedad["imagen"], novedad["link"]));
           print(novedadesCards[0]);
         }
       });
@@ -75,7 +76,7 @@ class _NewsScreenState extends State<NewsScreen> {
 }
 
 class _NovedadItem extends StatelessWidget {
-  final String titulo, descripcion, imagen;
+  final String titulo, descripcion, imagen, link;
   Uint8List imagenDecodificada;
   var titleTextStyle = TextStyle(
     color: Colors.black87,
@@ -87,7 +88,7 @@ class _NovedadItem extends StatelessWidget {
     fontWeight: FontWeight.w500,
     color: Colors.grey.shade800,
   );
-  _NovedadItem(this.titulo, this.descripcion,this.imagen);
+  _NovedadItem(this.titulo, this.descripcion,this.imagen, this.link);
   @override
   Widget build(BuildContext context) {
     // imagenDecodificada = base64.decode(imagen.toString());
@@ -108,9 +109,7 @@ class _NovedadItem extends StatelessWidget {
                             topRight: Radius.circular(10.0),
                           ),
                           image: DecorationImage(
-                            image: new AssetImage(
-                                "assets/images/2_15_2_SISTEMA_NACIONES-UNIDAS.jpg"),
-                            fit: BoxFit.cover,
+                            image: new NetworkImage(this.imagen)
                           )),
                     ),
               Padding(
@@ -127,9 +126,16 @@ class _NovedadItem extends StatelessWidget {
                     Expanded(
                       child: AutoSizeText(descripcion),
                     ),
+                    
                   ],
                 ),
               ),
+              const SizedBox(height: 20.0),
+              GestureDetector(
+  child: Text(link, style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue)),
+  onTap: () { launch(link);
+  }
+),
               const SizedBox(height: 20.0),
             ],
           ),

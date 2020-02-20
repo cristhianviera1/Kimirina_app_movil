@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ApiService with ChangeNotifier {
-  final String baseUrl = "http://192.168.0.103:4000";
+  final String baseUrl = "http://192.168.100.174:4000";
   List<User> _chatListUsers = new List();
   List<User> get chatListUsers => _chatListUsers;
   void set chatListUsers(newValue) {
@@ -152,6 +152,16 @@ class ApiService with ChangeNotifier {
 
   Future getNovedades() async {
     final response = await http.get("$baseUrl/novedades");
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+      
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+    Future getProductos() async {
+    final response = await http.get("$baseUrl/productos");
     if (response.statusCode == 200) {
       return json.decode(response.body);
       

@@ -112,7 +112,7 @@ class _ChatScreenState extends State<ChatScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       this.userId = prefs.getString("userid");
-      socket = io.io("http://192.168.0.103:4000");
+      socket = io.io("http://192.168.100.174:4000");
       socket.emit("loginRoom", (this.userId));
       socket.on("receive_message", (jsonData) {
         print("------\n${jsonData['message']}\n-------\n");

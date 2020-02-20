@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
+import 'package:kimirina_app/services/user_service.dart';
 
 class ProductScreen extends StatefulWidget {
   ProductScreen({Key key}) : super(key: key);
@@ -13,67 +14,65 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreen extends State<ProductScreen> {
+  List<Widget> productosCards = new List();
   final TextStyle dropdownMenuItem =
       TextStyle(color: Colors.black, fontSize: 18);
 
   final primary = Color(0xff696b9e);
   final secondary = Color(0xfff29a94);
 
+  @override
+  initState() {
+    getProducts();
+    super.initState();
+  }
+
   final List<Map> schoolLists = [
     {
       "name": "Asesoría en Prevención de VIH e ITS",
-      "type":
-          "En respuesta a la epidemia del VIH, con capacidades...",
-      "logoText":
-          "assets/images/asesorias.png",
+      "type": "En respuesta a la epidemia del VIH, con capacidades...",
+      "logoText": "assets/images/asesorias.png",
       "route": productDetaisViewRoute
     },
     {
       "name": "Pruebas Rápidas VIH",
       "type":
           "Esta prueba es empleada para detectar la infección causada por ese virus, permite detectar anticuerpos contra el VIH en la sangre en menos de 30 minutos",
-      "logoText":
-          "assets/images/pruebaRapida.jpg",
+      "logoText": "assets/images/pruebaRapida.jpg",
       "route": pruebaRapidaVihViewRoute
     },
     {
       "name": "Pruebas rapidas ITS",
       "type":
           "Es un tipo de prueba de anticuerpos, contra virus o bacterias, causantes de infecciones de transmisión sexual.",
-      "logoText":
-          "assets/images/its.png",
+      "logoText": "assets/images/its.png",
       "route": pruebaRapidaItsViewRoute
     },
     {
       "name": "Atención a personas con ITS",
-      "type":
-          "Se oferta el servicio y la derivación médica...",
-      "logoText":
-          "assets/images/vinculacion.png",
+      "type": "Se oferta el servicio y la derivación médica...",
+      "logoText": "assets/images/vinculacion.png",
       "route": atencionItsViewRoute
     },
     {
       "name": "PrEP",
       "type":
           "Esta dirigida a personas negativas para VIH que buscan prevenir una futura infección.",
-      "logoText":
-          "assets/images/prep.png",
+      "logoText": "assets/images/prep.png",
       "route": prepViewRoute
     },
     {
       "name": "nPEP",
       "type":
           "Consiste tomar medicamentos contra el VIH dentro de 72 horas después de una posible...",
-      "logoText":
-          "assets/images/npep.jpg",
+      "logoText": "assets/images/npep.jpg",
       "route": npepViewRoute
     },
     {
       "name": "Programa de atencion a PPVS",
       "type":
           "Kimirina oferta servicios de asesoría, atención y control de PPVS.",
-      "logoText":
-          "assets/images/ppvs.png",
+      "logoText": "assets/images/ppvs.png",
       "route": ppvsViewRoute
     },
   ];
@@ -149,14 +148,13 @@ class _ProductScreen extends State<ProductScreen> {
             Container(
               width: 70,
               height: 70,
-              margin: EdgeInsets.only(right: 15, top:10),
+              margin: EdgeInsets.only(right: 15, top: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(70),
                 border: Border.all(width: 3, color: secondary),
                 image: DecorationImage(
-                  image: new AssetImage(schoolLists[index]['logoText']),
-                  fit: BoxFit.fill
-                ),
+                    image: new NetworkImage(schoolLists[index]['logoText']),
+                    fit: BoxFit.fill),
               ),
             ),
             Expanded(
@@ -200,5 +198,21 @@ class _ProductScreen extends State<ProductScreen> {
         ),
       ),
     );
+  }
+
+  getProducts() {
+    ApiService().getProductos().then((value) {
+      setState(() {
+        schoolLists.removeRange(0, schoolLists.length);
+        for (var producto in value) {
+          schoolLists.add({
+            "name": producto["titulo"],
+            "type": producto["descripcion"],
+            "logoText": producto["imagen"],
+            "route": ppvsViewRoute
+          });
+        }
+      });
+    });
   }
 }

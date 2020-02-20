@@ -59,7 +59,7 @@ class _ChatListState extends State<ChatList> {
   getSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userid");
-    socket = io.io("http://192.168.0.103:4000");
+    socket = io.io("http://192.168.100.174:4000");
     socket.emit("getUserList", (userId));
     socket.on("getChats_response", (data) {
       print(data);
