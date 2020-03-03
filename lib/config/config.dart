@@ -1,3 +1,3 @@
 library kimirina.globals;
 
-String urlApiRest = "http://144.91.108.171:4008";
+String urlApiRest = "http://192.168.0.101:4000";

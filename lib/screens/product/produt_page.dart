@@ -16,8 +16,7 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreen extends State<ProductScreen> {
   List<Widget> productosCards = new List();
-  final TextStyle dropdownMenuItem =
-      TextStyle(color: Colors.black, fontSize: 18);
+  final TextStyle dropdownMenuItem = TextStyle(color: Colors.black, fontSize: 18);
 
   final primary = Color(0xff696b9e);
   final secondary = Color(0xfff29a94);

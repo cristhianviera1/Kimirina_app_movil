@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:dio/dio.dart';
@@ -8,6 +9,7 @@ import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/models/formulario_model.dart';
 import 'package:path/path.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
@@ -36,13 +38,13 @@ class ApiService with ChangeNotifier {
 
   //RegisterUser
   Future registerUser(User userReg) async {
-    final response = await http.post("$baseUrl/usuario",
-        headers: {"content-type": "application/json"},
-        body: anyToJson(userReg));
-    if (response.statusCode == 200) {
+    try {
+      final response = await http.post("$baseUrl/usuario",
+          headers: {"content-type": "application/json"},
+          body: anyToJson(userReg));
       return response.body;
-    } else {
-      return response.body;
+    } catch (err) {
+      return "inaccesible";
     }
   }
 
@@ -58,30 +60,19 @@ class ApiService with ChangeNotifier {
     }
   }
 
-  checkConnect() async {
-    try {
-      print(await http.read(baseUrl));
-    } catch (err) {
-      return "unaccesible";
-    }
-  }
-
   //LoginUser
   Future loginUser(User userReg) async {
     try {
       final response = await http.post("$baseUrl/usuario/login",
           headers: {"content-type": "application/json"},
           body: anyToJson(userReg));
-      if (response.statusCode == 200) {
-        return response.body;
-      }
+      return response.body;
     } catch (err) {
       return "inaccesible";
     }
   }
 
   userSessionCheck(userId) async {
-    this.checkConnect();
     try {
       final response = await http.post("$baseUrl/userSessionCheck",
           headers: {"content-type": "application/json"},
@@ -110,8 +101,10 @@ class ApiService with ChangeNotifier {
     String fileName = basename(user.imagen.path);
     print("File base name: $fileName");
     try {
-      FormData formData = new FormData.from({"image": new UploadFileInfo(user.imagen, fileName)});
-      var response = await Dio().put("$baseUrl/usuario/imagen/${user.id}", data: formData);
+      FormData formData = new FormData.from(
+          {"image": new UploadFileInfo(user.imagen, fileName)});
+      var response =
+          await Dio().put("$baseUrl/usuario/imagen/${user.id}", data: formData);
       print("File upload response: $response");
       return response.data;
     } catch (e) {
@@ -119,7 +112,6 @@ class ApiService with ChangeNotifier {
       return;
     }
   }
-  
 
   //updatePassword
   Future<bool> updatePassword(String pass) async {
@@ -168,6 +160,7 @@ class ApiService with ChangeNotifier {
       'extraHeaders': {'userId': '$userId'}
     });
     socket.emit("connection", {"msg": "Se ha conectado el usuario: " + userId});
+    socket.emit("loginRoom", (userId));
   }
 
   Stream getChatList(userId) async* {
@@ -189,11 +182,10 @@ class ApiService with ChangeNotifier {
     }
   }
 
-    Future getProductos() async {
+  Future getProductos() async {
     final response = await http.get("$baseUrl/productos");
     if (response.statusCode == 200) {
       return json.decode(response.body);
-      
     } else {
       return json.decode(response.body);
     }

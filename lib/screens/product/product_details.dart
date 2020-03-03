@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
-import "package:kimirina_app/widgets/network_image.dart";
 import 'package:url_launcher/url_launcher.dart';
 
 class ProductDetailsPage extends StatefulWidget {

@@ -295,7 +295,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _autoValidate = false;
 
   ///redirect user to main screen
-  void _value1Changed(bool value) => setState(() => _value1 = value);
+  void _value1Changed(bool value) =>
+      setState(() => {_value1 = value, print(_value1)});
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
@@ -331,16 +332,19 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ).show();
       }
-      if (response != "error") {
+      if (jsonDecode(response)["error"] == false) {
         SharedPreferences preferences = await SharedPreferences.getInstance();
-        print(response);
-        var tmpUsrId = jsonDecode(response)["id"];
-        var nombre = jsonDecode(response)["nombre"];
-        var correo = jsonDecode(response)["correo"];
-        var imagen = jsonDecode(response)["imagen"];
-        var edad = jsonDecode(response)["edad"];
-        var genero = jsonDecode(response)["genero"];
-        var rol = jsonDecode(response)["rol"];
+        var tmpUsrId = jsonDecode(response)["usuario"]["id"];
+        var nombre = jsonDecode(response)["usuario"]["nombre"];
+        var correo = jsonDecode(response)["usuario"]["correo"];
+        var imagen = jsonDecode(response)["usuario"]["imagen"];
+        var edad = jsonDecode(response)["usuario"]["edad"];
+        var genero = jsonDecode(response)["usuario"]["genero"];
+        var rol = jsonDecode(response)["usuario"]["rol"];
+
+        //recordarme
+        preferences.setBool("recordarme", _value1);
+        //
         preferences.setString("userid", tmpUsrId);
         preferences.setString("nombre", nombre);
         preferences.setString("correo", correo);
@@ -350,11 +354,12 @@ class _LoginScreenState extends State<LoginScreen> {
         preferences.setString("rol", rol);
         Navigator.of(context).pushReplacementNamed(navBarViewRoute);
       } else {
+        var errMsg = jsonDecode(response)["msg"];
         return Alert(
           context: context,
           type: AlertType.warning,
           title: "Error al iniciar sesión",
-          desc: "Por favor verifique que su correo y contraseña.",
+          desc: errMsg,
           buttons: [
             DialogButton(
               child: Text(
@@ -389,13 +394,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void checkUserLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var id = prefs.getString("userdId") ?? "";
-    if (id != null || id != "") {
-      ApiService().userSessionCheck(id).then((response) {
-        if (response) {
-          Navigator.of(context).pushNamed(navBarViewRoute);
-        }
-      });
+    var remeberMe = prefs.getBool("recordarme") ?? false;
+    if (remeberMe) {
+      Navigator.of(context).pushNamed(navBarViewRoute);
     }
   }
 }

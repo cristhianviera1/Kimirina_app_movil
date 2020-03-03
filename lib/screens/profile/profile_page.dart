@@ -200,6 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         });
                                         //Provider.of<ApiService>(context,listen: false).logout(userId);
                                         prefs.remove("userid");
+                                        prefs.remove("recordarme");
                                         Navigator.pop(
                                             scaffoldKey.currentContext);
                                         Navigator.of(context)

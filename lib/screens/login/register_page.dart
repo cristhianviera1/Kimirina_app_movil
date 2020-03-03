@@ -284,6 +284,24 @@ class _SignupScreenState extends State<SignupScreen> {
       _formKey.currentState.save();
       User userReg = User(nombre: _nombre, correo: _email, edad: _edad);
       _apiService.registerUser(userReg).then((response) async {
+        if (response == "inaccesible") {
+          return Alert(
+            context: context,
+            type: AlertType.warning,
+            title: "No se pudo conectar",
+            desc: "Por favor revise su conexión a internet.",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "Aceptar",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+              )
+            ],
+          ).show();
+        }
         if (jsonDecode(response)["error"] == false) {
           SharedPreferences preferences = await SharedPreferences.getInstance();
           preferences.setString("userid", jsonDecode(response)["userId"]);
@@ -293,7 +311,7 @@ class _SignupScreenState extends State<SignupScreen> {
             type: AlertType.success,
             title: "Registro exitoso",
             desc:
-                "Se ha envíado tu contraseña a tu dirección de correo.\n ¡No olvides cambiarla en tu primer inicio!",
+                "Tu contraseña será enviada a tu correo electrónico.\n ¡No olvides cambiarla!",
             buttons: [
               DialogButton(
                 child: Text(
@@ -307,28 +325,24 @@ class _SignupScreenState extends State<SignupScreen> {
             ],
           ).show();
         } else {
+          var errorMsg = jsonDecode(response)["msg"];
           return Alert(
             context: context,
             type: AlertType.error,
-            title: "El correo que ha ingresado ya se encuentra registrado",
-            desc: "¿Desea recuperar su contraseña?",
+            title: "Hubo un error",
+            desc: errorMsg,
             buttons: [
               DialogButton(
                 child: Text(
-                  "SI",
+                  "Aceptar",
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => {
+                  Navigator.pop(context),
+                  Navigator.of(context).pushNamed(loginViewRoute)
+                },
                 width: 120,
               ),
-              DialogButton(
-                child: Text(
-                  "NO",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onPressed: () => Navigator.pop(context),
-                width: 120,
-              )
             ],
           ).show();
         }

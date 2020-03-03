@@ -61,9 +61,10 @@ class _ChatListState extends State<ChatList> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userid");
     socket = io.io(urlApiRest);
+    urlApiRest = "https";
     socket.emit("getUserList", (userId));
     socket.on("getChats_response", (data) {
-      print(data);
+      print(data+"\neso fue xd");
       if (data != null || data != "undefined") {
         if (userAvailables.length == 0) {
           setState(() {
