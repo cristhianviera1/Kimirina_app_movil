@@ -35,7 +35,7 @@ class NoTreatment extends StatelessWidget {
                         fontWeight: FontWeight.bold
                       ),),
                       const SizedBox(height: 20.0),
-                      Text("¿Deseas contancar con un brigadista?", textAlign: TextAlign.center, style: TextStyle(
+                      Text("¿Deseas contactar con un brigadista? Prueba nuestro chat!", textAlign: TextAlign.center, style: TextStyle(
                         fontSize: 18.0
                       )),
                       const SizedBox(height: 30.0),
@@ -47,8 +47,10 @@ class NoTreatment extends StatelessWidget {
                           highlightElevation: 0,
                           color: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                          child: Text("Contáctanos"),
-                          onPressed: () => Navigator.of(context).pushNamed(chatListViewRoute),
+                          child: Text("Regresar al Inicio"),
+                          onPressed: (){
+                            Navigator.pop(context);
+                          }
                         ),
                       ),
                       const SizedBox(height: 30.0),
