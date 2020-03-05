@@ -172,11 +172,11 @@ class _ChatScreenState extends State<ChatScreen> {
             "userIdReceive": jsonData['userIdReceive']
           });
         });
-        scrollController.animateTo(
+        /*scrollController.animateTo(
           scrollController.position.maxScrollExtent * 1.2,
           duration: Duration(milliseconds: 600),
           curve: Curves.ease,
-        );
+        );*/
       });
     });
   }
