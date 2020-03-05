@@ -25,7 +25,6 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textController;
   ScrollController scrollController;
   String userId;
-  var socket;
 
   @override
   void initState() {

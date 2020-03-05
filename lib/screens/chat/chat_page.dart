@@ -18,8 +18,6 @@ class _ChatListState extends State<ChatList> {
   bool firstChats = true;
   SharedPreferences sharedPrefs;
   String userId;
-
-  var socket;
   @override
   initState() {
     getSharedPreferences();
@@ -61,7 +59,6 @@ class _ChatListState extends State<ChatList> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       var userId = prefs.getString("userid");
-      socket = io.io(urlApiRest);
       socket.emit("getUserList", (userId));
       socket.on("getChats_response", (data) {
         if (data != null || data != "undefined") {
@@ -74,8 +71,10 @@ class _ChatListState extends State<ChatList> {
                 foto =
                     'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
               }
-              userAvailables.add(_ChatItem(
-                  usr["nombre"], foto, 0, usr["online"], "", usr["_id"]));
+              setState(() {
+                userAvailables.add(_ChatItem(
+                    usr["nombre"], foto, 0, usr["online"], "", usr["_id"]));
+              });
             }
           }
         }
