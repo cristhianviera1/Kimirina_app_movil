@@ -77,17 +77,17 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.nombre) ?? "Usuario",
-        backgroundColor: morado,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            buildMessageList(),
-            buildInputArea()
-          ],
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.nombre) ?? "Usuario",
+          backgroundColor: morado,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[buildMessageList(), buildInputArea()],
+          ),
         ),
       ),
     );
@@ -179,22 +179,6 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     Navigator.pop(context);
     super.dispose();
-  }
-
-  void _scrollToEnd() {
-    if (!scrollController.hasClients) {
-      return;
-    }
-
-    var scrollPosition = scrollController.position;
-
-    if (scrollPosition.maxScrollExtent > scrollPosition.minScrollExtent) {
-      scrollController.animateTo(
-        scrollPosition.maxScrollExtent,
-        duration: new Duration(milliseconds: 200),
-        curve: Curves.easeOut,
-      );
-    }
   }
 
   buildInputArea() {
