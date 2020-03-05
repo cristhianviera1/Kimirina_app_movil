@@ -16,7 +16,8 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreen extends State<ProductScreen> {
   List<Widget> productosCards = new List();
-  final TextStyle dropdownMenuItem = TextStyle(color: Colors.black, fontSize: 18);
+  final TextStyle dropdownMenuItem =
+      TextStyle(color: Colors.black, fontSize: 18);
 
   final primary = Color(0xff696b9e);
   final secondary = Color(0xfff29a94);
@@ -27,7 +28,7 @@ class _ProductScreen extends State<ProductScreen> {
     super.initState();
   }
 
-  final List<Map> schoolLists = [
+  List<Map> schoolLists = [
     {
       "name": "Asesoría en Prevención de VIH e ITS",
       "type": "En respuesta a la epidemia del VIH, con capacidades...",
@@ -76,7 +77,7 @@ class _ProductScreen extends State<ProductScreen> {
       "route": ppvsViewRoute
     },
   ];
-
+  var numberOfProducts = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,10 +114,10 @@ class _ProductScreen extends State<ProductScreen> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(top: 10),
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height-120,
                 width: double.infinity,
                 child: ListView.builder(
-                    itemCount: schoolLists.length,
+                    itemCount: numberOfProducts,
                     itemBuilder: (BuildContext context, int index) {
                       return buildList(context, index);
                     }),
@@ -211,19 +212,20 @@ class _ProductScreen extends State<ProductScreen> {
   }
 
   getProducts() {
+    this.schoolLists = new List();
     ApiService().getProductos().then((value) {
       setState(() {
-        schoolLists.removeRange(0, schoolLists.length);
-        for (var producto in value) {
+        for (var i = 0; i < value.length; i++) {
           schoolLists.add({
-            "name": producto["titulo"],
-            "type": producto["descripcion"],
-            "logoText": producto["imagen"],
-            "link": producto["link"],
-            "observaciones": producto["observaciones"],
-            "precio": producto["precio"],
+            "name": value[i]["titulo"],
+            "type": value[i]["descripcion"],
+            "logoText": value[i]["imagen"],
+            "link": value[i]["link"],
+            "observaciones": value[i]["observaciones"],
+            "precio": value[i]["precio"],
           });
         }
+        numberOfProducts = schoolLists.length;
       });
     });
   }
