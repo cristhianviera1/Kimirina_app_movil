@@ -83,6 +83,12 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           title: Text(widget.nombre) ?? "Usuario",
           backgroundColor: morado,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: ()=>{Navigator.of(context).pop()},
+            )
+          ],
         ),
         body: SingleChildScrollView(
           child: Column(
