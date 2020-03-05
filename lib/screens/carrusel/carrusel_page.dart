@@ -26,36 +26,44 @@ class _CarruselPageState extends State<CarruselPage> {
       body: Column(
         children: <Widget>[
           Text(
-      'Kimirina',
-      style: TextStyle(
-        fontSize: 40,
-        foreground: Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 6
-          ..color = naranja,
-      ),
-    ),
-    
-    Text(
-      'Kimirina',
-      style: TextStyle(
-        fontSize: 40,
-        color: Colors.grey[300],
-      ),
-    ),
+            "Kimirina",
+            style: TextStyle(
+              inherit: true,
+              fontSize: 48.0,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                    // bottomLeft
+                    offset: Offset(-1.5, -1.5),
+                    color: naranja),
+                Shadow(
+                    // bottomRight
+                    offset: Offset(1.5, -1.5),
+                    color: naranja),
+                Shadow(
+                    // topRight
+                    offset: Offset(1.5, 1.5),
+                    color: naranja),
+                Shadow(
+                    // topLeft
+                    offset: Offset(-1.5, 1.5),
+                    color: naranja),
+              ],
+            ),
+          ),
           SizedBox(
             height: 10,
           ),
-           Text(
+          Text(
             'Otra Oportunidad de Vida',
             style: TextStyle(color: Colors.black, fontSize: 19.0),
           ),
-          
         ],
       ),
-      titleTextStyle: TextStyle(color: Colors.black,fontSize: 0),
+      titleTextStyle: TextStyle(color: Colors.black, fontSize: 0),
       mainImage: Image.asset('assets/gif/kimirina_logo.gif'),
-      textStyle: TextStyle(color: Colors.black), title: Text(""),
+      textStyle: TextStyle(color: Colors.black),
+      title: Text(""),
     ),
     PageViewModel(
       pageColor: Color(0xF6F6F7FF),
