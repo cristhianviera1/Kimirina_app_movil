@@ -8,7 +8,7 @@ import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:socket_io_client/socket_io_client.dart' as io;
+import 'package:kimirina_app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -345,6 +345,7 @@ class _LoginScreenState extends State<LoginScreen> {
         //recordarme
         preferences.setBool("recordarme", _value1);
         //
+        userid=tmpUsrId;
         preferences.setString("userid", tmpUsrId);
         preferences.setString("nombre", nombre);
         preferences.setString("correo", correo);

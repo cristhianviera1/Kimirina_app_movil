@@ -22,8 +22,8 @@ class _ChatListState extends State<ChatList> {
   var socket;
   @override
   initState() {
-    super.initState();
     getSharedPreferences();
+    super.initState();
   }
 
   @override
@@ -57,31 +57,29 @@ class _ChatListState extends State<ChatList> {
     );
   }
 
-  getSharedPreferences() async {
+  void getSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var userId = prefs.getString("userid");
-    socket = io.io(urlApiRest);
-    socket.emit("getUserList", (userId));
-    socket.on("getChats_response", (data) {
-      if (data != null || data != "undefined") {
-        if (userAvailables.length == 0) {
-          setState(() {
+    setState(() {
+      var userId = prefs.getString("userid");
+      socket = io.io(urlApiRest);
+      socket.emit("getUserList", (userId));
+      socket.on("getChats_response", (data) {
+        if (data != null || data != "undefined") {
+          if (userAvailables.length == 0) {
             for (var usr in data) {
               var foto;
-              if(usr["imagen"]!=""){
+              if (usr["imagen"] != "") {
                 foto = usr["imagen"];
-              }else{
-                foto = 'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
+              } else {
+                foto =
+                    'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
               }
-              userAvailables.add(_ChatItem(usr["nombre"], foto, 0,
-                  usr["online"], "", usr["_id"]));
+              userAvailables.add(_ChatItem(
+                  usr["nombre"], foto, 0, usr["online"], "", usr["_id"]));
             }
-          });
+          }
         }
-      }
-    });
-    socket.on("updateOfUser", (data) {
-      print(data);
+      });
     });
   }
 }
@@ -93,7 +91,6 @@ class _ChatItem extends StatelessWidget {
 
   _ChatItem(
       this.name, this.imgURL, this.unread, this.active, this.message, this.id);
-
 
   Widget _activeIcon(isActive) {
     if (isActive) {
@@ -116,6 +113,7 @@ class _ChatItem extends StatelessWidget {
       return Container();
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

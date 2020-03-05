@@ -3,13 +3,11 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 import 'package:dio/dio.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/models/formulario_model.dart';
 import 'package:path/path.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
@@ -155,11 +153,7 @@ class ApiService with ChangeNotifier {
 
   //SOCKET.IO
   Future<void> connectSocket(String userId) async {
-    socket = io.io(baseUrl, <String, dynamic>{
-      'transports': ['websocket'],
-      'extraHeaders': {'userId': '$userId'}
-    });
-    socket.emit("connection", {"msg": "Se ha conectado el usuario: " + userId});
+    socket = io.io(urlApiRest);
     socket.emit("loginRoom", (userId));
   }
 

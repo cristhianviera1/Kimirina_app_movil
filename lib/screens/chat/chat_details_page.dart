@@ -42,28 +42,14 @@ class _ChatScreenState extends State<ChatScreen> {
         for (var msg in response) {
           messages.add(msg);
         }
-        print("Número de chats:\n${messages.length}");
       });
     });
     super.initState();
   }
 
   void _pickImage() async {
-    final imageSource = await showDialog<ImageSource>(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("Selecciona una fuente"),
-              actions: <Widget>[
-                MaterialButton(
-                  child: Text("Cámara"),
-                  onPressed: () => Navigator.pop(context, ImageSource.camera),
-                ),
-                MaterialButton(
-                  child: Text("Galeria"),
-                  onPressed: () => Navigator.pop(context, ImageSource.gallery),
-                )
-              ],
-            ));
+    
+    final imageSource = ImageSource.gallery;
     if (imageSource != null) {
       File file = await ImagePicker.pickImage(source: imageSource);
       if (file != null) {
@@ -171,8 +157,8 @@ class _ChatScreenState extends State<ChatScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       this.userId = prefs.getString("userid");
-      socket = io.io(urlApiRest);
-      socket.emit("loginRoom", (this.userId));
+      //socket = io.io(urlApiRest);
+      //socket.emit("loginRoom", (this.userId));
       socket.on("receive_message", (jsonData) {
         if (jsonData['userIdReceive'] == this.userId) {
           setState(() {

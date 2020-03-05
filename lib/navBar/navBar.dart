@@ -27,7 +27,6 @@ class _NavBar extends State<NavBar> {
   }
 
   SharedPreferences sharedPrefs;
-  var socket;
   String userId;
   PageController pageController = PageController(initialPage: 0);
   StreamController<int> indexcontroller = StreamController<int>.broadcast();
@@ -35,21 +34,11 @@ class _NavBar extends State<NavBar> {
   @override
   void initState() {
     establishSocketConnection();
-    SharedPreferences.getInstance().then((prefs) {
+    /*SharedPreferences.getInstance().then((prefs) {
       setState(() {
         sharedPrefs = prefs;
-        this.userId = sharedPrefs.getString("userid");
-        this.socket = io.io(urlApiRest, <String, dynamic>{
-          'transports': ['websocket'],
-          'extraHeaders': {'userId': '$userId'}
-        });
-        this.socket.emit(
-            "connection", {"msg": "Se ha conectado el usuario: " + userId});
-        this.socket.emit("loginRoom", (userId));
-
-        this.socket.on("getChats_response", (json) => {print(json)});
       });
-    });
+    });*/
 
     super.initState();
   }
@@ -57,6 +46,10 @@ class _NavBar extends State<NavBar> {
   establishSocketConnection() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var userId = preferences.getString("userid");
+    socket.emit("connection", {"msg": "Se ha conectado el usuario: " + userId});
+    socket.emit("loginRoom", (userId));
+
+    socket.on("getChats_response", (json) => {print(json)});
     try {
       if (userId == '' || userId == 'undefined' || userId == null) {
         Navigator.of(scaffoldKey.currentContext).pushNamed(loginViewRoute);
