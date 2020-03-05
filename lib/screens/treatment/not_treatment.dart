@@ -47,7 +47,7 @@ class NoTreatment extends StatelessWidget {
                           highlightElevation: 0,
                           color: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                          child: Text("Regresar al Inicio"),
+                          child: Text("Empezar"),
                           onPressed: (){
                             Navigator.pop(context);
                           }
