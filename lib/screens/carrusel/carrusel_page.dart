@@ -26,11 +26,15 @@ class _CarruselPageState extends State<CarruselPage> {
       body: Column(
         children: <Widget>[
           Text(
-            'Kimirina Otra Oportunidad de Vida',
+            'Kimirina',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 10,
+          ),
+           Text(
+            '"Otra Oportunidad de Vida"',
+            style: TextStyle(color: Colors.black54, fontSize: 18.0),
           ),
           
         ],
