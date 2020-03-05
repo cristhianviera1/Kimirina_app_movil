@@ -26,16 +26,13 @@ class _CarruselPageState extends State<CarruselPage> {
       body: Column(
         children: <Widget>[
           Text(
-            'Kimirina',
+            'Kimirina Otra Oportunidad de Vida',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 10,
           ),
-          Text(
-            'Kimirina es una organización comunitaria especializada en la respuesta a la epidemia del VIH, con capacidades técnicas, metodologías y abordajes',
-            style: TextStyle(color: Colors.black54, fontSize: 16.0),
-          ),
+          
         ],
       ),
       titleTextStyle: TextStyle(color: Colors.black,fontSize: 0),
@@ -98,7 +95,7 @@ class _CarruselPageState extends State<CarruselPage> {
       title: Container(),
       body: Column(
         children: <Widget>[
-          Text('Sin Discriminación'),
+          Text('Kimirina Inclusiva'),
           SizedBox(
             height: 10,
           ),
