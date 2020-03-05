@@ -32,7 +32,7 @@ class _CarruselPageState extends State<CarruselPage> {
                 fontWeight: FontWeight.bold,
                 foreground: Paint()
                   ..shader = LinearGradient(
-                    colors: <Color>[Colors.pink, Colors.green],
+                    colors: <Color>[Colors.red, Colors.orange],
                   ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))),
           ),
           SizedBox(
