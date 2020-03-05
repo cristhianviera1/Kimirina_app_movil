@@ -48,7 +48,7 @@ class NoTreatment extends StatelessWidget {
                           color: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                           child: Text("Contáctanos"),
-                          onPressed: () => Navigator.of(context).pushNamed(chatDetailViewRoute),
+                          onPressed: () => Navigator.of(context).pushNamed(chatListViewRoute),
                         ),
                       ),
                       const SizedBox(height: 30.0),
