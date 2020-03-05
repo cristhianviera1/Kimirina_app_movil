@@ -47,7 +47,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _pickImage() async {
-    
     final imageSource = ImageSource.gallery;
     if (imageSource != null) {
       File file = await ImagePicker.pickImage(source: imageSource);
@@ -86,7 +85,6 @@ class _ChatScreenState extends State<ChatScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            //SizedBox(height: height * 0.1),
             buildMessageList(),
             buildInputArea()
           ],
@@ -159,21 +157,20 @@ class _ChatScreenState extends State<ChatScreen> {
       //socket = io.io(urlApiRest);
       //socket.emit("loginRoom", (this.userId));
       socket.on("receive_message", (jsonData) {
-        if (jsonData['userIdReceive'] == this.userId) {
-          setState(() {
-            messages.add({
-              "imagen": jsonData['imagen'],
-              "message": jsonData['message'],
-              "userIdSend": jsonData['userIdSend'],
-              "userIdReceive": jsonData['userIdReceive']
-            });
+        print(jsonData);
+        setState(() {
+          messages.add({
+            "imagen": jsonData['imagen'],
+            "message": jsonData['message'],
+            "userIdSend": jsonData['userIdSend'],
+            "userIdReceive": jsonData['userIdReceive']
           });
-          scrollController.animateTo(
-            scrollController.position.maxScrollExtent * 1.2,
-            duration: Duration(milliseconds: 600),
-            curve: Curves.ease,
-          );
-        }
+        });
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent * 1.2,
+          duration: Duration(milliseconds: 600),
+          curve: Curves.ease,
+        );
       });
     });
   }
