@@ -26,30 +26,14 @@ class _CarruselPageState extends State<CarruselPage> {
       body: Column(
         children: <Widget>[
           Text(
-            "Kimirina",
-            style: TextStyle(
-              inherit: true,
-              fontSize: 48.0,
-              color: Colors.white,
-              shadows: [
-                Shadow(
-                    // bottomLeft
-                    offset: Offset(-1.5, -1.5),
-                    color: naranja),
-                Shadow(
-                    // bottomRight
-                    offset: Offset(1.5, -1.5),
-                    color: naranja),
-                Shadow(
-                    // topRight
-                    offset: Offset(1.5, 1.5),
-                    color: naranja),
-                Shadow(
-                    // topLeft
-                    offset: Offset(-1.5, 1.5),
-                    color: naranja),
-              ],
-            ),
+            'Kimirina',
+            style: new TextStyle(
+                fontSize: 60.0,
+                fontWeight: FontWeight.bold,
+                foreground: Paint()
+                  ..shader = LinearGradient(
+                    colors: <Color>[Colors.pink, Colors.green],
+                  ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))),
           ),
           SizedBox(
             height: 10,
