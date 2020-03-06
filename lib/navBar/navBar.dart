@@ -365,30 +365,36 @@ Future<Alert> yesAlert(BuildContext contextYes) {
           height: 15,
         ),
         DialogButton(
-          child: Text(
-            "Lo he abandonado",
-            style: TextStyle(
-                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          color: primaryColor,
-          onPressed: () =>
-              Navigator.of(contextYes).pushNamed(noTreatmentViewRoute),
-        ),
+            child: Text(
+              "Lo he abandonado",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            color: primaryColor,
+            onPressed: () => {
+                  Navigator.pop(contextYes),
+                  Navigator.of(contextYes).pushNamed(noTreatmentViewRoute),
+                }),
         SizedBox(
           height: 15,
         ),
         DialogButton(
-          child: Text(
-            "No estoy en tratamiento",
-            style: TextStyle(
-                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          color: secondaryColor,
-          onPressed: () =>
-              Navigator.of(contextYes).pushNamed(noTreatmentViewRoute),
-        ),
+            child: Text(
+              "No estoy en tratamiento",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            color: secondaryColor,
+            onPressed: () => {
+                  Navigator.pop(contextYes),
+                  Navigator.of(contextYes).pushNamed(noTreatmentViewRoute),
+                }),
         SizedBox(
           height: 15,
         ),

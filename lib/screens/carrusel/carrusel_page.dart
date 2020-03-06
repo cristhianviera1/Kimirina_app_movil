@@ -39,7 +39,7 @@ class _CarruselPageState extends State<CarruselPage> {
             height: 10,
           ),
           Text(
-            'Otra Oportunidad de Vida',
+            'Una Oportunidad de Vida',
             style: TextStyle(color: Colors.black, fontSize: 19.0),
           ),
         ],

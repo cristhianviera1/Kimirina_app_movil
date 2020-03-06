@@ -197,7 +197,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                     onFieldSubmitted: (String value) {
-                      FocusScope.of(context).requestFocus(focusNode2);
+                      FocusScope.of(context).requestFocus(focusNode3);
                     },
                   ),
                   SizedBox(
@@ -205,12 +205,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   TextFormField(
                     validator: validateAge,
+                    focusNode: focusNode3,
                     onSaved: (String val) {
                       _edad = val;
                     },
                     keyboardType: TextInputType.number,
                     style: TextStyle(fontSize: 16, color: Colors.black),
-                    textInputAction: TextInputAction.next,
+                    textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                       labelText: "Edad",
                       contentPadding: new EdgeInsets.symmetric(
@@ -220,6 +221,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(25)),
                       ),
                     ),
+                    /*onFieldSubmitted: (String value) {
+                      FocusScope.of(context).requestFocus(focusNode3);
+                    },*/
                   ),
                   SizedBox(
                     height: 15,

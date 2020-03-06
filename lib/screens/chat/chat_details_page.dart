@@ -77,23 +77,14 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
-    return WillPopScope(
-      onWillPop: () => Future.value(false),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.nombre) ?? "Usuario",
-          backgroundColor: morado,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: ()=>{Navigator.of(context).pop()},
-            )
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[buildMessageList(), buildInputArea()],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.nombre) ?? "Usuario",
+        backgroundColor: morado,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[buildMessageList(), buildInputArea()],
         ),
       ),
     );
@@ -158,32 +149,30 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void getSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      this.userId = prefs.getString("userid");
-      //socket = io.io(urlApiRest);
-      //socket.emit("loginRoom", (this.userId));
-      socket.on("receive_message", (jsonData) {
-        print(jsonData);
-        setState(() {
-          messages.add({
-            "imagen": jsonData['imagen'],
-            "message": jsonData['message'],
-            "userIdSend": jsonData['userIdSend'],
-            "userIdReceive": jsonData['userIdReceive']
-          });
-        });
-        /*scrollController.animateTo(
+    this.userId = prefs.getString("userid");
+    //socket = io.io(urlApiRest);
+    //socket.emit("loginRoom", (this.userId));
+    socket.on("receive_message", (jsonData) {
+      print(jsonData);
+      messages.add({
+        "imagen": jsonData['imagen'],
+        "message": jsonData['message'],
+        "userIdSend": jsonData['userIdSend'],
+        "userIdReceive": jsonData['userIdReceive']
+      });
+      setState(() {});
+      scrollController.animateTo(
           scrollController.position.maxScrollExtent * 1.2,
           duration: Duration(milliseconds: 600),
           curve: Curves.ease,
-        );*/
-      });
+        );
     });
   }
 
   @override
   void dispose() {
-    Navigator.pop(context);
+    textController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -224,39 +213,41 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           SizedBox(width: 15),
-          Container(
-            padding: const EdgeInsets.all(15.0),
-            decoration: BoxDecoration(color: morado, shape: BoxShape.circle),
-            child: InkWell(
-              child: Icon(
-                Icons.send,
-                color: Colors.white,
+          GestureDetector(
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(color: morado, shape: BoxShape.circle),
+              child: InkWell(
+                child: Icon(
+                  Icons.send,
+                  color: Colors.white,
+                ),
               ),
-              onTap: () {
-                if (textController.text.isNotEmpty) {
-                  socket.emit(
-                      'send_message',
-                      json.encode({
-                        "message": textController.text,
-                        "imagen": false,
-                        "userIdReceive": widget.id,
-                        "userIdSend": this.userId
-                      }));
-                  this.setState(() => messages.add({
-                        "message": textController.text,
-                        "imagen": false,
-                        "userIdSend": this.userId,
-                        "userIdReceive": widget.id
-                      }));
-                  textController.text = '';
-                  scrollController.animateTo(
-                    scrollController.position.maxScrollExtent * 1.2,
-                    duration: Duration(milliseconds: 600),
-                    curve: Curves.ease,
-                  );
-                }
-              },
             ),
+            onTap: () {
+              if (textController.text.isNotEmpty) {
+                socket.emit(
+                    'send_message',
+                    json.encode({
+                      "message": textController.text,
+                      "imagen": false,
+                      "userIdReceive": widget.id,
+                      "userIdSend": this.userId
+                    }));
+                this.setState(() => messages.add({
+                      "message": textController.text,
+                      "imagen": false,
+                      "userIdSend": this.userId,
+                      "userIdReceive": widget.id
+                    }));
+                textController.text = '';
+                scrollController.animateTo(
+                  scrollController.position.maxScrollExtent * 1.2,
+                  duration: Duration(milliseconds: 600),
+                  curve: Curves.ease,
+                );
+              }
+            },
           )
         ],
       ),
