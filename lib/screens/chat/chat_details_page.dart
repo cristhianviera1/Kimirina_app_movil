@@ -28,6 +28,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
+    super.initState();
     getSharedPreferences();
     //Initializing the message list
     messages = List();
@@ -37,13 +38,17 @@ class _ChatScreenState extends State<ChatScreen> {
     scrollController = ScrollController();
     //Get history of chats
     ApiService().getChat(widget.id).then((response) {
-      this.setState(() {
+      setState(() {
         for (var msg in response) {
           messages.add(msg);
         }
       });
     });
-    super.initState();
+    Future.delayed(Duration(milliseconds: 500), () {
+      scrollController.jumpTo(
+        scrollController.position.maxScrollExtent,
+      );
+    });
   }
 
   void _pickImage() async {
@@ -154,18 +159,21 @@ class _ChatScreenState extends State<ChatScreen> {
     //socket.emit("loginRoom", (this.userId));
     socket.on("receive_message", (jsonData) {
       print(jsonData);
-      messages.add({
-        "imagen": jsonData['imagen'],
-        "message": jsonData['message'],
-        "userIdSend": jsonData['userIdSend'],
-        "userIdReceive": jsonData['userIdReceive']
-      });
-      setState(() {});
-      scrollController.animateTo(
-          scrollController.position.maxScrollExtent * 1.2,
-          duration: Duration(milliseconds: 600),
-          curve: Curves.ease,
-        );
+      if (mounted) {
+        setState(() {
+          messages.add({
+            "imagen": jsonData['imagen'],
+            "message": jsonData['message'],
+            "userIdSend": jsonData['userIdSend'],
+            "userIdReceive": jsonData['userIdReceive']
+          });
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent * 1.2,
+            duration: Duration(milliseconds: 600),
+            curve: Curves.ease,
+          );
+        });
+      }
     });
   }
 

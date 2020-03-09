@@ -48,18 +48,6 @@ class _NavBar extends State<NavBar> {
     var userId = preferences.getString("userid");
     socket.emit("connection", {"msg": "Se ha conectado el usuario: " + userId});
     socket.emit("loginRoom", (userId));
-
-    socket.on("getChats_response", (json) => {print(json)});
-    try {
-      if (userId == '' || userId == 'undefined' || userId == null) {
-        Navigator.of(scaffoldKey.currentContext).pushNamed(loginViewRoute);
-      } else {
-        /* making socket connection by passing UserId. */
-
-      }
-    } catch (error) {
-      print(error);
-    }
   }
 
   @override

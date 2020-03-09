@@ -23,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email;
   String _password;
-  var socket;
 
   @override
   void initState() {
@@ -353,6 +352,7 @@ class _LoginScreenState extends State<LoginScreen> {
         preferences.setString("edad", edad);
         preferences.setString("genero", genero);
         preferences.setString("rol", rol);
+        socket.emit("login",{"userId":tmpUsrId});
         Navigator.of(context).pushReplacementNamed(navBarViewRoute);
       } else {
         var errMsg = jsonDecode(response)["msg"];

@@ -21,6 +21,13 @@ class _ChatListState extends State<ChatList> {
   @override
   initState() {
     getSharedPreferences();
+    socket.on("updateUsers", (data) {
+      print(data);
+      setState(() {
+        userAvailables.removeRange(0, userAvailables.length);
+      });
+      this.getSharedPreferences();
+    });
     super.initState();
   }
 
@@ -57,29 +64,31 @@ class _ChatListState extends State<ChatList> {
 
   void getSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      var userId = prefs.getString("userid");
-      socket.emit("getUserList", (userId));
-      socket.on("getChats_response", (data) {
-        if (data != null || data != "undefined") {
-          if (userAvailables.length == 0) {
-            for (var usr in data) {
-              var foto;
-              if (usr["imagen"] != "") {
-                foto = usr["imagen"];
-              } else {
-                foto =
-                    'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
+    if (mounted) {
+      setState(() {
+        var userId = prefs.getString("userid");
+        socket.emit("getUserList", (userId));
+        socket.on("getChats_response", (data) {
+          if (data != null || data != "undefined") {
+            if (userAvailables.length == 0) {
+              for (var usr in data) {
+                var foto;
+                if (usr["imagen"] != "") {
+                  foto = usr["imagen"];
+                } else {
+                  foto =
+                      'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
+                }
+                setState(() {
+                  userAvailables.add(_ChatItem(
+                      usr["nombre"], foto, 0, usr["online"], "", usr["_id"]));
+                });
               }
-              setState(() {
-                userAvailables.add(_ChatItem(
-                    usr["nombre"], foto, 0, usr["online"], "", usr["_id"]));
-              });
             }
           }
-        }
+        });
       });
-    });
+    }
   }
 }
 
