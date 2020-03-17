@@ -23,9 +23,11 @@ class _ChatListState extends State<ChatList> {
     getSharedPreferences();
     socket.on("updateUsers", (data) {
       print(data);
-      setState(() {
-        userAvailables.removeRange(0, userAvailables.length);
-      });
+      if (mounted) {
+        setState(() {
+          userAvailables.removeRange(0, userAvailables.length);
+        });
+      }
       this.getSharedPreferences();
     });
     super.initState();
