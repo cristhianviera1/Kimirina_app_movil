@@ -26,10 +26,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _correo;
   String _imagen;
   String _edad;
-  String _genero;
+
   File _pickedImage;
   bool _imagePicked = false;
-  String imageOfUser = 'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
+  String _genero = 'Mujer';
+  String imageOfUser =
+      'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
   @override
   void initState() {
     super.initState();
@@ -61,7 +63,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           setState(() {
             _pickedImage = file;
             _imagePicked = true;
-            var user = new User(id: this._id, imagen: file);
+            var user =
+                new User(id: this._id, imagen: file, genero: this._genero);
             ApiService().uploadImage(user).then((response) {
               if (response) {
                 Alert(
@@ -180,10 +183,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       subtitle: Text(_edad ?? "Edad"),
                                     ),
                                     ListTile(
-                                      leading: Icon(Icons.people),
-                                      title: Text("Genero"),
-                                      subtitle: Text(_genero ?? "Genero"),
-                                    ),
+                                        leading: Icon(Icons.person_outline),
+                                        title: Text("Genero"),
+                                        subtitle: DropdownButton<String>(
+                                          value: _genero,
+                                          icon: Icon(Icons.arrow_drop_down),
+                                          iconSize: 24,
+                                          elevation: 16,
+                                          style: TextStyle(
+                                              color: naranja),
+                                          underline: Container(
+                                            height: 2,
+                                            color: naranja,
+                                          ),
+                                          onChanged: (String newValue) {
+                                            setState(() {
+                                              _genero = newValue;
+                                            });
+                                          },
+                                          items: <String>[
+                                            'Mujer',
+                                            'Hombre',
+                                            'Otro'
+                                          ].map<DropdownMenuItem<String>>(
+                                              (String _genero) {
+                                            return DropdownMenuItem<String>(
+                                              value: _genero,
+                                              child: Text(_genero ?? "genero"),
+                                            );
+                                          }).toList(),
+                                        )),
                                     ListTile(
                                       leading: Icon(FontAwesomeIcons.powerOff),
                                       title: Text("Cerrar Sesión"),
@@ -192,12 +221,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             await SharedPreferences
                                                 .getInstance();
                                         var userId = prefs.getString("userid");
-                                        var socket =
-                                            io.io(urlApiRest);
+                                        var socket = io.io(urlApiRest);
                                         socket
                                             .emit('logout', {"userId": userId});
-                                        socket.on("updateOfUser", (data) {
-                                        });
+                                        socket.on("updateOfUser", (data) {});
                                         //Provider.of<ApiService>(context,listen: false).logout(userId);
                                         prefs.remove("userid");
                                         prefs.remove("recordarme");
@@ -244,12 +271,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       this._nombre = prefs.getString("nombre");
       this._correo = prefs.getString("correo");
       this._imagen = prefs.getString("imagen");
-      if(this._imagen != null || this._imagen != ""){
+      this._genero = prefs.getString("genero");
+      if (this._imagen != null || this._imagen != "") {
         this.imageOfUser = this._imagen;
       }
-      print(this._imagen);
+      print(this._genero);
       this._edad = prefs.getString("edad");
-      this._genero = prefs.getString("genero");
     });
   }
 }
