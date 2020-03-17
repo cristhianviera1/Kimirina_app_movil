@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
@@ -12,12 +13,14 @@ class ChatList extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatList> {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   List<Widget> userAvailables = new List();
   List<User> userChatList = new List();
   bool loading = true;
   bool firstChats = true;
   SharedPreferences sharedPrefs;
   String userId;
+  var userAvailablesList;
   @override
   initState() {
     getSharedPreferences();
@@ -30,7 +33,53 @@ class _ChatListState extends State<ChatList> {
       }
       this.getSharedPreferences();
     });
+    socket.on("receive_message", (jsonData) {
+      print(jsonData);
+      activarNotificaciones(true, jsonData["userIdSend"], jsonData["message"]);
+    });
+    /**Para la notificación */
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOS = new IOSInitializationSettings();
+    var initSetttings = new InitializationSettings(android, iOS);
+    flutterLocalNotificationsPlugin.initialize(initSetttings,
+        onSelectNotification: onSelectNotification);
     super.initState();
+  }
+
+  Future onSelectNotification(String payload) {
+    debugPrint("payload : $payload");
+    showDialog(
+      context: context,
+      builder: (_) => new AlertDialog(
+        title: new Text('Notification'),
+        content: new Text('$payload'),
+      ),
+    );
+    return null;
+  }
+
+  showNotification(user, message) async {
+    var android = new AndroidNotificationDetails(
+        'channelId', 'channelName', 'channelDescription',
+        priority: Priority.High, importance: Importance.Max,icon: "",color: primaryColor);
+    var iOS = new IOSNotificationDetails();
+    var plataform = new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(0, '$user', '$message', plataform, payload: '');
+  }
+
+  activarNotificaciones(bool estado, user, message) async {
+    if (estado == false) {
+      await flutterLocalNotificationsPlugin.cancelAll();
+    } else {
+      var name = "";
+      for (var usr in userAvailablesList) {
+        if (usr["_id"] == user) {
+          name = usr["nombre"];
+        }
+      }
+      showNotification(name, message);
+    }
   }
 
   @override
@@ -73,6 +122,7 @@ class _ChatListState extends State<ChatList> {
         socket.on("getChats_response", (data) {
           if (data != null || data != "undefined") {
             if (userAvailables.length == 0) {
+              userAvailablesList = data;
               for (var usr in data) {
                 var foto;
                 if (usr["imagen"] != "") {
