@@ -49,13 +49,6 @@ class _ChatListState extends State<ChatList> {
 
   Future onSelectNotification(String payload) {
     debugPrint("payload : $payload");
-    showDialog(
-      context: context,
-      builder: (_) => new AlertDialog(
-        title: new Text('Notification'),
-        content: new Text('$payload'),
-      ),
-    );
     return null;
   }
 
