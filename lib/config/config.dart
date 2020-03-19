@@ -7,7 +7,7 @@ String userid = "";
 String imageOfUser = "";
 String edad = "";
 User userApp = new User(id: "",genero: "",nombre: "");
-String urlApiRest = "http://192.168.0.100:4000";
+String urlApiRest = "http://144.91.108.171:4008";
 var socket = io.io(urlApiRest, <String, dynamic>{
   'transports': ['websocket'],
   'extraHeaders': {'userId': '$userid'}
