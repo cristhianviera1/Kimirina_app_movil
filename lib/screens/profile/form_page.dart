@@ -270,8 +270,6 @@ class _FormPage extends State<FormPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     FormBuilderRadio(
-                      decoration:
-                          InputDecoration(labelText: 'My best language'),
                       attribute: "pregunta6",
                       onChanged: (value) {
                         _pregunta6 = value;
