@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
@@ -61,12 +57,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           setState(() {
             _pickedImage = file;
             _imagePicked = true;
-            var user = new User(id: this._id, imagen: file);
-            ApiService().uploadImage(user).then((response) => {
+            ApiService().uploadImage(file).then((response) => {
                   print(response),
                   if (response["error"] == "false")
                     {
-                      setState(() => {imageOfUser = response["data"]}),
+                      setState(() => {userApp.imagen = response["data"]}),
                       Alert(
                         context: context,
                         title: "Se ha actualizado la imagen de perfil",
@@ -145,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: () {
                           _pickImage();
                         },
-                        child: imageOfUser ==
+                        child: userApp.imagen ==
                                 "http://144.91.108.171:4008/images/usuarios/836295524.jpg"
                             ? CircleAvatar(
                                 radius: 70,
@@ -156,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             : CircleAvatar(
                                 radius: 70,
                                 backgroundColor: Colors.white,
-                                backgroundImage: NetworkImage(imageOfUser),
+                                backgroundImage: NetworkImage(userApp.imagen),
                               )),
                   ),
                   Padding(
@@ -308,13 +303,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       this._id = prefs.getString("userid");
       this._nombre = prefs.getString("nombre");
       this._correo = prefs.getString("correo");
-      this._imagen = prefs.getString("imagen");
-      this._genero = prefs.getString("genero");
-      if (this._imagen != null || this._imagen != "") {
-        imageOfUser = this._imagen;
-      }
-      //userApp.genero = this._genero;
-      //userApp.edad = prefs.getString("edad");
     });
   }
 }

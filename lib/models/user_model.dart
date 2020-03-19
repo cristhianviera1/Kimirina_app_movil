@@ -7,7 +7,7 @@ class User {
   String password;
   String edad;
   String genero;
-  File imagen;
+  String imagen;
   bool online;
   User(
       {this.id,

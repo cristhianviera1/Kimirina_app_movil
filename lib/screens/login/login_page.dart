@@ -354,6 +354,7 @@ class _LoginScreenState extends State<LoginScreen> {
         preferences.setString("rol", rol);
         userApp.genero = genero;
         userApp.edad = edad;
+        userApp.imagen = imagen;
         socket.emit("login", {"userId": tmpUsrId});
         Navigator.of(context).pushReplacementNamed(navBarViewRoute);
       } else {

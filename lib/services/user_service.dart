@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -90,13 +91,13 @@ class ApiService with ChangeNotifier {
     return response.body;
   }
 
-  uploadImage(User user) async {
-    String fileName = basename(user.imagen.path);
+  uploadImage(File photo) async {
+    String fileName = basename(photo.path);
     print("File base name: $fileName");
     try {
       FormData formData = new FormData.from(
-          {"image": new UploadFileInfo(user.imagen, fileName)});
-      var response = await Dio().put("$baseUrl/usuario/imagen/${user.id}", data: formData);
+          {"image": new UploadFileInfo(photo, fileName)});
+      var response = await Dio().put("$baseUrl/usuario/imagen/${userid}", data: formData);
       print("File upload response: $response");
       return response.data;
     } catch (e) {
