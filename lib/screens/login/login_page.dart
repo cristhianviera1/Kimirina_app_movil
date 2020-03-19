@@ -344,7 +344,7 @@ class _LoginScreenState extends State<LoginScreen> {
         //recordarme
         preferences.setBool("recordarme", _value1);
         //
-        userid=tmpUsrId;
+        userid = tmpUsrId;
         preferences.setString("userid", tmpUsrId);
         preferences.setString("nombre", nombre);
         preferences.setString("correo", correo);
@@ -352,7 +352,9 @@ class _LoginScreenState extends State<LoginScreen> {
         preferences.setString("edad", edad);
         preferences.setString("genero", genero);
         preferences.setString("rol", rol);
-        socket.emit("login",{"userId":tmpUsrId});
+        userApp.genero = genero;
+        userApp.edad = edad;
+        socket.emit("login", {"userId": tmpUsrId});
         Navigator.of(context).pushReplacementNamed(navBarViewRoute);
       } else {
         var errMsg = jsonDecode(response)["msg"];

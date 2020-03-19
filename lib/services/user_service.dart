@@ -84,25 +84,19 @@ class ApiService with ChangeNotifier {
   }
 
   //updUser
-  Future<bool> updateUser(User user) async {
-    final response = await http.post("$baseUrl/usuario/${user.id}",
-        headers: {"content-type": "application/json"}, body: user.imagen);
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
+  updateUser(object) async {
+    final response = await http.put("$baseUrl/usuario/${userid}",
+        headers: {"content-type": "application/json"}, body: jsonEncode(object));
+    return response.body;
   }
 
   uploadImage(User user) async {
-    print(user.id);
     String fileName = basename(user.imagen.path);
     print("File base name: $fileName");
     try {
       FormData formData = new FormData.from(
           {"image": new UploadFileInfo(user.imagen, fileName)});
-      var response =
-          await Dio().put("$baseUrl/usuario/imagen/${user.id}", data: formData);
+      var response = await Dio().put("$baseUrl/usuario/imagen/${user.id}", data: formData);
       print("File upload response: $response");
       return response.data;
     } catch (e) {

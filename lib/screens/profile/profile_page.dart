@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart';
 import 'package:kimirina_app/colors/colors.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
@@ -25,17 +26,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _nombre;
   String _correo;
   String _imagen;
-  String _edad;
 
   File _pickedImage;
   bool _imagePicked = false;
-  String _genero = 'Mujer';
-  String imageOfUser =
-      'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
+  String _genero;
   @override
   void initState() {
-    super.initState();
     getPreferences();
+    super.initState();
   }
 
   @override
@@ -63,24 +61,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
           setState(() {
             _pickedImage = file;
             _imagePicked = true;
-            var user =
-                new User(id: this._id, imagen: file, genero: this._genero);
-            ApiService().uploadImage(user).then((response) {
-              if (response) {
-                Alert(
-                  context: context,
-                  title: "Se ha actualizado la imagen de perfil",
-                  type: AlertType.success,
-                ).show();
-              } else {
-                Alert(
-                  context: context,
-                  title: "Ha ocurrido un error",
-                  desc: "Por favor vuelva a intentarlo",
-                  type: AlertType.error,
-                ).show();
-              }
-            });
+            var user = new User(id: this._id, imagen: file);
+            ApiService().uploadImage(user).then((response) => {
+                  print(response),
+                  if (response["error"] == "false")
+                    {
+                      setState(() => {imageOfUser = response["data"]}),
+                      Alert(
+                        context: context,
+                        title: "Se ha actualizado la imagen de perfil",
+                        type: AlertType.success,
+                        buttons: [
+                          DialogButton(
+                            child: Text(
+                              "Aceptar",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                            width: 120,
+                          )
+                        ],
+                      ).show()
+                    }
+                  else
+                    {
+                      Alert(
+                        context: context,
+                        title: "Ha ocurrido un error",
+                        desc: "Por favor vuelva a intentarlo",
+                        type: AlertType.error,
+                        buttons: [
+                          DialogButton(
+                            child: Text(
+                              "Aceptar",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                            width: 120,
+                          )
+                        ],
+                      ).show()
+                    }
+                });
           });
         }
       }
@@ -121,16 +145,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: () {
                           _pickImage();
                         },
-                        child: _imagePicked == false
+                        child: imageOfUser ==
+                                "http://144.91.108.171:4008/images/usuarios/836295524.jpg"
                             ? CircleAvatar(
                                 radius: 70,
                                 backgroundColor: Colors.white,
-                                backgroundImage: NetworkImage(imageOfUser),
+                                backgroundImage: NetworkImage(
+                                    "http://144.91.108.171:4008/images/usuarios/836295524.jpg"),
                               )
-                            : ClipRRect(
-                                borderRadius: new BorderRadius.circular(10.0),
-                                child:
-                                    Image(image: new FileImage(_pickedImage)),
+                            : CircleAvatar(
+                                radius: 70,
+                                backgroundColor: Colors.white,
+                                backgroundImage: NetworkImage(imageOfUser),
                               )),
                   ),
                   Padding(
@@ -180,31 +206,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ListTile(
                                       leading: Icon(Icons.calendar_today),
                                       title: Text("Edad"),
-                                      subtitle: Text(_edad ?? "Edad"),
+                                      subtitle: TextFormField(
+                                        initialValue: userApp.edad ?? "edad",
+                                        keyboardType: TextInputType.number,
+                                        onFieldSubmitted: (value) => {
+                                          setState(() => {userApp.edad = value}),
+                                          ApiService()
+                                              .updateUser({"edad": value}).then(
+                                                  (response) => {})
+                                        },
+                                      ),
                                     ),
                                     ListTile(
                                         leading: Icon(Icons.person_outline),
                                         title: Text("Genero"),
                                         subtitle: DropdownButton<String>(
-                                          value: _genero,
+                                          value: userApp.genero,
                                           icon: Icon(Icons.arrow_drop_down),
                                           iconSize: 24,
                                           elevation: 16,
-                                          style: TextStyle(
-                                              color: naranja),
+                                          style: TextStyle(color: Colors.black),
                                           underline: Container(
                                             height: 2,
                                             color: naranja,
                                           ),
                                           onChanged: (String newValue) {
-                                            setState(() {
-                                              _genero = newValue;
-                                            });
+                                            setState(() => {
+                                                  userApp.genero = newValue,
+                                                  ApiService().updateUser({
+                                                    "genero": userApp.genero
+                                                  }).then((response) =>
+                                                      {print(response)})
+                                                });
                                           },
                                           items: <String>[
-                                            'Mujer',
-                                            'Hombre',
-                                            'Otro'
+                                            'Femenino',
+                                            'Masculino',
+                                            'TransFemenino'
                                           ].map<DropdownMenuItem<String>>(
                                               (String _genero) {
                                             return DropdownMenuItem<String>(
@@ -273,10 +311,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       this._imagen = prefs.getString("imagen");
       this._genero = prefs.getString("genero");
       if (this._imagen != null || this._imagen != "") {
-        this.imageOfUser = this._imagen;
+        imageOfUser = this._imagen;
       }
-      print(this._genero);
-      this._edad = prefs.getString("edad");
+      //userApp.genero = this._genero;
+      //userApp.edad = prefs.getString("edad");
     });
   }
 }

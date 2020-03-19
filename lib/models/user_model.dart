@@ -22,8 +22,7 @@ class User {
   factory User.fromJson(dynamic json) {
     return new User(id:json["id"],nombre: json["nombre"]as String, );
   }
-  Map<String, dynamic> toJson() {
-    return {
+  Map toJson() => {
       "id": this.id,
       "nombre": this.nombre,
       "correo": this.correo,
@@ -32,6 +31,5 @@ class User {
       "genero": this.genero,
       "imagen": this.imagen,
       "online": this.online
-    };
-  }
+  };
 }
