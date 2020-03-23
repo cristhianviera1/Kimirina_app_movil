@@ -1,4 +1,4 @@
-package com.example.kimirina_app
+package com.kimirina_app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
