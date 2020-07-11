@@ -95,8 +95,8 @@ class ApiService with ChangeNotifier {
     String fileName = basename(photo.path);
     print("File base name: $fileName");
     try {
-      FormData formData = new FormData.from(
-          {"image": new UploadFileInfo(photo, fileName)});
+      FormData formData = new FormData.fromMap(
+          {"image": await MultipartFile.fromFile(photo.path,filename: fileName)});
       var response = await Dio().put("$baseUrl/usuario/imagen/${userid}", data: formData);
       print("File upload response: $response");
       return response.data;
