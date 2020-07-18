@@ -61,10 +61,10 @@ android {
 
  signingConfigs {
        release {
-           keyAlias keystoreProperties['key']
-           keyPassword keystoreProperties['ZVMStjCZ57Sod9C']
-           storeFile keystoreProperties['C:/Users/Aly/key.jks'] ? file(keystoreProperties['C:/Users/Aly/key.jks']) : null
-           storePassword keystoreProperties['ZVMStjCZ57Sod9C']
+           keyAlias keystoreProperties['kimirina']
+           keyPassword keystoreProperties['Uc]+*xrX6KpL']
+           storeFile keystoreProperties['c:\key.jks'] ? file(keystoreProperties['c:\key.jks']) : null
+           storePassword keystoreProperties['Uc]+*xrX6KpL']
        }
    }
 
