@@ -4,11 +4,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/services/user_service.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ChatScreen extends StatefulWidget {
   final String id;
@@ -158,7 +157,6 @@ class _ChatScreenState extends State<ChatScreen> {
     //socket = io.io(urlApiRest);
     //socket.emit("loginRoom", (this.userId));
     socket.on("receive_message", (jsonData) {
-      print(jsonData);
       if (mounted) {
         setState(() {
           messages.add({

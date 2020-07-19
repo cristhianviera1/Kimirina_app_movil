@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:socket_io_client/socket_io_client.dart' as io;
+
 import 'chat_details_page.dart';
 
 class ChatList extends StatefulWidget {
@@ -25,7 +25,6 @@ class _ChatListState extends State<ChatList> {
   initState() {
     getSharedPreferences();
     socket.on("updateUsers", (data) {
-      print(data);
       if (mounted) {
         setState(() {
           userAvailables.removeRange(0, userAvailables.length);
@@ -34,7 +33,6 @@ class _ChatListState extends State<ChatList> {
       this.getSharedPreferences();
     });
     socket.on("receive_message", (jsonData) {
-      print(jsonData);
       activarNotificaciones(true, jsonData["userIdSend"], jsonData["message"]);
     });
     /**Para la notificación */
@@ -175,7 +173,6 @@ class _ChatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print("$id\n$name");
         Navigator.push(
             context,
             MaterialPageRoute(

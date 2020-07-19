@@ -146,7 +146,7 @@ class _SignupScreenState extends State<SignupScreen> {
             margin: EdgeInsets.fromLTRB(20, 12, 20, 10),
             child: Form(
               key: _formKey,
-              autovalidate: _autoValidate,
+              autovalidate: autoValidate,
               child: Column(
                 children: <Widget>[
                   TextFormField(
@@ -231,7 +231,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   Container(
                     child: GestureDetector(
                         onTap: () {
-                          print("pressed");
                           _validateInputs();
                         },
                         child: Container(
@@ -256,7 +255,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   Container(
                     child: GestureDetector(
                         onTap: () {
-                          print("pressed");
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -276,11 +274,11 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  bool _value1 = false;
-  bool _autoValidate = false;
+  bool value1 = false;
+  bool autoValidate = false;
   String pass = "";
 
-  void _value1Changed(bool value) => setState(() => _value1 = value);
+  void value1Changed(bool value) => setState(() => value1 = value);
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
@@ -309,7 +307,7 @@ class _SignupScreenState extends State<SignupScreen> {
         if (jsonDecode(response)["error"] == false) {
           SharedPreferences preferences = await SharedPreferences.getInstance();
           preferences.setString("userid", jsonDecode(response)["userId"]);
-          print(jsonDecode(response)["userId"]);
+
           return Alert(
             context: context,
             type: AlertType.success,
@@ -354,7 +352,7 @@ class _SignupScreenState extends State<SignupScreen> {
     } else {
 //    If all data are not valid then start auto validation.
       setState(() {
-        _autoValidate = true;
+        autoValidate = true;
       });
     }
   }

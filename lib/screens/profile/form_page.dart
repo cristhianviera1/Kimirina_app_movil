@@ -141,7 +141,6 @@ class _FormPage extends State<FormPage> {
                     FormBuilderRadio(
                       onChanged: (value) {
                         _pregunta1 = value;
-                        print(_pregunta1);
                       },
                       attribute: "pregunta1",
                       options: [
@@ -169,7 +168,6 @@ class _FormPage extends State<FormPage> {
                       attribute: "pregunta2",
                       onChanged: (value) {
                         _pregunta2 = value;
-                        print(_pregunta2);
                       },
                       options: [
                         "Si",
@@ -325,8 +323,6 @@ class _FormPage extends State<FormPage> {
 
   void _validateInputs() async {
     if (_formKeyProfile.currentState.saveAndValidate()) {
-      print(
-          "$_pregunta1\n$_pregunta2\n$_pregunta3\n$_pregunta4\n$_pregunta5\n$_pregunta6\n$_pregunta7");
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var userId = prefs.getString("userid");
 
@@ -342,7 +338,6 @@ class _FormPage extends State<FormPage> {
           pregunta7: _pregunta7);
 
       _apiService.storeForm(formReg);
-      print(_formKeyProfile.currentState.value);
     }
   }
 }

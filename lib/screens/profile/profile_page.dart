@@ -1,16 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kimirina_app/shared/colors.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kimirina_app/config/config.dart';
-import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
-import 'package:socket_io_client/socket_io_client.dart' as io;
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -58,7 +58,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _pickedImage = file;
             _imagePicked = true;
             ApiService().uploadImage(file).then((response) => {
-                  print(response),
                   if (response["error"] == "false")
                     {
                       setState(() => {userApp.imagen = response["data"]}),
@@ -231,8 +230,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   userApp.genero = newValue,
                                                   ApiService().updateUser({
                                                     "genero": userApp.genero
-                                                  }).then((response) =>
-                                                      {print(response)})
+                                                  }).then((response) => {})
                                                 });
                                           },
                                           items: <String>[

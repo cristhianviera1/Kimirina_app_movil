@@ -1,16 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/screens/chat/chat_page.dart';
 import 'package:kimirina_app/screens/news/news_page.dart';
 import 'package:kimirina_app/screens/product/produt_page.dart';
-import 'dart:async';
 import 'package:kimirina_app/screens/profile/profile_page.dart';
-import 'package:kimirina_app/services/user_service.dart';
-import 'package:socket_io_client/socket_io_client.dart' as io;
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../routes/routes.dart';
 
 class NavBar extends StatefulWidget {
@@ -19,7 +19,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBar extends State<NavBar> {
-  ApiService _apiService = ApiService();
+
   @override
   void dispose() {
     indexcontroller.close();
@@ -108,9 +108,7 @@ class _NavBar extends State<NavBar> {
     );
   }
 
-  void render(response) {
-    print(response);
-  }
+  void render(response) {}
 }
 
 class FancyBottomNavigation extends StatefulWidget {
