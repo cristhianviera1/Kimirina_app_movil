@@ -32,7 +32,8 @@ Color naranja = HexColor("#F03506"); //Naranja
 Color azul = HexColor("#2D287C"); //Azul
 Color verde = HexColor("#1A863D"); // Verde
 Color morado = HexColor("#6F005C"); // Morado
- 
+Color nearlyWhite = Color(0xFFFFFFFF);
+Color grey = Color(0xFF3A5160);
 
 const TextStyle estiloBotonesTexto = TextStyle(fontSize: 16);
 
