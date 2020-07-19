@@ -59,15 +59,6 @@ android {
        }
    }
 
- signingConfigs {
-       release {
-           keyAlias keystoreProperties['kimirina']
-           keyPassword keystoreProperties['Uc]+*xrX6KpL']
-           storeFile keystoreProperties['c:\key.jks'] ? file(keystoreProperties['c:\key.jks']) : null
-           storePassword keystoreProperties['Uc]+*xrX6KpL']
-       }
-   }
-
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
