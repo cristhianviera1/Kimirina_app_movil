@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:kimirina_app/routes/routes.dart';
+import 'package:kimirina_app/models/productos_model.dart';
 import 'package:kimirina_app/screens/product/product_details.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:kimirina_app/shared/colors.dart';
@@ -25,56 +25,9 @@ class _ProductScreen extends State<ProductScreen> {
     super.initState();
   }
 
-  List<Map> schoolLists = [
-    {
-      "name": "Asesoría en Prevención de VIH e ITS",
-      "type": "En respuesta a la epidemia del VIH, con capacidades...",
-      "logoText": "assets/images/asesorias.png",
-      "route": productDetaisViewRoute
-    },
-    {
-      "name": "Pruebas Rápidas VIH",
-      "type":
-          "Esta prueba es empleada para detectar la infección causada por ese virus, permite detectar anticuerpos contra el VIH en la sangre en menos de 30 minutos",
-      "logoText": "assets/images/pruebaRapida.jpg",
-      "route": pruebaRapidaVihViewRoute
-    },
-    {
-      "name": "Pruebas rapidas ITS",
-      "type":
-          "Es un tipo de prueba de anticuerpos, contra virus o bacterias, causantes de infecciones de transmisión sexual.",
-      "logoText": "assets/images/its.png",
-      "route": pruebaRapidaItsViewRoute
-    },
-    {
-      "name": "Atención a personas con ITS",
-      "type": "Se oferta el servicio y la derivación médica...",
-      "logoText": "assets/images/vinculacion.png",
-      "route": atencionItsViewRoute
-    },
-    {
-      "name": "PrEP",
-      "type":
-          "Esta dirigida a personas negativas para VIH que buscan prevenir una futura infección.",
-      "logoText": "assets/images/prep.png",
-      "route": prepViewRoute
-    },
-    {
-      "name": "nPEP",
-      "type":
-          "Consiste tomar medicamentos contra el VIH dentro de 72 horas después de una posible...",
-      "logoText": "assets/images/npep.jpg",
-      "route": npepViewRoute
-    },
-    {
-      "name": "Programa de atencion a PPVS",
-      "type":
-          "Kimirina oferta servicios de asesoría, atención y control de PPVS.",
-      "logoText": "assets/images/ppvs.png",
-      "route": ppvsViewRoute
-    },
-  ];
+  var productList = <Producto>[];
   var numberOfProducts = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,14 +85,8 @@ class _ProductScreen extends State<ProductScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => ProductDetailsPage(
-                      titulo: schoolLists[index]['name'],
-                      descripcion: schoolLists[index]['type'],
-                      imagenUrl: schoolLists[index]['logoText'],
-                      link: schoolLists[index]['link'],
-                      observaciones: schoolLists[index]['observaciones'],
-                      precio: schoolLists[index]['precio'],
-                    )));
+                builder: (_) =>
+                    ProductDetailsPage(ProductoDetails: productList[index])));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -161,7 +108,7 @@ class _ProductScreen extends State<ProductScreen> {
                 borderRadius: BorderRadius.circular(70),
                 border: Border.all(width: 3, color: secondary),
                 image: DecorationImage(
-                    image: new NetworkImage(schoolLists[index]['logoText']),
+                    image: new NetworkImage(productList[index].imagen),
                     fit: BoxFit.fill),
               ),
             ),
@@ -170,7 +117,7 @@ class _ProductScreen extends State<ProductScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    schoolLists[index]['name'],
+                    productList[index].titulo,
                     style: TextStyle(
                         color: primary,
                         fontWeight: FontWeight.bold,
@@ -194,7 +141,7 @@ class _ProductScreen extends State<ProductScreen> {
                       ),
                       Expanded(
                           child: AutoSizeText(
-                        schoolLists[index]['type'],
+                        productList[index].descripcion,
                         maxLines: 3,
                       )),
                     ],
@@ -209,20 +156,20 @@ class _ProductScreen extends State<ProductScreen> {
   }
 
   getProducts() {
-    this.schoolLists = new List();
+    this.productList = new List();
     ApiService().getProductos().then((value) {
       setState(() {
         for (var i = 0; i < value.length; i++) {
-          schoolLists.add({
-            "name": value[i]["titulo"],
-            "type": value[i]["descripcion"],
-            "logoText": value[i]["imagen"],
-            "link": value[i]["link"],
-            "observaciones": value[i]["observaciones"],
-            "precio": value[i]["precio"],
-          });
+          productList.add(Producto(
+            titulo: value[i]["titulo"],
+            descripcion: value[i]["descripcion"],
+            imagen: value[i]["imagen"],
+            link: value[i]["link"],
+            precio: value[i]["precio"],
+            observaciones: value[i]["observaciones"],
+          ));
         }
-        numberOfProducts = schoolLists.length;
+        numberOfProducts = productList.length;
       });
     });
   }

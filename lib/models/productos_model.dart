@@ -1,4 +1,4 @@
-class Productos {
+class Producto {
   String id;
   String titulo;
   String descripcion;
@@ -7,7 +7,7 @@ class Productos {
   String precio;
   String observaciones;
 
-  Productos(
+  Producto(
       {this.id,
       this.titulo,
       this.descripcion,
@@ -17,8 +17,8 @@ class Productos {
       this.observaciones,
  });
 
-  factory Productos.fromJson(dynamic json) {
-    return new Productos(id:json["id"],titulo: json["titulo"]as String, );
+  factory Producto.fromJson(dynamic json) {
+    return new Producto(id:json["id"],titulo: json["titulo"]as String, );
   }
   Map<String, dynamic> toJson() {
     return {
