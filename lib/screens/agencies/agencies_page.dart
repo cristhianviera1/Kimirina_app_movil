@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/utils/googleMap.dart';
 
-import 'design_course_app_theme.dart';
-import 'mapasPrueba.dart';
-
 class AgenciesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -367,18 +364,15 @@ class AgenciesScreen extends StatelessWidget {
         ),
       ),
     );
-    final double tempHeight = MediaQuery.of(context).size.height -
-        (MediaQuery.of(context).size.width / 1.2) +
-        24.0;
     final double infoHeight = 364.0;
     final _card0 = Container(
       decoration: BoxDecoration(
-        color: DesignCourseAppTheme.nearlyWhite,
+        color: nearlyWhite,
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
         boxShadow: <BoxShadow>[
           BoxShadow(
-              color: DesignCourseAppTheme.grey.withOpacity(0.2),
+              color: grey.withOpacity(0.2),
               offset: const Offset(1.1, 1.1),
               blurRadius: 20.0),
         ],
