@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,10 +55,14 @@ class _ChatListState extends State<ChatList> {
   showNotification(user, message) async {
     var android = new AndroidNotificationDetails(
         'channelId', 'channelName', 'channelDescription',
-        priority: Priority.High, importance: Importance.Max,icon: "",color: primaryColor);
+        priority: Priority.High,
+        importance: Importance.Max,
+        icon: "",
+        color: primaryColor);
     var iOS = new IOSNotificationDetails();
     var plataform = new NotificationDetails(android, iOS);
-    await flutterLocalNotificationsPlugin.show(0, '$user', '$message', plataform, payload: '');
+    await flutterLocalNotificationsPlugin
+        .show(0, '$user', '$message', plataform, payload: '');
   }
 
   activarNotificaciones(bool estado, user, message) async {

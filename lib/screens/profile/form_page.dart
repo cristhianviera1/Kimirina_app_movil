@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,24 +53,25 @@ class _FormPage extends State<FormPage> {
           onPressed: () {
             _validateInputs();
             Alert(
-    context: context,
-    image: Image.asset("assets/images/logoTransparente.png"),
-    title: "Datos guardados",
-    desc: "Su información se guardo exitosamente",
-    buttons: [
-      DialogButton(
-          color: secondaryColor,
-          child: Text(
-            "Aceptar",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-            
-          })
-    ],
-  ).show();
+              context: context,
+              image: Image.asset("assets/images/logoTransparente.png"),
+              title: "Datos guardados",
+              desc: "Su información se guardo exitosamente",
+              buttons: [
+                DialogButton(
+                    color: secondaryColor,
+                    child: Text(
+                      "Aceptar",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+              ],
+            ).show();
           },
         );
       }
@@ -328,10 +329,18 @@ class _FormPage extends State<FormPage> {
           "$_pregunta1\n$_pregunta2\n$_pregunta3\n$_pregunta4\n$_pregunta5\n$_pregunta6\n$_pregunta7");
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var userId = prefs.getString("userid");
-  
-      Formulario formReg = new Formulario(fechaLlena: DateTime.now().toString(),personaLlena: userId, pregunta1: _pregunta1, pregunta2: _pregunta2, pregunta3: _pregunta3, pregunta4: _pregunta4, pregunta5: _pregunta5, pregunta6: _pregunta6, pregunta7: _pregunta7  );
-      
-      
+
+      Formulario formReg = new Formulario(
+          fechaLlena: DateTime.now().toString(),
+          personaLlena: userId,
+          pregunta1: _pregunta1,
+          pregunta2: _pregunta2,
+          pregunta3: _pregunta3,
+          pregunta4: _pregunta4,
+          pregunta5: _pregunta5,
+          pregunta6: _pregunta6,
+          pregunta7: _pregunta7);
+
       _apiService.storeForm(formReg);
       print(_formKeyProfile.currentState.value);
     }

@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fancy_dialog/fancy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/product/product_details.dart';
@@ -114,7 +114,7 @@ class _ProductScreen extends State<ProductScreen> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(top: 10),
-                height: MediaQuery.of(context).size.height-120,
+                height: MediaQuery.of(context).size.height - 120,
                 width: double.infinity,
                 child: ListView.builder(
                     itemCount: numberOfProducts,
