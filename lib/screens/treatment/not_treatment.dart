@@ -1,8 +1,7 @@
-import 'package:flare_flutter/flare_actor.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:kimirina_app/shared/colors.dart';
-import 'dart:ui';
-import 'package:kimirina_app/routes/routes.dart';
 
 class NoTreatment extends StatelessWidget {
   @override

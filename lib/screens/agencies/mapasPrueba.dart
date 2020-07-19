@@ -18,7 +18,6 @@ class MapsScreen extends StatefulWidget {
 class _MapsScreenState extends State<MapsScreen> {
   @override
   Widget build(BuildContext context) {
-    print("Hail Hydra${widget.agencieCity}\n${widget.lat}-${widget.lng}");
     return Scaffold(
       appBar: AppBar(
         title: Text("Centro Comunitario de ${widget.agencieCity}"),

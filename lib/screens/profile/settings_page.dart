@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/services/user_service.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SettingsOnePage extends StatefulWidget {
@@ -69,8 +68,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
   @override
   Widget build(BuildContext context) {
     var oneNotification = false;
-    var twoNotification = false;
-    var threeNotification = false;
+
     return Theme(
       isMaterialAppTheme: true,
       data: ThemeData(
@@ -196,7 +194,6 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                                           Container(
                                             child: GestureDetector(
                                                 onTap: () {
-                                                  print("pressed");
                                                   _validateInputs();
                                                 },
                                                 child: Container(
@@ -261,16 +258,8 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
     );
   }
 
-  Container _buildDivider() {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-      ),
-      width: double.infinity,
-      height: 1.0,
-      color: Colors.grey.shade400,
-    );
-  }
+
+
 
   String validatePassword(String value) {
     if (value.length < 6)
@@ -288,10 +277,10 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
     }
   }
 
-  bool _value1 = false;
+
   bool _autoValidate = false;
 
-  void _value1Changed(bool value) => setState(() => _value1 = value);
+
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();

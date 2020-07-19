@@ -6,7 +6,6 @@ import 'package:kimirina_app/screens/carrusel/carrusel_page.dart';
 import 'package:kimirina_app/screens/chat/chat_page.dart';
 import 'package:kimirina_app/screens/login/login_page.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
-import 'package:kimirina_app/screens/product/product_details.dart';
 import 'package:kimirina_app/screens/product/produt_page.dart';
 import 'package:kimirina_app/screens/profile/form_page.dart';
 import 'package:kimirina_app/screens/profile/settings_page.dart';

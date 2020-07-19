@@ -224,7 +224,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       child: GestureDetector(
                           onTap: () {
-                            print("pressed");
                             _validateInputs();
                           },
                           child: Container(
@@ -294,8 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _autoValidate = false;
 
   ///redirect user to main screen
-  void _value1Changed(bool value) =>
-      setState(() => {_value1 = value, print(_value1)});
+  void _value1Changed(bool value) => setState(() => {_value1 = value});
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {

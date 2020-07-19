@@ -1,12 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fancy_dialog/fancy_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:kimirina_app/shared/colors.dart';
-import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/product/product_details.dart';
 import 'package:kimirina_app/services/user_service.dart';
+import 'package:kimirina_app/shared/colors.dart';
 
 class ProductScreen extends StatefulWidget {
   ProductScreen({Key key}) : super(key: key);

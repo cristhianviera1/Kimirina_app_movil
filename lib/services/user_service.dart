@@ -87,21 +87,23 @@ class ApiService with ChangeNotifier {
   //updUser
   updateUser(object) async {
     final response = await http.put("$baseUrl/usuario/${userid}",
-        headers: {"content-type": "application/json"}, body: jsonEncode(object));
+        headers: {"content-type": "application/json"},
+        body: jsonEncode(object));
     return response.body;
   }
 
   uploadImage(File photo) async {
     String fileName = basename(photo.path);
-    print("File base name: $fileName");
+
     try {
-      FormData formData = new FormData.fromMap(
-          {"image": await MultipartFile.fromFile(photo.path,filename: fileName)});
-      var response = await Dio().put("$baseUrl/usuario/imagen/${userid}", data: formData);
-      print("File upload response: $response");
+      FormData formData = new FormData.fromMap({
+        "image": await MultipartFile.fromFile(photo.path, filename: fileName)
+      });
+      var response =
+          await Dio().put("$baseUrl/usuario/imagen/${userid}", data: formData);
+
       return response.data;
     } catch (e) {
-      print("Exception Caught: $e");
       return;
     }
   }
@@ -182,8 +184,6 @@ class ApiService with ChangeNotifier {
 
   Future logout(userId) {
     this.socket.emit('logout', {"userId": userId});
-    this.socket.on('logout-response', (data) {
-      print(data);
-    });
+    this.socket.on('logout-response', (data) {});
   }
 }

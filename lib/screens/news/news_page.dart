@@ -1,9 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:kimirina_app/shared/colors.dart';
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:kimirina_app/services/user_service.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsScreen extends StatefulWidget {
@@ -69,7 +69,6 @@ class _NewsScreenState extends State<NewsScreen> {
         for (var novedad in value) {
           novedadesCards.add(new _NovedadItem(novedad["titulo"],
               novedad["descripcion"], novedad["imagen"], novedad["link"]));
-          print(novedadesCards[0]);
         }
       });
     });
