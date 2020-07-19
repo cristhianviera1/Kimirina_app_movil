@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kimirina_app/models/productos_model.dart';
 import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -6,17 +7,11 @@ import 'package:url_launcher/url_launcher.dart';
 class ProductDetailsPage extends StatefulWidget {
   @override
   _ProductDetailsPageState createState() => _ProductDetailsPageState();
+
   //final Agencias agencias;
-  final String titulo, descripcion, imagenUrl, precio, observaciones, link;
-  ProductDetailsPage(
-      {Key key,
-      @required this.titulo,
-      this.descripcion,
-      this.imagenUrl,
-      this.precio,
-      this.observaciones,
-      this.link})
-      : super(key: key);
+  final Producto ProductoDetails;
+
+  ProductDetailsPage({Key key, this.ProductoDetails}) : super(key: key);
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
@@ -25,7 +20,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: naranja,
-        title: Text(widget.titulo),
+        title: Text(widget.ProductoDetails.titulo),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -36,7 +31,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 width: double.infinity,
                 decoration: new BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(widget.imagenUrl),
+                    image: NetworkImage(widget.ProductoDetails.imagen),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -51,25 +46,25 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      widget.titulo,
+                      widget.ProductoDetails.titulo,
                       style: Theme.of(context).textTheme.title,
                     ),
                     SizedBox(height: 10.0),
-                    Text(widget.precio),
+                    Text(widget.ProductoDetails.precio),
                     SizedBox(height: 10.0),
                     Divider(),
                     SizedBox(
                       height: 10.0,
                     ),
                     Text(
-                      widget.descripcion,
+                      widget.ProductoDetails.descripcion,
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     Text(
-                      widget.observaciones,
+                      widget.ProductoDetails.observaciones,
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(
@@ -78,12 +73,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     SizedBox(height: 20.0),
                     GestureDetector(
                         child: Text(
-                            "Consulta este enlace para más información\n${widget.link}",
+                            "Consulta este enlace para más información\n${widget.ProductoDetails.link}",
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: Colors.blue)),
                         onTap: () {
-                          launch(widget.link);
+                          launch(widget.ProductoDetails.link);
                         }),
                     SizedBox(height: 20.0),
                     Container(
