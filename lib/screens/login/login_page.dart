@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';

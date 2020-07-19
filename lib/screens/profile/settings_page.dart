@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -19,11 +19,12 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
   String _password;
   @override
   void initState() {
-    flutterLocalNotificationsPlugin = new  FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
     var iOS = new IOSInitializationSettings();
     var initSetttings = new InitializationSettings(android, iOS);
-    flutterLocalNotificationsPlugin.initialize(initSetttings, onSelectNotification: onSelectNotification);
+    flutterLocalNotificationsPlugin.initialize(initSetttings,
+        onSelectNotification: onSelectNotification);
     super.initState();
     focusNode2 = FocusNode();
     focusNode3 = FocusNode();
@@ -43,16 +44,20 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
   }
 
   showNotification() async {
-    var android = new AndroidNotificationDetails('channelId', 'channelName', 'channelDescription', priority: Priority.High,importance: Importance.Max);
+    var android = new AndroidNotificationDetails(
+        'channelId', 'channelName', 'channelDescription',
+        priority: Priority.High, importance: Importance.Max);
     var iOS = new IOSNotificationDetails();
     var plataform = new NotificationDetails(android, iOS);
-    await flutterLocalNotificationsPlugin.show(0,'Primera notificacion', 'Flutter Notificacion', plataform, payload: 'hola q hace');
+    await flutterLocalNotificationsPlugin.show(
+        0, 'Primera notificacion', 'Flutter Notificacion', plataform,
+        payload: 'hola q hace');
   }
 
   activarNotificaciones(bool estado) async {
-    if(estado == false) {
+    if (estado == false) {
       await flutterLocalNotificationsPlugin.cancelAll();
-    } else{
+    } else {
       showNotification();
     }
   }

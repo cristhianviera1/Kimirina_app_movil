@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -77,14 +77,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     SizedBox(height: 20.0),
                     GestureDetector(
-                        child: Text("Consulta este enlace para más información\n${widget.link}",
+                        child: Text(
+                            "Consulta este enlace para más información\n${widget.link}",
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: Colors.blue)),
                         onTap: () {
                           launch(widget.link);
                         }),
-                        SizedBox(height: 20.0),
+                    SizedBox(height: 20.0),
                     Container(
                       child: GestureDetector(
                           onTap: () {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/screens/chat/chat_page.dart';
 import 'package:kimirina_app/screens/news/news_page.dart';

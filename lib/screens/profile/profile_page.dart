@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
@@ -205,7 +205,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         initialValue: userApp.edad ?? "edad",
                                         keyboardType: TextInputType.number,
                                         onFieldSubmitted: (value) => {
-                                          setState(() => {userApp.edad = value}),
+                                          setState(
+                                              () => {userApp.edad = value}),
                                           ApiService()
                                               .updateUser({"edad": value}).then(
                                                   (response) => {})

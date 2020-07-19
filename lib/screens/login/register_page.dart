@@ -5,7 +5,7 @@ import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupScreen extends StatefulWidget {

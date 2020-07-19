@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kimirina_app/colors/colors.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/utils/googleMap.dart';
 
 import 'design_course_app_theme.dart';
