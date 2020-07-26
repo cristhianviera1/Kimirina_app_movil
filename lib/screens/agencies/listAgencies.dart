@@ -1,4 +1,4 @@
-import 'package:kimirina_app/models/agencias.dart';
+import 'package:kimirina_app/models/agencies.dart';
 
 final agenciesList = <Agencies>[
   Agencies(

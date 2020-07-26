@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:kimirina_app/models/productos_model.dart';
+import 'package:kimirina_app/models/products_model.dart';
 import 'package:kimirina_app/screens/product/product_details.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:kimirina_app/shared/colors.dart';
@@ -12,7 +12,7 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreen extends State<ProductScreen> {
-  List<Widget> productosCards = new List();
+  List<Widget> productsCards = new List();
   final TextStyle dropdownMenuItem =
       TextStyle(color: Colors.black, fontSize: 18);
 
@@ -25,7 +25,7 @@ class _ProductScreen extends State<ProductScreen> {
     super.initState();
   }
 
-  var productList = <Producto>[];
+  var productList = <Product>[];
   var numberOfProducts = 0;
 
   @override
@@ -86,7 +86,7 @@ class _ProductScreen extends State<ProductScreen> {
             context,
             MaterialPageRoute(
                 builder: (_) =>
-                    ProductDetailsPage(ProductoDetails: productList[index])));
+                    ProductDetailsPage(productDetails: productList[index])));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -108,7 +108,7 @@ class _ProductScreen extends State<ProductScreen> {
                 borderRadius: BorderRadius.circular(70),
                 border: Border.all(width: 3, color: secondary),
                 image: DecorationImage(
-                    image: new NetworkImage(productList[index].imagen),
+                    image: new NetworkImage(productList[index].image),
                     fit: BoxFit.fill),
               ),
             ),
@@ -117,7 +117,7 @@ class _ProductScreen extends State<ProductScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    productList[index].titulo,
+                    productList[index].title,
                     style: TextStyle(
                         color: primary,
                         fontWeight: FontWeight.bold,
@@ -141,7 +141,7 @@ class _ProductScreen extends State<ProductScreen> {
                       ),
                       Expanded(
                           child: AutoSizeText(
-                        productList[index].descripcion,
+                        productList[index].description,
                         maxLines: 3,
                       )),
                     ],
@@ -157,16 +157,16 @@ class _ProductScreen extends State<ProductScreen> {
 
   getProducts() {
     this.productList = new List();
-    ApiService().getProductos().then((value) {
+    ApiService().getProducts().then((value) {
       setState(() {
         for (var i = 0; i < value.length; i++) {
-          productList.add(Producto(
-            titulo: value[i]["titulo"],
-            descripcion: value[i]["descripcion"],
-            imagen: value[i]["imagen"],
+          productList.add(Product(
+            title: value[i]["title"],
+            description: value[i]["description"],
+            image: value[i]["image"],
             link: value[i]["link"],
-            precio: value[i]["precio"],
-            observaciones: value[i]["observaciones"],
+            price: value[i]["price"],
+            observations: value[i]["observations"],
           ));
         }
         numberOfProducts = productList.length;

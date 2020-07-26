@@ -8,19 +8,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'SlidesList.dart';
 
-class CarruselPage extends StatefulWidget {
+class carouselPage extends StatefulWidget {
   @override
-  _CarruselPageState createState() => _CarruselPageState();
+  _carouselPageState createState() => _carouselPageState();
 }
 
-class _CarruselPageState extends State<CarruselPage> {
+class _carouselPageState extends State<carouselPage> {
   @override
   void initState() {
     super.initState();
     verifyFirstOpen();
   }
 
-  final pages = carruselPages
+  final pages = carouselPages
       .map<PageViewModel>((slide) => PageViewModel(
             pageColor: Color(0xF6F6F7FF),
             bubbleBackgroundColor: slide.bubbleBackground,

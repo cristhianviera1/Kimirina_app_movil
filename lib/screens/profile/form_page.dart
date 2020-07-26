@@ -4,7 +4,7 @@ import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:kimirina_app/models/formulario_model.dart';
+import 'package:kimirina_app/models/form_model.dart';
 
 class FormPage extends StatefulWidget {
   @override
@@ -15,14 +15,14 @@ class _FormPage extends State<FormPage> {
   ApiService _apiService = ApiService();
   final GlobalKey<FormBuilderState> _formKeyProfile =
       GlobalKey<FormBuilderState>();
-  var fechaLlena = DateTime.now();
-  String _pregunta1;
-  String _pregunta2;
-  String _pregunta3;
-  String _pregunta4;
-  String _pregunta5;
-  String _pregunta6;
-  List<dynamic> _pregunta7;
+  var namePerson = DateTime.now();
+  String _question1;
+  String _question2;
+  String _question3;
+  String _question4;
+  String _question5;
+  String _question6;
+  List<dynamic> _question7;
 
   @override
   void initState() {
@@ -140,9 +140,9 @@ class _FormPage extends State<FormPage> {
                     ),
                     FormBuilderRadio(
                       onChanged: (value) {
-                        _pregunta1 = value;
+                        _question1 = value;
                       },
-                      attribute: "pregunta1",
+                      attribute: "answer1",
                       options: [
                         "Si",
                         "No",
@@ -165,9 +165,9 @@ class _FormPage extends State<FormPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     FormBuilderRadio(
-                      attribute: "pregunta2",
+                      attribute: "answer2",
                       onChanged: (value) {
-                        _pregunta2 = value;
+                        _question2 = value;
                       },
                       options: [
                         "Si",
@@ -191,9 +191,9 @@ class _FormPage extends State<FormPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     FormBuilderRadio(
-                      attribute: "pregunta3",
+                      attribute: "answer3",
                       onChanged: (value) {
-                        _pregunta3 = value;
+                        _question3 = value;
                       },
                       options: [
                         "Si",
@@ -217,9 +217,9 @@ class _FormPage extends State<FormPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     FormBuilderRadio(
-                      attribute: "pregunta4",
+                      attribute: "answer4",
                       onChanged: (value) {
-                        _pregunta4 = value;
+                        _question4 = value;
                       },
                       options: [
                         "Si",
@@ -243,9 +243,9 @@ class _FormPage extends State<FormPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     FormBuilderRadio(
-                      attribute: "pregunta5",
+                      attribute: "answer5",
                       onChanged: (value) {
-                        _pregunta5 = value;
+                        _question5 = value;
                       },
                       options: [
                         "Si",
@@ -269,9 +269,9 @@ class _FormPage extends State<FormPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     FormBuilderRadio(
-                      attribute: "pregunta6",
+                      attribute: "answer6",
                       onChanged: (value) {
-                        _pregunta6 = value;
+                        _question6 = value;
                       },
                       options: [
                         "Si",
@@ -295,9 +295,9 @@ class _FormPage extends State<FormPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     FormBuilderCheckboxList(
-                      attribute: "pregunta7",
+                      attribute: "answer7",
                       onChanged: (value) {
-                        _pregunta7 = value;
+                        _question7 = value;
                       },
                       options: [
                         FormBuilderFieldOption(value: "PrEP"),
@@ -326,16 +326,16 @@ class _FormPage extends State<FormPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var userId = prefs.getString("userid");
 
-      Formulario formReg = new Formulario(
-          fechaLlena: DateTime.now().toString(),
-          personaLlena: userId,
-          pregunta1: _pregunta1,
-          pregunta2: _pregunta2,
-          pregunta3: _pregunta3,
-          pregunta4: _pregunta4,
-          pregunta5: _pregunta5,
-          pregunta6: _pregunta6,
-          pregunta7: _pregunta7);
+      FormQuestion formReg = new FormQuestion(
+          dateCompleted: DateTime.now().toString(),
+          namePerson: userId,
+          question1: _question1,
+          question2: _question2,
+          question3: _question3,
+          question4: _question4,
+          question5: _question5,
+          question6: _question6,
+          question7: _question7);
 
       _apiService.storeForm(formReg);
     }

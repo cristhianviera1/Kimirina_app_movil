@@ -20,8 +20,8 @@ class _SignupScreenState extends State<SignupScreen> {
   FocusNode focusNode3;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email;
-  String _nombre;
-  String _edad;
+  String _name;
+  String _age;
   //String _password;
 
   @override
@@ -152,11 +152,14 @@ class _SignupScreenState extends State<SignupScreen> {
                   TextFormField(
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Ingrese un nombre';
+                        return  "Ingrese un nombre";
+                      }
+                      else{
+                        return null;
                       }
                     },
                     onSaved: (String val) {
-                      _nombre = val;
+                      _name = val;
                     },
                     obscureText: false,
                     keyboardType: TextInputType.text,
@@ -207,7 +210,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     validator: validateAge,
                     focusNode: focusNode3,
                     onSaved: (String val) {
-                      _edad = val;
+                      _age = val;
                     },
                     keyboardType: TextInputType.number,
                     style: TextStyle(fontSize: 16, color: Colors.black),
@@ -284,7 +287,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_formKey.currentState.validate()) {
       //If all data are correct then save data to out variables
       _formKey.currentState.save();
-      User userReg = User(nombre: _nombre, correo: _email, edad: _edad);
+      User userReg = User(name: _name, email: _email, age: _age);
       _apiService.registerUser(userReg).then((response) async {
         if (response == "inaccesible") {
           return Alert(

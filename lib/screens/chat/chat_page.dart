@@ -33,7 +33,7 @@ class _ChatListState extends State<ChatList> {
       this.getSharedPreferences();
     });
     socket.on("receive_message", (jsonData) {
-      activarNotificaciones(true, jsonData["userIdSend"], jsonData["message"]);
+      activatedNotifications(true, jsonData["userIdSend"], jsonData["message"]);
     });
     /**Para la notificación */
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
@@ -58,19 +58,19 @@ class _ChatListState extends State<ChatList> {
         icon: "",
         color: primaryColor);
     var iOS = new IOSNotificationDetails();
-    var plataform = new NotificationDetails(android, iOS);
+    var platform = new NotificationDetails(android, iOS);
     await flutterLocalNotificationsPlugin
-        .show(0, '$user', '$message', plataform, payload: '');
+        .show(0, '$user', '$message', platform, payload: '');
   }
 
-  activarNotificaciones(bool estado, user, message) async {
-    if (estado == false) {
+  activatedNotifications(bool state, user, message) async {
+    if (state == false) {
       await flutterLocalNotificationsPlugin.cancelAll();
     } else {
       var name = "";
       for (var usr in userAvailablesList) {
         if (usr["_id"] == user) {
-          name = usr["nombre"];
+          name = usr["name"];
         }
       }
       showNotification(name, message);
@@ -88,7 +88,7 @@ class _ChatListState extends State<ChatList> {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  'Mensajes',
+                  'messages',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -109,26 +109,26 @@ class _ChatListState extends State<ChatList> {
   }
 
   void getSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     if (mounted) {
       setState(() {
-        var userId = prefs.getString("userid");
+        var userId = pref.getString("userid");
         socket.emit("getUserList", (userId));
         socket.on("getChats_response", (data) {
           if (data != null || data != "undefined") {
             if (userAvailables.length == 0) {
               userAvailablesList = data;
               for (var usr in data) {
-                var foto;
-                if (usr["imagen"] != "") {
-                  foto = usr["imagen"];
+                var image;
+                if (usr["image"] != "") {
+                  image = usr["image"];
                 } else {
-                  foto =
+                  image =
                       'http://144.91.108.171:4008/images/usuarios/836295524.jpg';
                 }
                 setState(() {
                   userAvailables.add(_ChatItem(
-                      usr["nombre"], foto, 0, usr["online"], "", usr["_id"]));
+                      usr["name"], image, 0, usr["online"], "", usr["_id"]));
                 });
               }
             }
@@ -178,7 +178,7 @@ class _ChatItem extends StatelessWidget {
             MaterialPageRoute(
                 builder: (_) => ChatScreen(
                       id: id,
-                      nombre: name,
+                      name: name,
                     )));
       },
       child: Padding(

@@ -19,13 +19,13 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String _id;
-  String _nombre;
-  String _correo;
-  String _imagen;
+  String _name;
+  String _email;
+  String _image;
 
   File _pickedImage;
   bool _imagePicked = false;
-  String _genero;
+  String _gender;
   @override
   void initState() {
     getPreferences();
@@ -60,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ApiService().uploadImage(file).then((response) => {
                   if (response["error"] == "false")
                     {
-                      setState(() => {userApp.imagen = response["data"]}),
+                      setState(() => {userApp.image = response["data"]}),
                       Alert(
                         context: context,
                         title: "Se ha actualizado la imagen de perfil",
@@ -139,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: () {
                           _pickImage();
                         },
-                        child: userApp.imagen ==
+                        child: userApp.image ==
                                 "http://144.91.108.171:4008/images/usuarios/836295524.jpg"
                             ? CircleAvatar(
                                 radius: 70,
@@ -150,14 +150,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             : CircleAvatar(
                                 radius: 70,
                                 backgroundColor: Colors.white,
-                                backgroundImage: NetworkImage(userApp.imagen),
+                                backgroundImage: NetworkImage(userApp.image),
                               )),
                   ),
                   Padding(
                     padding: EdgeInsets.all(4),
                   ),
                   Text(
-                    _nombre ?? "Usuario",
+                    _name ?? "Usuario",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
@@ -195,19 +195,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ListTile(
                                       leading: Icon(Icons.email),
                                       title: Text("Correo"),
-                                      subtitle: Text(_correo ?? "correo"),
+                                      subtitle: Text(_email ?? "email"),
                                     ),
                                     ListTile(
                                       leading: Icon(Icons.calendar_today),
                                       title: Text("Edad"),
                                       subtitle: TextFormField(
-                                        initialValue: userApp.edad ?? "edad",
+                                        initialValue: userApp.age ?? "age",
                                         keyboardType: TextInputType.number,
                                         onFieldSubmitted: (value) => {
                                           setState(
-                                              () => {userApp.edad = value}),
+                                              () => {userApp.age = value}),
                                           ApiService()
-                                              .updateUser({"edad": value}).then(
+                                              .updateUser({"age": value}).then(
                                                   (response) => {})
                                         },
                                       ),
@@ -216,7 +216,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         leading: Icon(Icons.person_outline),
                                         title: Text("Genero"),
                                         subtitle: DropdownButton<String>(
-                                          value: userApp.genero,
+                                          value: userApp.gender,
                                           icon: Icon(Icons.arrow_drop_down),
                                           iconSize: 24,
                                           elevation: 16,
@@ -227,9 +227,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                           onChanged: (String newValue) {
                                             setState(() => {
-                                                  userApp.genero = newValue,
+                                                  userApp.gender = newValue,
                                                   ApiService().updateUser({
-                                                    "genero": userApp.genero
+                                                    "gender": userApp.gender
                                                   }).then((response) => {})
                                                 });
                                           },
@@ -238,10 +238,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             'Masculino',
                                             'TransFemenino'
                                           ].map<DropdownMenuItem<String>>(
-                                              (String _genero) {
+                                              (String _gender) {
                                             return DropdownMenuItem<String>(
-                                              value: _genero,
-                                              child: Text(_genero ?? "genero"),
+                                              value: _gender,
+                                              child: Text(_gender ?? "gender"),
                                             );
                                           }).toList(),
                                         )),
@@ -300,8 +300,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       this._id = prefs.getString("userid");
-      this._nombre = prefs.getString("nombre");
-      this._correo = prefs.getString("correo");
+      this._name = prefs.getString("name");
+      this._email = prefs.getString("email");
     });
   }
 }
