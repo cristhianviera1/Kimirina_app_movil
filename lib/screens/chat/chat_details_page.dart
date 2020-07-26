@@ -11,8 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatScreen extends StatefulWidget {
   final String id;
-  final String nombre;
-  ChatScreen({Key key, @required this.id, this.nombre}) : super(key: key);
+  final String name;
+  ChatScreen({Key key, @required this.id, this.name}) : super(key: key);
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -60,14 +60,14 @@ class _ChatScreenState extends State<ChatScreen> {
           String base64Image = base64Encode(imageBytes);
           messages.add({
             "message": base64Image,
-            "imagen": true,
+            "image": true,
             "userIdSend": this.userId,
             "userIdReceive": widget.id
           });
           socket.emit(
               'send_message',
               json.encode({
-                "imagen": true,
+                "image": true,
                 "message": base64Image,
                 "userIdReceive": widget.id,
                 "userIdSend": this.userId
@@ -83,7 +83,7 @@ class _ChatScreenState extends State<ChatScreen> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.nombre) ?? "Usuario",
+        title: Text(widget.name) ?? "User",
         backgroundColor: morado,
       ),
       body: SingleChildScrollView(
@@ -95,19 +95,19 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget buildSingleMessage(int index) {
-    var aligment;
+    var alignment;
     var color;
     if (messages[index]["userIdSend"] == this.userId) {
-      aligment = Alignment.topRight;
+      alignment = Alignment.topRight;
       color = Colors.purple;
     } else {
-      aligment = Alignment.centerLeft;
+      alignment = Alignment.centerLeft;
       color = Colors.deepPurple;
     }
-    if (messages[index]["imagen"] == true) {
+    if (messages[index]["image"] == true) {
       Uint8List bytes = base64.decode(messages[index]["message"]);
       return Container(
-        alignment: aligment,
+        alignment: alignment,
         child: Container(
           padding: const EdgeInsets.all(20.0),
           margin: const EdgeInsets.only(bottom: 20.0, left: 20.0, right: 20.0),
@@ -120,7 +120,7 @@ class _ChatScreenState extends State<ChatScreen> {
       );
     } else {
       return Container(
-        alignment: aligment,
+        alignment: alignment,
         child: Container(
           padding: const EdgeInsets.all(20.0),
           margin: const EdgeInsets.only(bottom: 20.0, left: 20.0, right: 20.0),
@@ -160,7 +160,7 @@ class _ChatScreenState extends State<ChatScreen> {
       if (mounted) {
         setState(() {
           messages.add({
-            "imagen": jsonData['imagen'],
+            "image": jsonData['image'],
             "message": jsonData['message'],
             "userIdSend": jsonData['userIdSend'],
             "userIdReceive": jsonData['userIdReceive']
@@ -236,13 +236,13 @@ class _ChatScreenState extends State<ChatScreen> {
                     'send_message',
                     json.encode({
                       "message": textController.text,
-                      "imagen": false,
+                      "image": false,
                       "userIdReceive": widget.id,
                       "userIdSend": this.userId
                     }));
                 this.setState(() => messages.add({
                       "message": textController.text,
-                      "imagen": false,
+                      "image": false,
                       "userIdSend": this.userId,
                       "userIdReceive": widget.id
                     }));

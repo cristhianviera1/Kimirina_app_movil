@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kimirina_app/models/productos_model.dart';
+import 'package:kimirina_app/models/products_model.dart';
 import 'package:kimirina_app/shared/colors.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,9 +9,9 @@ class ProductDetailsPage extends StatefulWidget {
   _ProductDetailsPageState createState() => _ProductDetailsPageState();
 
   //final Agencias agencias;
-  final Producto ProductoDetails;
+  final Product productDetails;
 
-  ProductDetailsPage({Key key, this.ProductoDetails}) : super(key: key);
+  ProductDetailsPage({Key key, this.productDetails}) : super(key: key);
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
@@ -20,7 +20,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: naranja,
-        title: Text(widget.ProductoDetails.titulo),
+        title: Text(widget.productDetails.title),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -31,7 +31,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 width: double.infinity,
                 decoration: new BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(widget.ProductoDetails.imagen),
+                    image: NetworkImage(widget.productDetails.image),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -46,25 +46,25 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      widget.ProductoDetails.titulo,
+                      widget.productDetails.title,
                       style: Theme.of(context).textTheme.title,
                     ),
                     SizedBox(height: 10.0),
-                    Text(widget.ProductoDetails.precio),
+                    Text(widget.productDetails.price),
                     SizedBox(height: 10.0),
                     Divider(),
                     SizedBox(
                       height: 10.0,
                     ),
                     Text(
-                      widget.ProductoDetails.descripcion,
+                      widget.productDetails.description,
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     Text(
-                      widget.ProductoDetails.observaciones,
+                      widget.productDetails.observations,
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(
@@ -73,18 +73,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     SizedBox(height: 20.0),
                     GestureDetector(
                         child: Text(
-                            "Consulta este enlace para más información\n${widget.ProductoDetails.link}",
+                            "Consulta este enlace para más información\n${widget.productDetails.link}",
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: Colors.blue)),
                         onTap: () {
-                          launch(widget.ProductoDetails.link);
+                          launch(widget.productDetails.link);
                         }),
                     SizedBox(height: 20.0),
                     Container(
                       child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(agenciasViewRoute);
+                            Navigator.of(context).pushNamed(agenciesViewRoute);
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.065,

@@ -1,9 +1,6 @@
 import 'package:fancy_dialog/FancyAnimation.dart';
 import 'package:fancy_dialog/fancy_dialog.dart';
-/**
- * Author: Sudip Thapa  
- * profile: https://github.com/sudeepthapa
-  */
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

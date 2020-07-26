@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         title: 'Kimirina',
         debugShowCheckedModeBanner: false,
         onGenerateRoute: router.generateRoute,
-        initialRoute: carruselViewRoute,
+        initialRoute: carouselViewRoute,
       ),
     );
   }

@@ -1,12 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 
-class CarruselSlide {
+class CarouselSlide {
   Text title;
   String subTitle;
   Color bubbleBackground;
   Widget mainImage;
 
-  CarruselSlide(
+  CarouselSlide(
       {this.title, this.subTitle, this.bubbleBackground, this.mainImage});
 }

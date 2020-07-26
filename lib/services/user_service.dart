@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
-import 'package:kimirina_app/models/formulario_model.dart';
+import 'package:kimirina_app/models/form_model.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -48,7 +48,7 @@ class ApiService with ChangeNotifier {
   }
 
   //guardar formulario
-  Future storeForm(Formulario formReg) async {
+  Future storeForm(FormQuestion formReg) async {
     final response = await http.post("$baseUrl/formulario",
         headers: {"content-type": "application/json"},
         body: anyToJson(formReg));
@@ -164,7 +164,7 @@ class ApiService with ChangeNotifier {
     });
   }
 
-  Future getNovedades() async {
+  Future getNews() async {
     final response = await http.get("$baseUrl/novedades");
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -173,7 +173,7 @@ class ApiService with ChangeNotifier {
     }
   }
 
-  Future getProductos() async {
+  Future getProducts() async {
     final response = await http.get("$baseUrl/productos");
     if (response.statusCode == 200) {
       return json.decode(response.body);

@@ -14,7 +14,7 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-  List<Widget> novedadesCards = new List();
+  List<Widget> newsCards = new List();
   final Color bgColor = Color(0xffF3F3F3);
   final Color primaryColor = Color(0xffE70F0B);
 
@@ -56,7 +56,7 @@ class _NewsScreenState extends State<NewsScreen> {
         padding: const EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 16.0),
         children: <Widget>[
           Column(
-            children: novedadesCards,
+            children: newsCards,
           )
         ],
       ),
@@ -64,20 +64,20 @@ class _NewsScreenState extends State<NewsScreen> {
   }
 
   getNews() {
-    ApiService().getNovedades().then((value) {
+    ApiService().getNews().then((value) {
       setState(() {
-        for (var novedad in value) {
-          novedadesCards.add(new _NovedadItem(novedad["titulo"],
-              novedad["descripcion"], novedad["imagen"], novedad["link"]));
+        for (var news in value) {
+          newsCards.add(new _NewsItem(news["title"],
+              news["description"], news["image"], news["link"]));
         }
       });
     });
   }
 }
 
-class _NovedadItem extends StatelessWidget {
-  final String titulo, descripcion, imagen, link;
-  Uint8List imagenDecodificada;
+class _NewsItem extends StatelessWidget {
+  final String title, description, image, link;
+  Uint8List imageDecoded;
   var titleTextStyle = TextStyle(
     color: Colors.black87,
     fontSize: 20.0,
@@ -88,10 +88,10 @@ class _NovedadItem extends StatelessWidget {
     fontWeight: FontWeight.w500,
     color: Colors.grey.shade800,
   );
-  _NovedadItem(this.titulo, this.descripcion, this.imagen, this.link);
+  _NewsItem(this.title, this.description, this.image, this.link);
   @override
   Widget build(BuildContext context) {
-    // imagenDecodificada = base64.decode(imagen.toString());
+
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
@@ -109,12 +109,12 @@ class _NovedadItem extends StatelessWidget {
                       topRight: Radius.circular(10.0),
                     ),
                     image:
-                        DecorationImage(image: new NetworkImage(this.imagen))),
+                        DecorationImage(image: new NetworkImage(this.image))),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  titulo,
+                  title,
                   style: titleTextStyle,
                 ),
               ),
@@ -125,7 +125,7 @@ class _NovedadItem extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: AutoSizeText(descripcion),
+                          child: AutoSizeText(description),
                         ),
                       ],
                     ),

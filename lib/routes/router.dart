@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kimirina_app/navBar/navBar.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/agencies/agencies_page.dart';
-import 'package:kimirina_app/screens/carrusel/carrusel_page.dart';
+import 'package:kimirina_app/screens/carousel/carousel_page.dart';
 import 'package:kimirina_app/screens/chat/chat_page.dart';
 import 'package:kimirina_app/screens/login/login_page.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
@@ -17,8 +17,8 @@ import '../screens/treatment/yes_treatment.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
-    case carruselViewRoute:
-      return MaterialPageRoute(builder: (context) => CarruselPage());
+    case carouselViewRoute:
+      return MaterialPageRoute(builder: (context) => carouselPage());
     case loginViewRoute:
       return MaterialPageRoute(builder: (context) => LoginScreen());
     case navBarViewRoute:
@@ -31,7 +31,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => NoTreatment());
     case chatListViewRoute:
       return MaterialPageRoute(builder: (context) => ChatList());
-    case agenciasViewRoute:
+    case agenciesViewRoute:
       return MaterialPageRoute(builder: (context) => AgenciesScreen());
     case settingsViewRoute:
       return MaterialPageRoute(builder: (context) => SettingsOnePage());

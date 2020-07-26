@@ -43,18 +43,22 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
   }
 
   showNotification() async {
+    var scheduledNotificationDateTime =
+    DateTime.now().add(Duration(seconds: 5));
     var android = new AndroidNotificationDetails(
-        'channelId', 'channelName', 'channelDescription',
-        priority: Priority.High, importance: Importance.Max);
+        'channelId', 'channelName', 'channelDescription');
     var iOS = new IOSNotificationDetails();
     var plataform = new NotificationDetails(android, iOS);
-    await flutterLocalNotificationsPlugin.show(
-        0, 'Primera notificacion', 'Flutter Notificacion', plataform,
-        payload: 'hola q hace');
+    await flutterLocalNotificationsPlugin.schedule(
+        0,
+        'scheduled title',
+        'scheduled body',
+        scheduledNotificationDateTime,
+        plataform);
   }
 
-  activarNotificaciones(bool estado) async {
-    if (estado == false) {
+  enableNotifications(bool state) async {
+    if (state == false) {
       await flutterLocalNotificationsPlugin.cancelAll();
     } else {
       showNotification();
@@ -67,7 +71,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
 
   @override
   Widget build(BuildContext context) {
-    var oneNotification = false;
+    var oneNotification = true;
 
     return Theme(
       isMaterialAppTheme: true,
@@ -245,7 +249,7 @@ class _SettingsOnePageState extends State<SettingsOnePage> {
                     value: oneNotification,
                     title: Text("Recordatorio de prueba ViH"),
                     onChanged: (bool oneNotification) {
-                      activarNotificaciones(oneNotification);
+                      enableNotifications(oneNotification);
                     },
                   ),
                   const SizedBox(height: 60.0),

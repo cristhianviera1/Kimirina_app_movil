@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(fontSize: 16, color: Colors.black),
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
-                        labelText: "Contaseña",
+                        labelText: "password",
                         contentPadding: new EdgeInsets.symmetric(
                             vertical:
                                 MediaQuery.of(context).size.height * 0.022,
@@ -209,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onChanged: _value1Changed,
                           ),
                           Text(
-                            "Recordarme",
+                            "recordarme",
                             style: TextStyle(
                                 color: naranja, //letras recuerdame
                                 fontSize: 16,
@@ -309,8 +309,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _loginUser() {
-    User userReg = new User(correo: _email, password: _password);
+    User userReg = new User(email: _email, password: _password);
     _apiService.loginUser(userReg).then((response) async {
+
       if (response == "inaccesible") {
         return Alert(
           context: context,
@@ -331,28 +332,28 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       if (jsonDecode(response)["error"] == false) {
         SharedPreferences preferences = await SharedPreferences.getInstance();
-        var tmpUsrId = jsonDecode(response)["usuario"]["id"];
-        var nombre = jsonDecode(response)["usuario"]["nombre"];
-        var correo = jsonDecode(response)["usuario"]["correo"];
-        var imagen = jsonDecode(response)["usuario"]["imagen"];
-        var edad = jsonDecode(response)["usuario"]["edad"];
-        var genero = jsonDecode(response)["usuario"]["genero"];
-        var rol = jsonDecode(response)["usuario"]["rol"];
+        var tmpUsrId = jsonDecode(response)["user"]["id"];
+        var name = jsonDecode(response)["user"]["name"];
+        var email = jsonDecode(response)["user"]["email"];
+        var image = jsonDecode(response)["user"]["image"];
+        var age = jsonDecode(response)["user"]["age"];
+        var gender = jsonDecode(response)["user"]["gender"];
+        var rol = jsonDecode(response)["user"]["rol"];
 
         //recordarme
         preferences.setBool("recordarme", _value1);
         //
         userid = tmpUsrId;
         preferences.setString("userid", tmpUsrId);
-        preferences.setString("nombre", nombre);
-        preferences.setString("correo", correo);
-        preferences.setString("imagen", imagen);
-        preferences.setString("edad", edad);
-        preferences.setString("genero", genero);
+        preferences.setString("name", name);
+        preferences.setString("email", email);
+        preferences.setString("image", image);
+        preferences.setString("age", age);
+        preferences.setString("gender", gender);
         preferences.setString("rol", rol);
-        userApp.genero = genero;
-        userApp.edad = edad;
-        userApp.imagen = imagen;
+        userApp.gender = gender;
+        userApp.age = age;
+        userApp.image = image;
         socket.emit("login", {"userId": tmpUsrId});
         Navigator.of(context).pushReplacementNamed(navBarViewRoute);
       } else {
@@ -374,6 +375,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ).show();
       }
+      return null;
     });
   }
 

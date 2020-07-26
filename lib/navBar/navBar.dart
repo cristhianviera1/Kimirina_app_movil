@@ -332,7 +332,7 @@ Future<Alert> noAlert(BuildContext context) {
           ),
           onPressed: () {
             Navigator.pop(context);
-            Navigator.of(context).pushNamed(agenciasViewRoute);
+            Navigator.of(context).pushNamed(agenciesViewRoute);
           })
     ],
   ).show();
