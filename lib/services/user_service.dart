@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kimirina_app/config/config.dart';
-import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/models/form_model.dart';
+import 'package:kimirina_app/models/user_model.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -38,18 +39,18 @@ class ApiService with ChangeNotifier {
   //RegisterUser
   Future registerUser(User userReg) async {
     try {
-      final response = await http.post("$baseUrl/usuario",
+      final response = await http.post("$baseUrl/user",
           headers: {"content-type": "application/json"},
           body: anyToJson(userReg));
       return response.body;
     } catch (err) {
-      return "inaccesible";
+      return err;
     }
   }
 
   //guardar formulario
   Future storeForm(FormQuestion formReg) async {
-    final response = await http.post("$baseUrl/formulario",
+    final response = await http.post("$baseUrl/form",
         headers: {"content-type": "application/json"},
         body: anyToJson(formReg));
     if (response.statusCode == 200) {
@@ -62,7 +63,7 @@ class ApiService with ChangeNotifier {
   //LoginUser
   Future loginUser(User userReg) async {
     try {
-      final response = await http.post("$baseUrl/usuario/login",
+      final response = await http.post("$baseUrl/user/login",
           headers: {"content-type": "application/json"},
           body: anyToJson(userReg));
       return response.body;
@@ -86,22 +87,20 @@ class ApiService with ChangeNotifier {
 
   //updUser
   updateUser(object) async {
-    final response = await http.put("$baseUrl/usuario/${userid}",
+    final response = await http.put("$baseUrl/user/${userid}",
         headers: {"content-type": "application/json"},
         body: jsonEncode(object));
     return response.body;
   }
 
-  uploadImage(File photo) async {
+  uploadImage(PickedFile photo) async {
     String fileName = basename(photo.path);
-
     try {
       FormData formData = new FormData.fromMap({
         "image": await MultipartFile.fromFile(photo.path, filename: fileName)
       });
       var response =
-          await Dio().put("$baseUrl/usuario/imagen/${userid}", data: formData);
-
+          await Dio().put("$baseUrl/user/image/${userid}", data: formData);
       return response.data;
     } catch (e) {
       return;
@@ -112,7 +111,7 @@ class ApiService with ChangeNotifier {
   Future<bool> updatePassword(String pass) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = prefs.getString("userid") ?? "";
-    final response = await http.post("$baseUrl/usuario/updPassword",
+    final response = await http.post("$baseUrl/user/updatePassword",
         headers: {"content-type": "application/json"},
         body: jsonEncode({"id": id, "password": pass}));
     if (response.statusCode == 200) {
@@ -125,7 +124,7 @@ class ApiService with ChangeNotifier {
   Future getChats() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = prefs.getString("userid") ?? "";
-    final response = await http.post("$baseUrl/usuario/chats",
+    final response = await http.post("$baseUrl/user/chats",
         headers: {"content-type": "application/json"},
         body: jsonEncode({"id": id}));
     if (response.statusCode == 200) {
@@ -138,7 +137,7 @@ class ApiService with ChangeNotifier {
   Future getChat(String idReceive) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = prefs.getString("userid");
-    final response = await http.post("$baseUrl/usuario/chat",
+    final response = await http.post("$baseUrl/user/chat",
         headers: {"content-type": "application/json"},
         body: jsonEncode({"id": id, "idReceive": idReceive}));
     if (response.statusCode == 200) {
@@ -165,7 +164,7 @@ class ApiService with ChangeNotifier {
   }
 
   Future getNews() async {
-    final response = await http.get("$baseUrl/novedades");
+    final response = await http.get("$baseUrl/news");
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -174,7 +173,7 @@ class ApiService with ChangeNotifier {
   }
 
   Future getProducts() async {
-    final response = await http.get("$baseUrl/productos");
+    final response = await http.get("$baseUrl/products");
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

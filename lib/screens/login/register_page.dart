@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/services/user_service.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:kimirina_app/shared/colors.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -13,16 +13,47 @@ class SignupScreen extends StatefulWidget {
   _SignupScreenState createState() => _SignupScreenState();
 }
 
+class FullNameValidator {
+  static String validate(String value) {
+    if (value.length < 5) {
+      return "Mínimo 5 carácteres";
+    }
+    return value.isEmpty ? "El campo es obligatorio" : null;
+  }
+}
+
+class EmailValidator {
+  static String validate(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value)) {
+      return 'Ingrese un email válido';
+    }
+    return value.isEmpty ? "El campo es obligatorio" : null;
+  }
+}
+
+class AgeValidator {
+  static String validate(String value) {
+    if (int.parse(value) > 90 || int.parse(value) < 10) {
+      return "Ingrese una edad valida";
+    }
+    return value.isEmpty ? "El campo es obligatorio" : null;
+  }
+}
+
 class _SignupScreenState extends State<SignupScreen> {
   ApiService _apiService = ApiService();
   FocusNode focusNode1;
   FocusNode focusNode2;
   FocusNode focusNode3;
+  FocusNode focusNode4;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email;
   String _name;
+  String _surname;
   String _age;
-  //String _password;
 
   @override
   void initState() {
@@ -39,6 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
     focusNode1.dispose();
     focusNode2.dispose();
     focusNode3.dispose();
+    focusNode4.dispose();
     super.dispose();
   }
 
@@ -140,6 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ],
             ),
           ),
+          //Formulario
           Container(
             width: MediaQuery.of(context).size.width,
             height: (MediaQuery.of(context).size.height * 0.80) - 22,
@@ -150,18 +183,10 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Column(
                 children: <Widget>[
                   TextFormField(
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return  "Ingrese un nombre";
-                      }
-                      else{
-                        return null;
-                      }
-                    },
+                    validator: FullNameValidator.validate,
                     onSaved: (String val) {
                       _name = val;
                     },
-                    obscureText: false,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 16, color: Colors.black),
                     textInputAction: TextInputAction.next,
@@ -182,7 +207,34 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 10,
                   ),
                   TextFormField(
-                    validator: validateEmail,
+                    validator: FullNameValidator.validate,
+                    onSaved: (String val) {
+                      _surname = val;
+                    },
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      labelText: "Apellido",
+                      contentPadding: new EdgeInsets.symmetric(
+                          vertical: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.022,
+                          horizontal: 15.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                      ),
+                    ),
+                    onFieldSubmitted: (String value) {
+                      FocusScope.of(context).requestFocus(focusNode1);
+                    },
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    validator: EmailValidator.validate,
                     onSaved: (String val) {
                       _email = val;
                     },
@@ -207,7 +259,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 10,
                   ),
                   TextFormField(
-                    validator: validateAge,
+                    validator: AgeValidator.validate,
                     focusNode: focusNode3,
                     onSaved: (String val) {
                       _age = val;
@@ -284,98 +336,57 @@ class _SignupScreenState extends State<SignupScreen> {
   void value1Changed(bool value) => setState(() => value1 = value);
 
   void _validateInputs() {
-    if (_formKey.currentState.validate()) {
-      //If all data are correct then save data to out variables
-      _formKey.currentState.save();
-      User userReg = User(name: _name, email: _email, age: _age);
-      _apiService.registerUser(userReg).then((response) async {
-        if (response == "inaccesible") {
-          return Alert(
-            context: context,
-            type: AlertType.warning,
-            title: "No se pudo conectar",
-            desc: "Por favor revise su conexión a internet.",
-            buttons: [
-              DialogButton(
-                child: Text(
-                  "Aceptar",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onPressed: () => Navigator.pop(context),
-                width: 120,
-              )
-            ],
-          ).show();
-        }
-        if (jsonDecode(response)["error"] == false) {
-          SharedPreferences preferences = await SharedPreferences.getInstance();
-          preferences.setString("userid", jsonDecode(response)["userId"]);
-
-          return Alert(
-            context: context,
-            type: AlertType.success,
-            title: "Registro exitoso",
-            desc:
-                "Tu contraseña será enviada a tu correo electrónico.\n ¡No olvides cambiarla!",
-            buttons: [
-              DialogButton(
-                child: Text(
-                  "Aceptar",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(loginViewRoute),
-                width: 120,
-              )
-            ],
-          ).show();
-        } else {
-          var errorMsg = jsonDecode(response)["msg"];
-          return Alert(
-            context: context,
-            type: AlertType.error,
-            title: "Hubo un error",
-            desc: errorMsg,
-            buttons: [
-              DialogButton(
-                child: Text(
-                  "Aceptar",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onPressed: () => {
-                  Navigator.pop(context),
-                  Navigator.of(context).pushNamed(loginViewRoute)
-                },
-                width: 120,
-              ),
-            ],
-          ).show();
-        }
-      });
-    } else {
-//    If all data are not valid then start auto validation.
+    if (!_formKey.currentState.validate()) {
       setState(() {
         autoValidate = true;
       });
-    }
-  }
-
-  String validateEmail(String value) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value))
-      return 'Ingrese un email válido';
-    else
-      return null;
-  }
-
-  String validateAge(String value) {
-    if (int.parse(value) > 90 || int.parse(value) < 10) {
-      return "Ingrese una edad valida";
-    } else {
       return null;
     }
+    _formKey.currentState.save();
+    User userReg = User(name: _name + " " + _surname, email: _email, age: _age);
+    _apiService.registerUser(userReg).then((response) async {
+      if (jsonDecode(response)["error"] == true) {
+        return Alert(
+          context: context,
+          type: AlertType.error,
+          title: "Hubo un error",
+          desc: jsonDecode(response)["msg"],
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Aceptar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () =>
+              {
+                Navigator.pop(context),
+                Navigator.of(context).pushNamed(loginViewRoute)
+              },
+              width: 120,
+            ),
+          ],
+        ).show();
+      }
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("userid", jsonDecode(response)["userId"]);
+      return Alert(
+        context: context,
+        type: AlertType.success,
+        title: "Registro exitoso",
+        desc:
+        "Tu contraseña será enviada a tu correo electrónico.\n ¡No olvides cambiarla!",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Aceptar",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.of(context).pushNamed(loginViewRoute),
+            width: 120,
+          )
+        ],
+      ).show();
+    });
   }
 }
 

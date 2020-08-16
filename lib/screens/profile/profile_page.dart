@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,9 +21,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _email;
   String _image;
 
-  File _pickedImage;
+  PickedFile _pickedImage;
   bool _imagePicked = false;
   String _gender;
+  final ImagePicker _picker = ImagePicker();
+
   @override
   void initState() {
     getPreferences();
@@ -52,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ));
       if (imageSource != null) {
-        File file = await ImagePicker.pickImage(source: imageSource);
+        final file = (await _picker.getImage(source: imageSource));
         if (file != null) {
           setState(() {
             _pickedImage = file;
@@ -197,7 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       title: Text("Correo"),
                                       subtitle: Text(_email ?? "email"),
                                     ),
-                                    ListTile(
+                                    /*ListTile(
                                       leading: Icon(Icons.calendar_today),
                                       title: Text("Edad"),
                                       subtitle: TextFormField(
@@ -211,10 +211,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   (response) => {})
                                         },
                                       ),
-                                    ),
+                                    ),*/
                                     ListTile(
                                         leading: Icon(Icons.person_outline),
-                                        title: Text("Genero"),
+                                        title: Text("Género"),
                                         subtitle: DropdownButton<String>(
                                           value: userApp.gender,
                                           icon: Icon(Icons.arrow_drop_down),

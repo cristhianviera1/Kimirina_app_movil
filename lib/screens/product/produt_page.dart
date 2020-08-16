@@ -158,6 +158,7 @@ class _ProductScreen extends State<ProductScreen> {
   getProducts() {
     this.productList = new List();
     ApiService().getProducts().then((value) {
+      print(value);
       setState(() {
         for (var i = 0; i < value.length; i++) {
           productList.add(Product(

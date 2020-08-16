@@ -1,14 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
-import 'package:kimirina_app/shared/colors.dart';
+import 'package:kimirina_app/config/config.dart';
 import 'package:kimirina_app/models/user_model.dart';
 import 'package:kimirina_app/routes/routes.dart';
 import 'package:kimirina_app/screens/login/register_page.dart';
 import 'package:kimirina_app/services/user_service.dart';
+import 'package:kimirina_app/shared/colors.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:kimirina_app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -292,26 +291,21 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _value1 = false;
   bool _autoValidate = false;
 
-  ///redirect user to main screen
   void _value1Changed(bool value) => setState(() => {_value1 = value});
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
-      //    If all data are correct then save data to out variables
       _formKey.currentState.save();
-      _loginUser();
-    } else {
-      //    If all data are not valid then start auto validation.
-      setState(() {
-        _autoValidate = true;
-      });
+      return _loginUser();
     }
+    setState(() {
+      _autoValidate = true;
+    });
   }
 
   void _loginUser() {
     User userReg = new User(email: _email, password: _password);
     _apiService.loginUser(userReg).then((response) async {
-
       if (response == "inaccesible") {
         return Alert(
           context: context,
@@ -330,33 +324,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ).show();
       }
-      if (jsonDecode(response)["error"] == false) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        var tmpUsrId = jsonDecode(response)["user"]["id"];
-        var name = jsonDecode(response)["user"]["name"];
-        var email = jsonDecode(response)["user"]["email"];
-        var image = jsonDecode(response)["user"]["image"];
-        var age = jsonDecode(response)["user"]["age"];
-        var gender = jsonDecode(response)["user"]["gender"];
-        var rol = jsonDecode(response)["user"]["rol"];
-
-        //recordarme
-        preferences.setBool("recordarme", _value1);
-        //
-        userid = tmpUsrId;
-        preferences.setString("userid", tmpUsrId);
-        preferences.setString("name", name);
-        preferences.setString("email", email);
-        preferences.setString("image", image);
-        preferences.setString("age", age);
-        preferences.setString("gender", gender);
-        preferences.setString("rol", rol);
-        userApp.gender = gender;
-        userApp.age = age;
-        userApp.image = image;
-        socket.emit("login", {"userId": tmpUsrId});
-        Navigator.of(context).pushReplacementNamed(navBarViewRoute);
-      } else {
+      if (jsonDecode(response)["error"] == true) {
         var errMsg = jsonDecode(response)["msg"];
         return Alert(
           context: context,
@@ -375,6 +343,28 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ).show();
       }
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      var tmpUsrId = jsonDecode(response)["data"]["id"];
+      var name = jsonDecode(response)["data"]["name"];
+      var email = jsonDecode(response)["data"]["email"];
+      var image = jsonDecode(response)["data"]["image"];
+      var age = jsonDecode(response)["data"]["age"];
+      var gender = jsonDecode(response)["data"]["gender"];
+      var rol = jsonDecode(response)["data"]["rol"];
+      preferences.setBool("recordarme", _value1);
+      userid = tmpUsrId;
+      preferences.setString("userid", tmpUsrId);
+      preferences.setString("name", name);
+      preferences.setString("email", email);
+      preferences.setString("image", image);
+      preferences.setString("age", age);
+      preferences.setString("gender", gender);
+      preferences.setString("rol", rol);
+      userApp.gender = gender;
+      userApp.age = age;
+      userApp.image = image;
+      socket.emit("login", {"userId": tmpUsrId});
+      Navigator.of(context).pushReplacementNamed(navBarViewRoute);
       return null;
     });
   }
