@@ -197,54 +197,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       title: Text("Correo"),
                                       subtitle: Text(_email ?? "email"),
                                     ),
-                                    /*ListTile(
-                                      leading: Icon(Icons.calendar_today),
-                                      title: Text("Edad"),
-                                      subtitle: TextFormField(
-                                        initialValue: userApp.age ?? "age",
-                                        keyboardType: TextInputType.number,
-                                        onFieldSubmitted: (value) => {
-                                          setState(
-                                              () => {userApp.age = value}),
-                                          ApiService()
-                                              .updateUser({"age": value}).then(
-                                                  (response) => {})
-                                        },
-                                      ),
-                                    ),*/
-                                    ListTile(
-                                        leading: Icon(Icons.person_outline),
-                                        title: Text("Género"),
-                                        subtitle: DropdownButton<String>(
-                                          value: userApp.gender,
-                                          icon: Icon(Icons.arrow_drop_down),
-                                          iconSize: 24,
-                                          elevation: 16,
-                                          style: TextStyle(color: Colors.black),
-                                          underline: Container(
-                                            height: 2,
-                                            color: naranja,
-                                          ),
-                                          onChanged: (String newValue) {
-                                            setState(() => {
-                                                  userApp.gender = newValue,
-                                                  ApiService().updateUser({
-                                                    "gender": userApp.gender
-                                                  }).then((response) => {})
-                                                });
-                                          },
-                                          items: <String>[
-                                            'Femenino',
-                                            'Masculino',
-                                            'TransFemenino'
-                                          ].map<DropdownMenuItem<String>>(
-                                              (String _gender) {
-                                            return DropdownMenuItem<String>(
-                                              value: _gender,
-                                              child: Text(_gender ?? "gender"),
-                                            );
-                                          }).toList(),
-                                        )),
                                     ListTile(
                                       leading: Icon(FontAwesomeIcons.powerOff),
                                       title: Text("Cerrar Sesión"),
