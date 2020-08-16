@@ -185,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(fontSize: 16, color: Colors.black),
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
-                        labelText: "password",
+                        labelText: "Contraseña",
                         contentPadding: new EdgeInsets.symmetric(
                             vertical:
                                 MediaQuery.of(context).size.height * 0.022,
@@ -208,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onChanged: _value1Changed,
                           ),
                           Text(
-                            "recordarme",
+                            "Mantener sesión iniciada",
                             style: TextStyle(
                                 color: naranja, //letras recuerdame
                                 fontSize: 16,
@@ -344,16 +344,17 @@ class _LoginScreenState extends State<LoginScreen> {
         ).show();
       }
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      var tmpUsrId = jsonDecode(response)["data"]["id"];
+      print(jsonDecode(response));
+      var userId = jsonDecode(response)["data"]["_id"];
       var name = jsonDecode(response)["data"]["name"];
       var email = jsonDecode(response)["data"]["email"];
       var image = jsonDecode(response)["data"]["image"];
       var age = jsonDecode(response)["data"]["age"];
       var gender = jsonDecode(response)["data"]["gender"];
       var rol = jsonDecode(response)["data"]["rol"];
+      userid = userId;
       preferences.setBool("recordarme", _value1);
-      userid = tmpUsrId;
-      preferences.setString("userid", tmpUsrId);
+      preferences.setString("userid", userId);
       preferences.setString("name", name);
       preferences.setString("email", email);
       preferences.setString("image", image);
@@ -363,7 +364,7 @@ class _LoginScreenState extends State<LoginScreen> {
       userApp.gender = gender;
       userApp.age = age;
       userApp.image = image;
-      socket.emit("login", {"userId": tmpUsrId});
+      socket.emit("login", {"userId": userId});
       Navigator.of(context).pushReplacementNamed(navBarViewRoute);
       return null;
     });

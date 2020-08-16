@@ -87,7 +87,7 @@ class ApiService with ChangeNotifier {
 
   //updUser
   updateUser(object) async {
-    final response = await http.put("$baseUrl/user/${userid}",
+    final response = await http.put("$baseUrl/user/$userid",
         headers: {"content-type": "application/json"},
         body: jsonEncode(object));
     return response.body;
@@ -100,7 +100,7 @@ class ApiService with ChangeNotifier {
         "image": await MultipartFile.fromFile(photo.path, filename: fileName)
       });
       var response =
-          await Dio().put("$baseUrl/user/image/${userid}", data: formData);
+          await Dio().put("$baseUrl/user/image/$userid", data: formData);
       return response.data;
     } catch (e) {
       return;

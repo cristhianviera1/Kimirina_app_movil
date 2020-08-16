@@ -58,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _pickedImage = file;
             _imagePicked = true;
             ApiService().uploadImage(file).then((response) => {
-                  if (response["error"] == "false")
+                  if (response["error"] == false)
                     {
                       setState(() => {userApp.image = response["data"]}),
                       Alert(

@@ -158,16 +158,15 @@ class _ProductScreen extends State<ProductScreen> {
   getProducts() {
     this.productList = new List();
     ApiService().getProducts().then((value) {
-      print(value);
       setState(() {
-        for (var i = 0; i < value.length; i++) {
+        for (var i = 0; i < value["data"].length; i++) {
           productList.add(Product(
-            title: value[i]["title"],
-            description: value[i]["description"],
-            image: value[i]["image"],
-            link: value[i]["link"],
-            price: value[i]["price"],
-            observations: value[i]["observations"],
+            title: value["data"][i]["title"],
+            description: value["data"][i]["description"],
+            image: value["data"][i]["image"],
+            link: value["data"][i]["link"],
+            price: value["data"][i]["price"],
+            observations: value["data"][i]["observations"],
           ));
         }
         numberOfProducts = productList.length;

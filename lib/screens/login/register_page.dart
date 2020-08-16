@@ -36,10 +36,11 @@ class EmailValidator {
 
 class AgeValidator {
   static String validate(String value) {
-    if (int.parse(value) > 90 || int.parse(value) < 10) {
-      return "Ingrese una edad valida";
+    print(int.parse(value));
+    if (int.parse(value) > 90 || int.parse(value) < 10 || value.isEmpty) {
+      return "Ingrese una edad válida";
     }
-    return value.isEmpty ? "El campo es obligatorio" : null;
+    return null;
   }
 }
 
@@ -345,6 +346,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _formKey.currentState.save();
     User userReg = User(name: _name + " " + _surname, email: _email, age: _age);
     _apiService.registerUser(userReg).then((response) async {
+      print(jsonDecode(response));
       if (jsonDecode(response)["error"] == true) {
         return Alert(
           context: context,

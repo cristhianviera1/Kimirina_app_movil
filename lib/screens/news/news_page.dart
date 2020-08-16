@@ -66,9 +66,9 @@ class _NewsScreenState extends State<NewsScreen> {
   getNews() {
     ApiService().getNews().then((value) {
       setState(() {
-        for (var news in value) {
-          newsCards.add(new _NewsItem(news["title"],
-              news["description"], news["image"], news["link"]));
+        for (var news in value["data"]) {
+          newsCards.add(new _NewsItem(
+              news["title"], news["description"], news["image"], news["link"]));
         }
       });
     });
